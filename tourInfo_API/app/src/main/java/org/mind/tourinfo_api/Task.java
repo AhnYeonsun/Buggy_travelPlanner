@@ -40,6 +40,7 @@ public class Task extends AsyncTask<String, Void, String> {
             connect.setRequestProperty("Response-Time", "0");
 
             if (connect.getResponseCode() == connect.HTTP_OK) {
+                //Log.i("URL test ::: ", url.toString());
                 InputStreamReader tmp = new InputStreamReader(connect.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(tmp);
                 StringBuffer buffer = new StringBuffer();
@@ -48,7 +49,7 @@ public class Task extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
-                //Log.i("receiveMsg : ", receiveMsg);
+                Log.i("receiveMsg : ", receiveMsg);
 
                 reader.close();
             } else {

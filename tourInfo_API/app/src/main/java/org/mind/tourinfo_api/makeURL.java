@@ -22,7 +22,7 @@ public class makeURL {
         try {
             searchType = ob.getSearchType();
             option = ob.getOption();
-            Log.i("searchType Test :::", searchType);
+            //Log.i("searchType Test :::", searchType);
             URL url = new URL(endPoint +
                     searchType +
                     "?ServiceKey=" + serviceKey +
