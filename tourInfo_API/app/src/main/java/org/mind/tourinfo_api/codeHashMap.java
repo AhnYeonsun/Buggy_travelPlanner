@@ -23,11 +23,12 @@ import java.util.HashMap;
 
 public class codeHashMap {
     HashMap<String, String> regionCodeHashMap = new HashMap<>();
-    HashMap<String, String> sigunguCodeMap = new HashMap<>();
+    HashMap<String, String> sigunguCodeHashMap = new HashMap<>();
 
     final private String searchType = "areaCode";
-    private String option = null;
-    private String urlText = null, resultText = null;
+    private String option = "";
+    private String urlText = "", resultText = "";
+    private int[] codeArr = new int[10];
 
     public codeHashMap() {
 
@@ -56,6 +57,27 @@ public class codeHashMap {
 
     public void regionCode() {
         setOption("null");
+        setURL();
+    }
+
+    public void sigunguCode() {
+        Iterator<String> iterator = regionCodeHashMap.keySet().iterator();
+        String resultData = null;
+
+        for (int i = 0; i < codeArr.length; i++) {
+            //System.out.println("AAAAAAAAAAAA");
+            option = "areaCode=" + Integer.toString(codeArr[i]);
+            Log.i("option test :::", option);
+            setURL();
+            try {
+                resultData = new Task(urlText).execute().get();
+                dataParser((resultData));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void dataParser(String jsonString) {
@@ -78,7 +100,18 @@ public class codeHashMap {
                 code = jObject.optString("code");
                 name = jObject.optString("name");
 
-                regionCodeHashMap.put(name, code);
+
+                if(option.equals("null")) {
+                    regionCodeHashMap.put(name, code);
+                    //System.out.println(jObject);
+                    //codeArr[i] = code;
+                    System.out.println(code);
+                    codeArr[i] = Integer.parseInt(code);
+
+                }
+                else{
+                    sigunguCodeHashMap.put(name,code);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -86,16 +119,21 @@ public class codeHashMap {
     }
 
     public void setText() {
-        Iterator<String> iterator = regionCodeHashMap.keySet().iterator();
-
-        while (iterator.hasNext()) {
-            System.out.println("AAAAAAAAAAAAAAAAAA");
-            String key = (String) iterator.next();
+        Iterator<String> iterator1 = regionCodeHashMap.keySet().iterator();
+        Iterator<String> iterator2 = sigunguCodeHashMap.keySet().iterator();
+        while (iterator1.hasNext()) {
+            //System.out.println("AAAAAAAAAAAAAAAAAA");
+            String key = (String) iterator1.next();
             resultText += "Code : " + key + "      value : " + regionCodeHashMap.get(key) + "\n";
-            Log.i("CODE test :::", regionCodeHashMap.get(key) + key);
-
+            //Log.i("CODE test :::", regionCodeHashMap.get(key) + key);
             //  Log.i("Print testing ::: ",option);
             //}
+        }
+
+        while (iterator2.hasNext()) {
+            String key = (String) iterator2.next();
+            resultText += "Code : " + key + "      value : " + sigunguCodeHashMap.get(key) + "\n";
+            //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
         }
     }
 
@@ -103,16 +141,17 @@ public class codeHashMap {
         String resultData = null;
 
         regionCode();
-        setURL();
-
         try {
             resultData = new Task(urlText).execute().get();
+
             dataParser((resultData));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        sigunguCode();
 
         setText();
 
