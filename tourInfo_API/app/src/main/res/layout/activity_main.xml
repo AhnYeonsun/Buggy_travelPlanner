@@ -4,6 +4,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--<ListView-->
+        <!--android:id = "@+id/region"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+    <Spinner
+        android:id="@+id/regionList"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <Spinner
+        android:id="@+id/sigunguList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="검색"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,6 +33,7 @@
             android:id="@+id/tourInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
     </ScrollView>
 
 </LinearLayout>
