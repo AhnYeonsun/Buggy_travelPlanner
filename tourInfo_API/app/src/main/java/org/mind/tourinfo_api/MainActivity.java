@@ -14,8 +14,8 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity{
-
+public class MainActivity extends AppCompatActivity {
+    final String[] contentType = {"관광지", "문화시설", "축제/공연/행사", "여행코스", "레포츠", "숙박", "쇼핑", "음식"}; //initial content type
     getRegionHashMap regionHashMap = new getRegionHashMap(); //object of getRegionHashMap() function
     String resultText = new String(); // set text string
 
@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity{
     Spinner regionList; //select box for region list
     Spinner sigunguList; //select box for sigungu list
     Button searchBtn; //Button for searching
-    String region="", sigungu="";
+    String region = "", sigungu = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity{
         regionHashMap.main(); //get regionHashMap.main()
 
         // Set the region list //
-        regionList = (Spinner)findViewById(R.id.regionList); //spinner of region list
-        ArrayList<String> items1 =  new ArrayList<String>(Arrays.asList("")); //array list of spinner
+        regionList = (Spinner) findViewById(R.id.regionList); //spinner of region list
+        ArrayList<String> items1 = new ArrayList<String>(Arrays.asList("")); //array list of spinner
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items1);
 
         // add to spinner list
@@ -53,8 +54,8 @@ public class MainActivity extends AppCompatActivity{
         //------------------------------//
 
         // Set the sigungu list //
-        sigunguList = (Spinner)findViewById(R.id.sigunguList); //spinner of sigungu list
-        ArrayList<String> items2 =  new ArrayList<String>(Arrays.asList("")); //array list of spinner
+        sigunguList = (Spinner) findViewById(R.id.sigunguList); //spinner of sigungu list
+        ArrayList<String> items2 = new ArrayList<String>(Arrays.asList("")); //array list of spinner
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items2);
 
         // Add to spinner list //
@@ -105,7 +106,8 @@ public class MainActivity extends AppCompatActivity{
         String keyword = "";
         try {
             keyword = URLEncoder.encode("강원", "UTF-8");
-        }catch(UnsupportedEncodingException e){ };
+        } catch (UnsupportedEncodingException e) {
+        }
 
         keywordSearch tour2 = new keywordSearch(keyword);
         tour2.main();
@@ -113,13 +115,41 @@ public class MainActivity extends AppCompatActivity{
         Iterator<String> iterator4 = tour2.tourList.keySet().iterator();
         while (iterator4.hasNext()) {
             String key = (String) iterator4.next();
-            resultText += "ID : " + key + "\n      addr1 : " + tour2.tourList.get(key)[0] + " \n 컨텐츠 타입 : "+  tour2.tourList.get(key)[1]+
+
+            resultText += "ID : " + key + "\n      addr1 : " + tour2.tourList.get(key)[0] + " \n 컨텐츠 타입 : " + classification(tour2.tourList.get(key)[1]) +
                     " \n   이미지 : " + tour2.tourList.get(key)[2] + " \n      좌표 X : " + tour2.tourList.get(key)[3] +
-                    "    좌표 Y : " + tour2.tourList.get(key)[4]+ " \n    tel : "+ tour2.tourList.get(key)[5]+
-                    " \n   title : "+ tour2.tourList.get(key)[6]+"\n";
+                    "    좌표 Y : " + tour2.tourList.get(key)[4] + " \n    tel : " + tour2.tourList.get(key)[5] +
+                    " \n   title : " + tour2.tourList.get(key)[6] + "\n";
             //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
         }
         result.setText(resultText);
         // --------------------------------------------- //
+    }
+
+    // Description : classify the content type //
+    // Input : integer content type formed string //
+    // Output : String content type formed tring //
+    public String classification(String content) {
+        int contentID = Integer.parseInt(content);
+
+        switch(contentID){
+            case 12:
+                return contentType[0];
+            case 14:
+                return contentType[1];
+            case 15:
+                return contentType[2];
+            case 25:
+                return contentType[3];
+            case 28:
+                return contentType[4];
+            case 32:
+                return contentType[5];
+            case 38:
+                return contentType[6];
+            case 39:
+                return contentType[7];
+        }
+        return "";
     }
 }
