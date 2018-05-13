@@ -9,18 +9,21 @@ public class makeURL {
     private final String endPoint = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
     private final String setting = "&MobileOS=ETC&MobileApp=TestApp&_type=json";
 
-    private String searchType = "", option = "";
+    private String searchType = "", option = "", keyword = "";
     private String areaCode = "", sigunguCode="";
-    getRegionHashMap ob; //object of getRegionHashMap class
+    getRegionHashMap rhm; //object of getRegionHashMap class
     regionSearch rs; //object of regionSearch class
+    keywordSearch ks; //object of keywordSearch class
 
     public makeURL(getRegionHashMap ob1){
-        ob = ob1;
+        rhm = ob1;
     } //constructor for getRegionHashMap class
 
     public makeURL(regionSearch rs){
         this.rs = rs;
     } //construct for regionSearch class
+
+    public makeURL(keywordSearch ks){this.ks = ks;} //construct for keywordSearch class
 
     // Description : make the final URL //
     // Input : Distinguishable code integer code value //
@@ -30,8 +33,8 @@ public class makeURL {
 
         try {
             if(i==0) { //called getRegionHashMap class
-                searchType = ob.getSearchType();
-                option = ob.getOption();
+                searchType = rhm.getSearchType();
+                option = rhm.getOption();
                 //Log.i("searchType Test :::", searchType);
                 URL url = new URL(endPoint +
                         searchType +
@@ -52,6 +55,17 @@ public class makeURL {
                         "&" + "areaCode=" + areaCode+
                         "&" + "sigunguCode=" + sigunguCode +
                         "&"+setting);
+
+                urlText = url.toString();
+            }
+            else if(i==2){
+                searchType = ks.getSearchType();
+                keyword = ks.getKeyword();
+                URL url = new URL(endPoint +
+                searchType +
+                "?ServiceKey=" + serviceKey +
+                "&keyword=" + keyword +
+                setting);
 
                 urlText = url.toString();
             }

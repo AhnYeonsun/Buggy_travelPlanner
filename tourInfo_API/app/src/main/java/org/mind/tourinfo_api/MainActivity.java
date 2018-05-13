@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.Button;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,35 +73,53 @@ public class MainActivity extends AppCompatActivity{
         //------------------------------//
 
         // set the result when user search region base //
-        result = (TextView) findViewById(R.id.tourInfo); //search result text
-        searchBtn = findViewById(R.id.searchBtn);
-        searchBtn.setOnClickListener(new View.OnClickListener() { //when user click the search button, put the user selected data
-            @Override
-            public void onClick(View v) {
-                resultText="";
-                region = (String)regionList.getSelectedItem();
-                sigungu = (String)sigunguList.getSelectedItem();
-
-                regionSearch tour = new regionSearch(region, sigungu, regionHashMap); // object of regionSearch class
-                tour.main();
-
-                // Set result text
-                Iterator<String> iterator3 = tour.tourList.keySet().iterator();
-                while (iterator3.hasNext()) {
-                    String key = (String) iterator3.next();
-                    resultText += "ID : " + key + "\n      addr1 : " + tour.tourList.get(key)[0] + " \n 컨텐츠 타입 : "+  tour.tourList.get(key)[1]+
-                            " \n   이미지 : " + tour.tourList.get(key)[2] + " \n      좌표 X : " + tour.tourList.get(key)[3] +
-                            "    좌표 Y : " + tour.tourList.get(key)[4]+ " \n    tel : "+ tour.tourList.get(key)[5]+
-                            " \n   title : "+ tour.tourList.get(key)[6]+"\n";
-                    //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
-                }
-                result.setText(resultText);
-            }
-        });
+//        result = (TextView) findViewById(R.id.tourInfo); //search result text
+//        searchBtn = findViewById(R.id.searchBtn);
+//        searchBtn.setOnClickListener(new View.OnClickListener() { //when user click the search button, put the user selected data
+//            @Override
+//            public void onClick(View v) {
+//                resultText="";
+//                region = (String)regionList.getSelectedItem();
+//                sigungu = (String)sigunguList.getSelectedItem();
+//
+//                regionSearch tour = new regionSearch(region, sigungu, regionHashMap); // object of regionSearch class
+//                tour.main();
+//
+//                // Set result text
+//                Iterator<String> iterator3 = tour.tourList.keySet().iterator();
+//                while (iterator3.hasNext()) {
+//                    String key = (String) iterator3.next();
+//                    resultText += "ID : " + key + "\n      addr1 : " + tour.tourList.get(key)[0] + " \n 컨텐츠 타입 : "+  tour.tourList.get(key)[1]+
+//                            " \n   이미지 : " + tour.tourList.get(key)[2] + " \n      좌표 X : " + tour.tourList.get(key)[3] +
+//                            "    좌표 Y : " + tour.tourList.get(key)[4]+ " \n    tel : "+ tour.tourList.get(key)[5]+
+//                            " \n   title : "+ tour.tourList.get(key)[6]+"\n";
+//                    //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
+//                }
+//                result.setText(resultText);
+//            }
+//        });
         // -------------------------------------------//
 
+        // set the result when user search keyword //
+        result = (TextView) findViewById(R.id.tourInfo);
+        String keyword = "";
+        try {
+            keyword = URLEncoder.encode("강원", "UTF-8");
+        }catch(UnsupportedEncodingException e){ };
 
-
-
+        keywordSearch tour2 = new keywordSearch(keyword);
+        tour2.main();
+        // Set result text
+        Iterator<String> iterator4 = tour2.tourList.keySet().iterator();
+        while (iterator4.hasNext()) {
+            String key = (String) iterator4.next();
+            resultText += "ID : " + key + "\n      addr1 : " + tour2.tourList.get(key)[0] + " \n 컨텐츠 타입 : "+  tour2.tourList.get(key)[1]+
+                    " \n   이미지 : " + tour2.tourList.get(key)[2] + " \n      좌표 X : " + tour2.tourList.get(key)[3] +
+                    "    좌표 Y : " + tour2.tourList.get(key)[4]+ " \n    tel : "+ tour2.tourList.get(key)[5]+
+                    " \n   title : "+ tour2.tourList.get(key)[6]+"\n";
+            //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
+        }
+        result.setText(resultText);
+        // --------------------------------------------- //
     }
 }
