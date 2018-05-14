@@ -5,11 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     tools:context="com.example.soso.soso.Recommend">
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:entries="@array/province"
+            android:id="@+id/regionList"></Spinner>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/sigunguList"></Spinner>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="클릭클릭! 추천 받기!"
+        android:id="@+id/searchBtn"
+        android:background="#FF9999"
+        android:padding="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border">
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@color/SeSSapGreen"
+        android:dividerHeight="2dp"
         android:id="@+id/recom_listview1">
     </ListView>
+    </LinearLayout>
 </LinearLayout>
