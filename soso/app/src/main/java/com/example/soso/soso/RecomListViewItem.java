@@ -22,7 +22,6 @@ public class RecomListViewItem {
     private String text;
     private String url;
     private Bitmap image;
-    loadBitmap Task;
 
     public void setIcon(String url) {
         this.url = url;
@@ -31,8 +30,9 @@ public class RecomListViewItem {
 
     public Bitmap getIcon() {
         try {
-            System.out.println("AAAAAAAAAAAAAAAAA");
-            image = (Bitmap) Task.execute().get();
+            //System.out.println("AAAAAAAAAAAAAAAAA");
+            this.image = new loadBitmap(this.url).execute().get();
+            //System.out.println("AAAAAAAAAAAAAAAAA");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -50,20 +50,23 @@ public class RecomListViewItem {
 
     private class loadBitmap extends AsyncTask<String, Integer, Bitmap> {
         Bitmap bitmap = null;
-        ImageView imageV;
+        String url = "";
 
+        public loadBitmap(String url){
+            this.url = url;
+        }
         @Override
-        public Bitmap doInBackground(String... urls) {
+        public Bitmap doInBackground(String... params) {
             try {
-                URL url = new URL(urls[0]);
-                //Log.i("URL test :::", url.toString());
-                HttpURLConnection conn = (HttpsURLConnection) url.openConnection();
-                conn.setDoInput(true);
+                URL url = new URL(this.url);
+                Log.i("URL test :::", url.toString());
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
 
                 InputStream is = conn.getInputStream();
 
                 bitmap = BitmapFactory.decodeStream(is);
+
 
             } catch (IOException e) {
                 e.printStackTrace();

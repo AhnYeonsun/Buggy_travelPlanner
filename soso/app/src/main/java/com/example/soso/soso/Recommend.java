@@ -76,8 +76,6 @@ public class Recommend extends AppCompatActivity {
             }
         });
 
-        // Adapter 생성
-
 
         // 리스트뷰 참조 및 Adapter달기
         listview1 = findViewById(R.id.recom_listview1);
@@ -85,6 +83,7 @@ public class Recommend extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                // Adapter 생성
                 adapter = new RecomListViewAdapter();
                 listview1.setAdapter(adapter);
                 region = (String)regionList.getSelectedItem();
@@ -103,9 +102,9 @@ public class Recommend extends AppCompatActivity {
                             " \n이미지 : " + tour.tourList.get(key)[2] + " \n좌표 X : " + tour.tourList.get(key)[3] +
                             "   좌표 Y : " + tour.tourList.get(key)[4]+ " \ntel : "+ tour.tourList.get(key)[5]+
                             " \ntitle : "+ tour.tourList.get(key)[6]+"\n";
-
                     adapter.addItem(tour.tourList.get(key)[2],infoText);
 
+                    infoText = "";
                     //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
                 }
 
