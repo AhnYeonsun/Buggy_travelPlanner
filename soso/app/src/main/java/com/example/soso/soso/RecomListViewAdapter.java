@@ -73,7 +73,6 @@ public class RecomListViewAdapter extends BaseAdapter{
         iconImageView = convertView.findViewById(R.id.recommendImg);
         textView=convertView.findViewById(R.id.recommendText);
 
-        //System.out.println("AAAAAAAAAAAAAAAAA");
         RecomListViewItem recomListViewItem =recomlistViewItemList.get(position);
 
         iconImageView.setImageBitmap(recomListViewItem.getIcon());
