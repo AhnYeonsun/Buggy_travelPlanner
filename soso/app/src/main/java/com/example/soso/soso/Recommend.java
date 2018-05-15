@@ -94,20 +94,20 @@ public class Recommend extends AppCompatActivity {
 
                 // Set result text
                 Iterator<String> iterator3 = tour.tourList.keySet().iterator();
-                String infoText = "";
+
                 while (iterator3.hasNext()) {
+                    String infoText = "";
+                    String title = "";
                     String key = (String) iterator3.next();
 
-                    infoText += "ID : " + key + "\naddr1 : " + tour.tourList.get(key)[0] + "\n 컨텐츠 타입 : "+  classification(tour.tourList.get(key)[1])+
-                            " \n이미지 : " + tour.tourList.get(key)[2] + " \n좌표 X : " + tour.tourList.get(key)[3] +
+                    infoText += "ID : " + key + "\n주소 : " + tour.tourList.get(key)[0] + "\n 컨텐츠 타입 : "+  classification(tour.tourList.get(key)[1])+
+                            " \n좌표 X : " + tour.tourList.get(key)[3] +
                             "   좌표 Y : " + tour.tourList.get(key)[4]+ " \ntel : "+ tour.tourList.get(key)[5]+
                             " \ntitle : "+ tour.tourList.get(key)[6]+"\n";
-                    adapter.addItem(tour.tourList.get(key)[2],infoText);
+                    title = tour.tourList.get(key)[6];
+                    adapter.addItem(tour.tourList.get(key)[2],title);
 
-                    infoText = "";
-                    //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
                 }
-
             }
         });
     }
@@ -120,6 +120,7 @@ public class Recommend extends AppCompatActivity {
 
         switch(contentID){
             case 12:
+
                 return contentType[0];
             case 14:
                 return contentType[1];
