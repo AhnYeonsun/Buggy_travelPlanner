@@ -9,34 +9,56 @@
     tools:context="com.example.soso.soso.Recommend">
 
     <Spinner
+        android:id="@+id/regionList"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:entries="@array/province"
-        android:id="@+id/regionList" />
+        android:entries="@array/province" />
 
     <Spinner
+        android:id="@+id/sigunguList"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/sigunguList" />
+        android:layout_height="50dp" />
+
 
     <Button
+        android:id="@+id/searchBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="클릭클릭! 추천 받기!"
-        android:id="@+id/searchBtn"
-        android:background="#FF9999"
-        android:padding="5dp"/>
+        android:background="#CC9999"
+        android:padding="5dp"
+        android:text="클릭클릭! 추천 받기!" />
+
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="50dp">
+
+         <TextView
+             android:layout_width="100dp"
+             android:layout_height="wrap_content"
+             android:text="타입"
+             android:textSize="30sp"
+             android:textStyle="bold" />
+
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="내용"
+             android:textSize="30sp"
+             android:textStyle="bold" />
+     </LinearLayout>-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/border">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/SeSSapGreen"
-        android:dividerHeight="2dp"
-        android:id="@+id/recom_listview1">
-    </ListView>
+        <ListView
+            android:id="@+id/recom_listview1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/SeSSapGreen"
+            android:dividerHeight="2dp"
+            android:listSelector="#FF9999"
+            android:longClickable="true"></ListView>
     </LinearLayout>
 </LinearLayout>

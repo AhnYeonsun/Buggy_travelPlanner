@@ -3,6 +3,8 @@ package com.example.soso.soso;
 /**
  * Created by SOSO on 2018-05-14.
  */
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -36,12 +38,15 @@ import static java.util.Arrays.*;
  */
 
 public class RecomListViewAdapter extends BaseAdapter{
-    private ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
+    private static ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
     ImageView iconImageView;
-    TextView textView;
+    TextView titleView;
+    TextView addressView;
+    Drawable icon;
     String url = "";
-
-    public RecomListViewAdapter() {
+    String info[];
+    final String[] contentType = {"관광지", "문화시설", "축제/공연/행사", "여행코스", "레포츠", "숙박", "쇼핑", "음식"}; //initial content type
+    public RecomListViewAdapter(Context c) {
     }
     @Override
     public int getCount() {
@@ -71,20 +76,29 @@ public class RecomListViewAdapter extends BaseAdapter{
         }
 
         iconImageView = convertView.findViewById(R.id.recommendImg);
-        textView=convertView.findViewById(R.id.recommendText);
-
+        titleView=convertView.findViewById(R.id.recommendText);
+        addressView=convertView.findViewById(R.id.recommendAdd);
         RecomListViewItem recomListViewItem =recomlistViewItemList.get(position);
 
-        iconImageView.setImageBitmap(recomListViewItem.getIcon());
-        textView.setText(recomListViewItem.getText());
+        //iconImageView.setImageBitmap(recomListViewItem.getIcon());
+        titleView.setText(recomListViewItem.getName()); //이름 가져오기
+        addressView.setText(recomListViewItem.getAddress()); //주소가져오기
+        iconImageView.setImageResource(recomlistViewItemList.get(position).getImgId());
 
         return convertView;
     }
 
-    public void addItem(String url, String text){
+    /*public void addItem(String url, String text){
         RecomListViewItem item = new RecomListViewItem();
         item.setIcon(url);
         item.setText(text);
+        recomlistViewItemList.add(item);
+    }*/
+    public void addItem(int img, String name,String address){
+        RecomListViewItem item = new RecomListViewItem();
+        item.setName(name);
+        item.setAddress(address);
+        item.setImgId(img);
         recomlistViewItemList.add(item);
     }
 }

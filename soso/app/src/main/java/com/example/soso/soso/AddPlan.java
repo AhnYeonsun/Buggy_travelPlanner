@@ -137,8 +137,8 @@ public class AddPlan extends AppCompatActivity {
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(getApplicationContext(), Recommendation.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), PlanDetail.class);
+                startActivity(intent);
                 //doDifferent();
                 //String t = Long.toString(diffDays);
                 //hi.setText(t);

@@ -22,13 +22,47 @@ public class RecomListViewItem {
     private String text;
     private String url;
     private Bitmap image;
+    private Drawable icon;
 
-    public void setIcon(String url) {
+    private String name;
+    private String address;
+    private int imgId;
+
+    public void setName(String name){
+        this.name=name;
+
+    }
+    public String getName()
+    {
+        return this.name;
+    }
+    public void setAddress(String address){
+        this.address=address;
+
+    }
+    public String getAddress()
+    {
+        return this.address;
+    }
+    public void setImgId(int imgId) {
+        this.imgId = imgId ;
+    }
+    public int getImgId() {
+        return this.imgId ;
+    }
+
+    /*public void setText(String text) {
+        this.text = text; }
+
+    public String getText() {
+        return this.text;
+    }
+ public void setIcon(String url) {
         this.url = url;
         //Log.i("****URL TEST ::::: ",this.url);
     }
 
-    public Bitmap getIcon() {
+   public Bitmap getIcon() {
         try {
             //System.out.println("AAAAAAAAAAAAAAAAA");
             this.image = new loadBitmap(this.url).execute().get();
@@ -39,16 +73,8 @@ public class RecomListViewItem {
             e.printStackTrace();
         }
         return this.image;
-    }
-
-    public void setText(String text) {
-        this.text = text; }
-
-    public String getText() {
-        return this.text;
-    }
-
-    private class loadBitmap extends AsyncTask<String, Integer, Bitmap> {
+    }*/
+   /* private class loadBitmap extends AsyncTask<String, Integer, Bitmap> {
         Bitmap bitmap = null;
         String url = "";
 
@@ -73,7 +99,7 @@ public class RecomListViewItem {
             }
             return bitmap;
         }
-    }
+    }*/
 
 }
 

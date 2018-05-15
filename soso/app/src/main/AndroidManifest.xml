@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.soso.soso">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:windowSoftInputMode="stateAlwaysHidden"> //액티비티 실행시 EditText에 키보드 자동 실행되는것 막기
+        android:windowSoftInputMode="stateAlwaysHidden">
+        //액티비티 실행시 EditText에 키보드 자동 실행되는것 막기
         <activity android:name=".Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +23,8 @@
         </activity>
         <activity android:name=".AddPlan" />
         <activity android:name=".Checklist" />
-        <activity android:name=".Recommend"></activity>
+        <activity android:name=".Recommend" />
+        <activity android:name=".PlanDetail"></activity>
     </application>
 
-    <uses-permission android:name = "android.permission.INTERNET"/>
-    <uses-permission android:name = "android.permission.ACCESS_NETWORK_STATE"/>
 </manifest>
