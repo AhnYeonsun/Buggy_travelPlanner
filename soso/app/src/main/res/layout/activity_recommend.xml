@@ -7,15 +7,17 @@
     android:orientation="vertical"
     android:padding="10dp"
     tools:context="com.example.soso.soso.Recommend">
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:entries="@array/province"
-            android:id="@+id/regionList"></Spinner>
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/sigunguList"></Spinner>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:entries="@array/province"
+        android:id="@+id/regionList" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/sigunguList" />
 
     <Button
         android:layout_width="match_parent"
