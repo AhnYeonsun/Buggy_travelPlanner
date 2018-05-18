@@ -9,9 +9,9 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 //Description : Search the specific region's tour data and save the hash map//
-public class regionSearch {
+public class RegionSearch {
     private String region = "", sigungu = ""; //String value region, sigungu that user's selected
-    private getRegionHashMap regionCodeHashMap; //class object of getRegionHashMap
+    private GetRegionHashMap regionCodeHashMap; //class object of GetRegionHashMap
     private final String searchType = "areaBasedList";
     private String areaCode = "", sigunguCode = "";
     private String urlText = "";
@@ -20,7 +20,7 @@ public class regionSearch {
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
 
-    public regionSearch(String region, String sigungu, getRegionHashMap regionCode) { //constructor
+    public RegionSearch(String region, String sigungu, GetRegionHashMap regionCode) { //constructor
         this.region = region;
         this.sigungu = sigungu;
         this.regionCodeHashMap = regionCode;
@@ -49,11 +49,11 @@ public class regionSearch {
         return this.sigunguCode;
     }
 
-    // Description : bring the URL from makeURL class //
+    // Description : bring the URL from MakeURL class //
     // Input : none //
     // Output : none //
     public void setURL() {
-        this.urlText = new makeURL(this).integrateURL(1);
+        this.urlText = new MakeURL(this).integrateURL(1);
     }
 
     // Description : find the region, singungu code //
@@ -136,7 +136,7 @@ public class regionSearch {
         searchRegionCode();
         setURL();
         try {
-            resultData = new connectAPI(urlText).execute().get();
+            resultData = new ConnectAPI(urlText).execute().get();
             dataParser((resultData));
         } catch (InterruptedException e) {
             e.printStackTrace();

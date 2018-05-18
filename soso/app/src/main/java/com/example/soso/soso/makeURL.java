@@ -4,29 +4,29 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 //Description : make URL how bring the URL data from other class//
-public class makeURL {
+public class MakeURL {
     private final String serviceKey = "Rc%2FaF%2FUtrBXVonYiqMAc0tttIxuHrlVynLgI7aWtcpTsIbk5rzsrUPA8fSqT0MYU%2BaE3xMZ2jtX3jxf220chCg%3D%3D";
     private final String endPoint = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
     private final String setting = "&MobileOS=ETC&MobileApp=TestApp&_type=json";
 
     private String searchType = "", option = "", keyword = "", contentID = "", contentTypeID = "";
     private String areaCode = "", sigunguCode="";
-    getRegionHashMap rhm; //object of getRegionHashMap class
-    regionSearch rs; //object of regionSearch class
-    keywordSearch ks; //object of keywordSearch class
+    GetRegionHashMap rhm; //object of GetRegionHashMap class
+    RegionSearch rs; //object of RegionSearch class
+    KeywordSearch ks; //object of KeywordSearch class
     //getInformation gi; //object of getInformation class
 
-    public makeURL(getRegionHashMap ob1){
+    public MakeURL(GetRegionHashMap ob1){
         rhm = ob1;
-    } //constructor for getRegionHashMap class
+    } //constructor for GetRegionHashMap class
 
-    public makeURL(regionSearch rs){
+    public MakeURL(RegionSearch rs){
         this.rs = rs;
-    } //construct for regionSearch class
+    } //construct for RegionSearch class
 
-    public makeURL(keywordSearch ks){this.ks = ks;} //construct for keywordSearch class
+    public MakeURL(KeywordSearch ks){this.ks = ks;} //construct for KeywordSearch class
 
-    //public makeURL(getInformation gi){this.gi = gi;} //construct for getInformation class
+    //public MakeURL(getInformation gi){this.gi = gi;} //construct for getInformation class
 
 
     // Description : make the final URL //
@@ -36,7 +36,7 @@ public class makeURL {
         String urlText = "";
 
         try {
-            if(i==0) { //called getRegionHashMap class
+            if(i==0) { //called GetRegionHashMap class
                 searchType = rhm.getSearchType();
                 option = rhm.getOption();
                 //Log.i("searchType Test :::", searchType);
@@ -48,7 +48,7 @@ public class makeURL {
 
                 urlText = url.toString();
             }
-            else if(i==1){ //called regionSearch class
+            else if(i==1){ //called RegionSearch class
                 searchType = rs.getSearchType();
                 areaCode = rs.getAreaCode();
                 sigunguCode = rs.getSigunguCode();

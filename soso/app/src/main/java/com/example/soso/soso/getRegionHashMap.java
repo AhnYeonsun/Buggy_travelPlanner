@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 // Description : Get region codes and save to hash map class //
 
-public class getRegionHashMap {
+public class GetRegionHashMap {
     public HashMap<String, String> regionCodeHashMap = new HashMap<>(); //Hash Map that saving the region code (etc 서울, 경기도...)
     public HashMap<String, String[]> sigunguCodeHashMap = new HashMap<>(); //Hash Map that saving the 시,군,구 code(etc 강남구, 남양주시)
 
@@ -21,7 +21,7 @@ public class getRegionHashMap {
     private int[] codeArr = new int[10]; //Saves the integer of areaCode
 
 
-    public getRegionHashMap() { } //constructor
+    public GetRegionHashMap() { } //constructor
 
     public String getSearchType() {
         return this.searchType;
@@ -36,7 +36,7 @@ public class getRegionHashMap {
     }
 
     public void setURL() {
-        this.urlText = new makeURL(this).integrateURL(0); //object of makeURL.interagetURL()
+        this.urlText = new MakeURL(this).integrateURL(0); //object of MakeURL.interagetURL()
     }
 
 
@@ -47,7 +47,7 @@ public class getRegionHashMap {
         setOption("null"); //setting the option value for "null"
         setURL();
         try {
-            resultData = new connectAPI(urlText).execute().get();
+            resultData = new ConnectAPI(urlText).execute().get();
             //Log.i("result data ::: ", resultData);
             dataParser((resultData));
         } catch (InterruptedException e) {
@@ -69,7 +69,7 @@ public class getRegionHashMap {
             //Log.i("option test :::", option);
             setURL(); //setting the option value
             try {
-                resultData = new connectAPI(urlText).execute().get();
+                resultData = new ConnectAPI(urlText).execute().get();
                 dataParser((resultData));
             } catch (InterruptedException e) {
                 e.printStackTrace();

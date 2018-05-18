@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 //Description : Searching the keyword that user input //
-public class keywordSearch {
+public class KeywordSearch {
     private final String searchType = "searchKeyword";
     private String keyword = "";
     private String urlText = "";
@@ -16,7 +16,7 @@ public class keywordSearch {
     private String addr="", ID="", img="", mapX="", mapY="", tel="", title="", typeID="";
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
-    public keywordSearch(String keyword){
+    public KeywordSearch(String keyword){
         this.keyword = keyword;
     } //constructor
 
@@ -32,11 +32,11 @@ public class keywordSearch {
     // Output : keyword //
     public String getKeyword(){return this.keyword;}
 
-    // Description : bring the URL from makeURL class //
+    // Description : bring the URL from MakeURL class //
     // Input : none //
     // Output : none //
     public void setURL() {
-        this.urlText = new makeURL(this).integrateURL(2);
+        this.urlText = new MakeURL(this).integrateURL(2);
     }
 
     // Description : parsing the data //
@@ -90,7 +90,7 @@ public class keywordSearch {
 
         setURL();
         try {
-            resultData = new connectAPI(urlText).execute().get();
+            resultData = new ConnectAPI(urlText).execute().get();
             dataParser((resultData));
         } catch (InterruptedException e) {
             e.printStackTrace();
