@@ -52,53 +52,54 @@ public class RecomListViewAdapter extends BaseAdapter{
     public int getCount() {
         return recomlistViewItemList.size();
     }
-
+    
     @Override
     public Object getItem(int position) {
         return recomlistViewItemList.get(position);
     }
-
+    
     @Override
     public long getItemId(int position) {
         return position;
     }
-
+    
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
-
+        
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         //System.out.println("AAAAAAAAAAAAAAAAA");
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.recommend_item, parent, false);
         }
-
+        
         iconImageView = convertView.findViewById(R.id.recommendImg);
         titleView=convertView.findViewById(R.id.recommendText);
         addressView=convertView.findViewById(R.id.recommendAdd);
         RecomListViewItem recomListViewItem =recomlistViewItemList.get(position);
-
+        
         //iconImageView.setImageBitmap(recomListViewItem.getIcon());
         titleView.setText(recomListViewItem.getName()); //이름 가져오기
         addressView.setText(recomListViewItem.getAddress()); //주소가져오기
         iconImageView.setImageResource(recomlistViewItemList.get(position).getImgId());
-
+        
         return convertView;
     }
-
+    
     /*public void addItem(String url, String text){
-        RecomListViewItem item = new RecomListViewItem();
-        item.setIcon(url);
-        item.setText(text);
-        recomlistViewItemList.add(item);
-    }*/
-    public void addItem(int img, String name,String address){
+     RecomListViewItem item = new RecomListViewItem();
+     item.setIcon(url);
+     item.setText(text);
+     recomlistViewItemList.add(item);
+     }*/
+    public void addItem(int img, String name,String address, String info){
         RecomListViewItem item = new RecomListViewItem();
         item.setName(name);
         item.setAddress(address);
         item.setImgId(img);
+        item.setInfo(info);
         recomlistViewItemList.add(item);
     }
 }
