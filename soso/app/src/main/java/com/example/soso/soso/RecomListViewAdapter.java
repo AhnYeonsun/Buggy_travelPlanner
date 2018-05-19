@@ -46,8 +46,9 @@ public class RecomListViewAdapter extends BaseAdapter{
     String url = "";
     String info[];
     final String[] contentType = {"관광지", "문화시설", "축제/공연/행사", "여행코스", "레포츠", "숙박", "쇼핑", "음식"}; //initial content type
-    public RecomListViewAdapter(Context c) {
-    }
+
+    public RecomListViewAdapter(){}
+    public RecomListViewAdapter(Context c) { }
     @Override
     public int getCount() {
         return recomlistViewItemList.size();
@@ -55,6 +56,7 @@ public class RecomListViewAdapter extends BaseAdapter{
     
     @Override
     public Object getItem(int position) {
+        System.out.println("************* : " + position);
         return recomlistViewItemList.get(position);
     }
     

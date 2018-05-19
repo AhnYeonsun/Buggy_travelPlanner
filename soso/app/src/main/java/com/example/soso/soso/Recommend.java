@@ -127,9 +127,9 @@ public class Recommend extends AppCompatActivity {
         listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
-                final RecomListViewItem item = (RecomListViewItem) recomadapter.getItem(position); //여기가 내가 누른 리스트뷰가 어떤 건지 확인하는건데 주석 풀면 오류남... 왜 인지는 모르겟...ㅎ.ㅎ 미안.....
+                RecomListViewItem item = (RecomListViewItem) new RecomListViewAdapter().getItem(position); //여기가 내가 누른 리스트뷰가 어떤 건지 확인하는건데 주석 풀면 오류남... 왜 인지는 모르겟...ㅎ.ㅎ 미안.....
                 builder.setTitle("세부 정보")
-                .setMessage(item.getInfo) //정보 넣는 부분인데, 내 생각에는 정보도 어뎁터로 넘어가서 item.getInfo 같이 불러와야 될듯? RecomListViewItem에 추가해야함
+                .setMessage(item.getInfo()) //정보 넣는 부분인데, 내 생각에는 정보도 어뎁터로 넘어가서 item.getInfo 같이 불러와야 될듯? RecomListViewItem에 추가해야함
                 .setCancelable(false)
                 .setPositiveButton("여기갈랭!", new DialogInterface.OnClickListener() {
                     @Override
