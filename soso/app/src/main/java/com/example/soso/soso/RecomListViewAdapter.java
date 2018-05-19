@@ -104,4 +104,8 @@ public class RecomListViewAdapter extends BaseAdapter{
         item.setInfo(info);
         recomlistViewItemList.add(item);
     }
+
+    public void clear(){
+        recomlistViewItemList.clear();
+    }
 }

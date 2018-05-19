@@ -1,5 +1,7 @@
 package com.example.soso.soso;
 
+import android.util.Log;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -43,7 +45,7 @@ public class MakeURL {
                 URL url = new URL(endPoint +
                         searchType +
                         "?ServiceKey=" + serviceKey +
-                        "&" + this.option +
+                        "&numOfRows=100&pageNo=1&" + this.option +
                         setting);
 
                 urlText = url.toString();
@@ -58,7 +60,7 @@ public class MakeURL {
                         "?ServiceKey=" + serviceKey +
                         "&" + "areaCode=" + areaCode+
                         "&" + "sigunguCode=" + sigunguCode +
-                        "&"+setting);
+                        "&numOfRows=40&pageNo=1"+setting);
 
                 urlText = url.toString();
             }
@@ -69,7 +71,7 @@ public class MakeURL {
                 searchType +
                 "?ServiceKey=" + serviceKey +
                 "&keyword=" + keyword +
-                setting);
+                "&numOfRows=40&pageNo=1"+setting);
 
                 urlText = url.toString();
             }
@@ -86,7 +88,7 @@ public class MakeURL {
 //
 //                urlText = url.toString();
 //            }
-            //Log.i("url Test :::", urlText);
+            Log.i("url Test :::", urlText);
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }

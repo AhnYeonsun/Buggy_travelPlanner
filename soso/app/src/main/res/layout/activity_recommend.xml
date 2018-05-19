@@ -19,6 +19,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp" />
 
+    <EditText
+        android:id="@+id/keywordEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="검색"/>
 
     <Button
         android:id="@+id/searchBtn"
@@ -27,6 +32,14 @@
         android:background="#CC9999"
         android:padding="5dp"
         android:text="클릭클릭! 추천 받기!" />
+
+    <Button
+        android:id="@+id/keywordBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CC9999"
+        android:padding="5dp"
+        android:text="키워드 검색!"/>
 
     <!-- <LinearLayout
          android:layout_width="match_parent"

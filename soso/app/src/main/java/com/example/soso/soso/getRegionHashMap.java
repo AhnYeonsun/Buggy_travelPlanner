@@ -1,5 +1,7 @@
 package com.example.soso.soso;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,10 +17,10 @@ public class GetRegionHashMap {
     public HashMap<String, String[]> sigunguCodeHashMap = new HashMap<>(); //Hash Map that saving the 시,군,구 code(etc 강남구, 남양주시)
 
     final private String searchType = "areaCode";
-    private String option = ""; //For sigunguCode searching option. Will saves the areaCode
+    private String option = "null"; //For sigunguCode searching option. Will saves the areaCode
     private String urlText = ""; //Saves the URL
     private String resultText = ""; //Saves result of search
-    private int[] codeArr = new int[10]; //Saves the integer of areaCode
+    private int[] codeArr = new int[17]; //Saves the integer of areaCode
 
 
     public GetRegionHashMap() { } //constructor
@@ -59,16 +61,13 @@ public class GetRegionHashMap {
 
 
     // Description : get sigungu code function. //
-    public void getSigunguCode() {
+    public void getSigunguCode(String region) {
         Iterator<String> iterator = regionCodeHashMap.keySet().iterator(); //iterator for regionCodeHashMap
         String resultData = ""; //string value for saving the data
 
-        //for loop that number of region codes
-        for (int i = 0; i < codeArr.length; i++) {
-            option = "areaCode=" + Integer.toString(codeArr[i]); //setting the option value "areaCode=(number of areaCode)
-            //Log.i("option test :::", option);
-            setURL(); //setting the option value
-            try {
+        setOption("areaCode=" + region);
+        setURL();
+        try {
                 resultData = new ConnectAPI(urlText).execute().get();
                 dataParser((resultData));
             } catch (InterruptedException e) {
@@ -76,7 +75,21 @@ public class GetRegionHashMap {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-        }
+
+        //for loop that number of region codes
+//        for (int i = 0; i < codeArr.length; i++) {
+//            option = "areaCode=" + Integer.toString(codeArr[i]); //setting the option value "areaCode=(number of areaCode)
+//            //Log.i("option test :::", option);
+//            setURL(); //setting the option value
+//            try {
+//                resultData = new ConnectAPI(urlText).execute().get();
+//                dataParser((resultData));
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (ExecutionException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
 
@@ -106,15 +119,15 @@ public class GetRegionHashMap {
                 //Log.i("Name test :::: ", name);
 
                 //Get the region code//
-                if(option.equals("null")) {
+                if(getOption().equals("null")) {
                     regionCodeHashMap.put(name, code); //add data to hash map
                     codeArr[i] = Integer.parseInt(code); //put the region code data(integer) to codeArr
-                    //Log.i("codeArr test ::: ", codeArr[i]+"");
+                    Log.i("codeArr test ::: ", name);
                 }
                 else{ //Get the sigungu code//
                     hashValue[0] = option;
                     hashValue[1] = code;
-                    //Log.i("CODE test :::", hashValue[1]);
+                    Log.i("CODE test :::", name);
                     sigunguCodeHashMap.put(name,hashValue); //add data to hash map
                 }
             }
@@ -123,10 +136,6 @@ public class GetRegionHashMap {
         }
     }
 
-    //main function
-    public void main() {
-        getRegionCode();
-        getSigunguCode();
-    }
+
 }
 
