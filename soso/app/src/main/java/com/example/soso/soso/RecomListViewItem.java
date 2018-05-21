@@ -28,7 +28,9 @@ public class RecomListViewItem {
     private String name;
     private String address;
     private int imgId;
-    
+    private String contentID;
+    private String contentTypeID;
+
     public void setName(String name){
         this.name=name;
         
@@ -53,7 +55,14 @@ public class RecomListViewItem {
     }
     public void setInfo(String info) {this.info = info;}
     public String getInfo() {return info;}
-    
+    public void setContentID(String contentID){
+        this.contentID = contentID;
+    }
+    public String getContentID(){return contentID;}
+    public void setContentTypeID(String contentTypeID){
+        this.contentTypeID = contentTypeID;
+    }
+    public String getContentTypeID(){return contentTypeID;}
     /*public void setText(String text) {
      this.text = text; }
      

@@ -10,6 +10,7 @@ public class Home extends AppCompatActivity {
     Button addPlanBtn;
     Button checklistBtn;
     Button recommendBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

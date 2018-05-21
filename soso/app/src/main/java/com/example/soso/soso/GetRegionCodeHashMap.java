@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 // Description : Get region codes and save to hash map class //
 
-public class GetRegionHashMap {
+public class GetRegionCodeHashMap {
     public HashMap<String, String> regionCodeHashMap = new HashMap<>(); //Hash Map that saving the region code (etc 서울, 경기도...)
     public HashMap<String, String[]> sigunguCodeHashMap = new HashMap<>(); //Hash Map that saving the 시,군,구 code(etc 강남구, 남양주시)
 
@@ -23,7 +23,7 @@ public class GetRegionHashMap {
     private int[] codeArr = new int[17]; //Saves the integer of areaCode
 
 
-    public GetRegionHashMap() { } //constructor
+    public GetRegionCodeHashMap() { } //constructor
 
     public String getSearchType() {
         return this.searchType;
@@ -38,7 +38,7 @@ public class GetRegionHashMap {
     }
 
     public void setURL() {
-        this.urlText = new MakeURL(this).integrateURL(0); //object of MakeURL.interagetURL()
+        this.urlText = new GetURL(this).integrateURL(0); //object of GetURL.interagetURL()
     }
 
 
@@ -49,7 +49,7 @@ public class GetRegionHashMap {
         setOption("null"); //setting the option value for "null"
         setURL();
         try {
-            resultData = new ConnectAPI(urlText).execute().get();
+            resultData = new ConnectionAPI(urlText).execute().get();
             //Log.i("result data ::: ", resultData);
             dataParser((resultData));
         } catch (InterruptedException e) {
@@ -68,7 +68,7 @@ public class GetRegionHashMap {
         setOption("areaCode=" + region);
         setURL();
         try {
-                resultData = new ConnectAPI(urlText).execute().get();
+                resultData = new ConnectionAPI(urlText).execute().get();
                 dataParser((resultData));
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -82,7 +82,7 @@ public class GetRegionHashMap {
 //            //Log.i("option test :::", option);
 //            setURL(); //setting the option value
 //            try {
-//                resultData = new ConnectAPI(urlText).execute().get();
+//                resultData = new ConnectionAPI(urlText).execute().get();
 //                dataParser((resultData));
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.graphics.Bitmap;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -24,7 +23,7 @@ import java.util.Iterator;
 public class Recommend extends AppCompatActivity {
     final String[] contentType = {"관광지", "문화시설", "축제/공연/행사", "여행코스", "레포츠", "숙박", "쇼핑", "음식"}; //initial content type
 
-    GetRegionHashMap regionHashMap = new GetRegionHashMap(); //object of GetRegionHashMap() function
+    GetRegionCodeHashMap regionHashMap = new GetRegionCodeHashMap(); //object of GetRegionCodeHashMap() function
     RecomListViewAdapter adapter;
     ListView listview1;
     Button searchBtn, keywordBtn;
@@ -36,6 +35,7 @@ public class Recommend extends AppCompatActivity {
     ArrayAdapter<String> adapter2;
     String regionCode = new String();
     boolean check = false;
+    String contentID = "", contentTypeID = "";
     SearchHashMap hashMapSearcher;
 
     @Override
@@ -108,7 +108,6 @@ public class Recommend extends AppCompatActivity {
 
 
 
-
         // 리스트뷰 참조 및 Adapter달기
         listview1 = findViewById(R.id.recom_listview1);
 
@@ -123,7 +122,7 @@ public class Recommend extends AppCompatActivity {
                 region = (String) regionList.getSelectedItem();
                 sigungu = (String) sigunguList.getSelectedItem();
 
-                RegionSearch tour = new RegionSearch(region, sigungu, regionHashMap); // object of RegionSearch class
+                RegionSearching tour = new RegionSearching(region, sigungu, regionHashMap); // object of RegionSearching class
                 tour.main();
 
                 // Set result text
@@ -146,11 +145,12 @@ public class Recommend extends AppCompatActivity {
                     title = tour.tourList.get(key)[6];
                     imgId = classification(tour.tourList.get(key)[1]);
                     //adapter.addItem(tour.tourList.get(key)[2],title);
-                    adapter.addItem(imgId, title, addr, infoText);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
+                    adapter.addItem(imgId, key, tour.tourList.get(key)[1],title, addr, infoText);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
                     adapter.notifyDataSetChanged();
                 }
             }
         });
+
 
         //////////////// set the result when user search keyword //////////////////
         keywordEditText = (EditText) findViewById(R.id.keywordEdit);
@@ -166,7 +166,7 @@ public class Recommend extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                 }
 
-                KeywordSearch tour2 = new KeywordSearch(keyword);
+                KeywordSearching tour2 = new KeywordSearching(keyword);
                 tour2.main();
                 // Set result text
                 Iterator<String> iterator4 = tour2.tourList.keySet().iterator();
@@ -174,6 +174,8 @@ public class Recommend extends AppCompatActivity {
                     String infoText = "";
                     String title = "";
                     String addr = "";
+
+
                     int imgId = 0;
 
                     String key = (String) iterator4.next();
@@ -181,13 +183,14 @@ public class Recommend extends AppCompatActivity {
                     infoText += "\n주소 : " + tour2.tourList.get(key)[0] +
                             " \n좌표 X : " + tour2.tourList.get(key)[3] +
                             "   좌표 Y : " + tour2.tourList.get(key)[4] +
-                            "\ntel : " + tour2.tourList.get(key)[5];
+                            "\ntel : " + tour2.tourList.get(key)[5] +"\n";
 
                     addr = tour2.tourList.get(key)[0];
                     title = tour2.tourList.get(key)[6];
                     imgId = classification(tour2.tourList.get(key)[1]);
                     //adapter.addItem(tour.tourList.get(key)[2],title);
-                    adapter.addItem(imgId, title, addr, infoText);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
+
+                    adapter.addItem(imgId, key, tour2.tourList.get(key)[1], title, addr, infoText);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
                     adapter.notifyDataSetChanged();
                 }
                 // --------------------------------------------- //
@@ -199,9 +202,23 @@ public class Recommend extends AppCompatActivity {
         listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
-                RecomListViewItem item = (RecomListViewItem) new RecomListViewAdapter().getItem(position); //여기가 내가 누른 리스트뷰가 어떤 건지 확인하는건데 주석 풀면 오류남... 왜 인지는 모르겟...ㅎ.ㅎ 미안.....
+                RecomListViewItem item = (RecomListViewItem) new RecomListViewAdapter().getItem(position);
+
+                GetDetailInfo getDetailInfo = new GetDetailInfo(item.getContentID(), item.getContentTypeID());
+                getDetailInfo.main();
+
+                String message= item.getInfo()+"\n";
+
+                Iterator<String> iterator = getDetailInfo.detailInfoHashMap.keySet().iterator();
+                while (iterator.hasNext()) {
+                    String key = (String) iterator.next();
+                    message += key + getDetailInfo.detailInfoHashMap.get(key) + "\n";
+                    Log.i("TEST***** :", key);
+
+                }
+
                 builder.setTitle("세부 정보")
-                        .setMessage(item.getInfo()) //정보 넣는 부분인데, 내 생각에는 정보도 어뎁터로 넘어가서 item.getInfo 같이 불러와야 될듯? RecomListViewItem에 추가해야함
+                        .setMessage(message) //정보 넣는 부분인데, 내 생각에는 정보도 어뎁터로 넘어가서 item.getInfo 같이 불러와야 될듯? RecomListViewItem에 추가해야함
                         .setCancelable(false)
                         .setPositiveButton("여기갈랭!", new DialogInterface.OnClickListener() {
                             @Override
@@ -226,32 +243,31 @@ public class Recommend extends AppCompatActivity {
     // Input : integer content type formed string //
     // Output : String content type formed string //
     public int classification(String content) {
-        int contentID = Integer.parseInt(content);
         int temp = 0;
 
-        switch (contentID) {
-            case 12:
+        switch (content) {
+            case "12":
                 temp = R.drawable.attraction;//관광지
                 break;
-            case 14:
+            case "14":
                 temp = R.drawable.culture; //문화시설
                 break;
-            case 15:
+            case "15":
                 temp = R.drawable.festival; //축제,공연,행사
                 break;
-            case 25:
+            case "25":
                 temp = R.drawable.travel; //여행코스
                 break;
-            case 28:
+            case "28":
                 temp = R.drawable.leisure; //레포츠
                 break;
-            case 32:
+            case "32":
                 temp = R.drawable.hotel; //숙박
                 break;
-            case 38:
+            case "38":
                 temp = R.drawable.shopping; //쇼핑
                 break;
-            case 39:
+            case "39":
                 temp = R.drawable.restaurant; //음식
                 break;
         }

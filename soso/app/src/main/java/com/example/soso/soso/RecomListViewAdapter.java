@@ -96,12 +96,14 @@ public class RecomListViewAdapter extends BaseAdapter{
      item.setText(text);
      recomlistViewItemList.add(item);
      }*/
-    public void addItem(int img, String name,String address, String info){
+    public void addItem(int img, String contentID, String contentTypeID, String name,String address, String info){
         RecomListViewItem item = new RecomListViewItem();
         item.setName(name);
         item.setAddress(address);
         item.setImgId(img);
         item.setInfo(info);
+        item.setContentID(contentID);
+        item.setContentTypeID(contentTypeID);
         recomlistViewItemList.add(item);
     }
 

@@ -9,9 +9,9 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 //Description : Search the specific region's tour data and save the hash map//
-public class RegionSearch {
+public class RegionSearching {
     private String region = "", sigungu = ""; //String value region, sigungu that user's selected
-    private GetRegionHashMap regionCodeHashMap; //class object of GetRegionHashMap
+    private GetRegionCodeHashMap regionCodeHashMap; //class object of GetRegionCodeHashMap
     private final String searchType = "areaBasedList";
     private String areaCode = "", sigunguCode = "";
     private String urlText = "";
@@ -20,7 +20,7 @@ public class RegionSearch {
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
 
-    public RegionSearch(String region, String sigungu, GetRegionHashMap regionCode) { //constructor
+    public RegionSearching(String region, String sigungu, GetRegionCodeHashMap regionCode) { //constructor
         this.region = region;
         this.sigungu = sigungu;
         this.regionCodeHashMap = regionCode;
@@ -49,11 +49,11 @@ public class RegionSearch {
         return this.sigunguCode;
     }
 
-    // Description : bring the URL from MakeURL class //
+    // Description : bring the URL from GetURL class //
     // Input : none //
     // Output : none //
     public void setURL() {
-        this.urlText = new MakeURL(this).integrateURL(1);
+        this.urlText = new GetURL(this).integrateURL(1);
     }
 
     // Description : find the region, singungu code //
@@ -103,21 +103,14 @@ public class RegionSearch {
                 JSONObject jObject = jarray.getJSONObject(i);
 
                 System.out.println(jObject);
-                addr = jObject.optString("addr1");
-                tourInfo[0] = addr;
+                tourInfo[0] = jObject.optString("addr1");
                 ID = jObject.optString("contentid");
-                typeID = jObject.optString("contenttypeid");
-                tourInfo[1] = typeID;
-                img = jObject.optString("firstimage");
-                tourInfo[2] = img;
-                mapX = jObject.optString("mapx");
-                tourInfo[3] = mapX;
-                mapY = jObject.optString("mapy");
-                tourInfo[4] = mapY;
-                tel = jObject.optString("tel");
-                tourInfo[5] = tel;
-                title = jObject.optString("title");
-                tourInfo[6] = title;
+                tourInfo[1] = jObject.optString("contenttypeid");
+                tourInfo[2] = jObject.optString("firstimage");
+                tourInfo[3] = jObject.optString("mapx");
+                tourInfo[4] = jObject.optString("mapy");
+                tourInfo[5] = jObject.optString("tel");
+                tourInfo[6] = jObject.optString("title");
 
                 tourList.put(ID,tourInfo); //add to tour list data
                 //System.out.println(jObject);
@@ -136,7 +129,7 @@ public class RegionSearch {
         searchRegionCode();
         setURL();
         try {
-            resultData = new ConnectAPI(urlText).execute().get();
+            resultData = new ConnectionAPI(urlText).execute().get();
             dataParser((resultData));
         } catch (InterruptedException e) {
             e.printStackTrace();

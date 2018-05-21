@@ -12,12 +12,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 // Description : connecting the API server and bring the data from API database
-public class ConnectAPI extends AsyncTask<String, Void, String> {
+public class ConnectionAPI extends AsyncTask<String, Void, String> {
     private String url; //String value for URL
     private String str, receiveMsg;
 
     // constructor //
-    public ConnectAPI(String urlText){
+    public ConnectionAPI(String urlText){
         this.url = urlText;
     }
 
