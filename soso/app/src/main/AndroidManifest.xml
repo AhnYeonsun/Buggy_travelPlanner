@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden">
         //액티비티 실행시 EditText에 키보드 자동 실행되는것 막기
-        <activity android:name=".Home">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,11 @@
         <activity android:name=".AddPlan" />
         <activity android:name=".Checklist" />
         <activity android:name=".Recommend" />
-        <activity android:name=".PlanDetail"></activity>
+        <activity android:name=".PlanDetail" />
+        <activity android:name=".SetDetail"/>
+        <activity android:name=".joinActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".Home"/>
     </application>
 
 </manifest>
