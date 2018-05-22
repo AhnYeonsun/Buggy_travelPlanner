@@ -53,24 +53,24 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         deleteBtn=convertView.findViewById(R.id.deletebtn);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = listViewItemList.get(position);
+        final ListViewItem listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         itemListView.setText(listViewItem.getText());
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builder.setTitle("삭제ㄱ?")
-                        .setMessage("삭제 할랭 안할랭?")
+                builder.setTitle("체크리스트에서 빼기")
+                        .setMessage(listViewItem.getText().toString()+"을/를 안가져갈래요?")
                         .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("할랭", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("뺄래요", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 listViewItemList.remove(position);
                                 notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("삭제안행", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("가져가요!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();

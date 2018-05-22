@@ -21,16 +21,18 @@ public class PlanDetail extends AppCompatActivity {
 
     ExpandableListView elv;
     DetailedPlanAdapter adapter;
-    int num=5; //AddPlan에서 가져올부분임.(날짜 차이)
+    int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
-
+        Intent intent = getIntent();
+        String numStr = intent.getStringExtra("date");
+        num=Integer.parseInt(numStr);
         arrayList = new ArrayList<>();
         //여행일수만큼 groupitem 생성
-        for(int i=0;i<num;i++)
+        for(int i=0;i<num+1;i++)//+1해줘야지 마지막날까지 나옴
         {
             String s = String.valueOf(i+1);
             arrayList.add(new GroupItem(s+"일차"));

@@ -1,12 +1,15 @@
 package com.example.soso.soso;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -28,11 +31,13 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private EditText inputEmail;
     private EditText inputPw;
-
+    LinearLayout loginlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE); //액션바 없애기 꼭 이 위치에!!
         setContentView(R.layout.activity_login);
+
         FirebaseApp.initializeApp(this);
         userDatabase = FirebaseDatabase.getInstance().getReference();
         //infoDatabase = userDatabase.child("Users").child("Info");
@@ -98,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //join button
         joinBtn = (Button)findViewById(R.id.joinBtn);
+        joinBtn.setPaintFlags(joinBtn.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         joinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

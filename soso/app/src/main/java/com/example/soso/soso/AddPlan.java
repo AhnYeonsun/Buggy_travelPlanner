@@ -29,10 +29,8 @@ public class AddPlan extends AppCompatActivity {
     Button next;
     String startDate = "", endDate="", plan, temp1, temp2;
     DatePickerDialog datePickerDialog;
-    long diff, diffDays;
-    Button temp;
-    TextView hi;
 
+    private long calDateDays;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +43,6 @@ public class AddPlan extends AppCompatActivity {
         cal_last = findViewById(R.id.cal_last);
         plan_name = findViewById(R.id.plan_name);
         next = findViewById(R.id.next);
-
-        temp=findViewById(R.id.temp);
-        hi=findViewById(R.id.hi);
 
         plan = plan_name.getText().toString();
 
@@ -129,20 +124,13 @@ public class AddPlan extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                doDifferent();
                 Intent intent = new Intent(getApplicationContext(), PlanDetail.class);
+                intent.putExtra("date",String.valueOf(calDateDays));
                 startActivity(intent);
             }
         });
 
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                hi.setText(date_first.getText().toString());
-                doDifferent();
-                //String t = Long.toString(diffDays);
-                //hi.setText(t);
-            }
-        });
 
     }
 
@@ -167,10 +155,10 @@ public class AddPlan extends AppCompatActivity {
 
             // Date.getTime() 은 해당날짜를 기준으로 1970년 00:00:00 부터 몇 초가 흘렀는지를 반환해준다.
             // 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
-            long calDateDays = calDate / ( 24*60*60*1000);
+            calDateDays = calDate / ( 24*60*60*1000);
             calDateDays = Math.abs(calDateDays);
 
-            hi.setText(String.valueOf(calDateDays)); //+1ㅎㅐ줘야지 됨
+            //hi.setText(String.valueOf(calDateDays)); //+1ㅎㅐ줘야지 됨
         }
         catch(ParseException ex)
         {
