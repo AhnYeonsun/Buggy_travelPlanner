@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 //Description : Search the specific region's tour data and save the hash map//
-public class RegionSearching {
+public class Finding_AreaCode {
     private String region = "", sigungu = ""; //String value region, sigungu that user's selected
     private GetRegionCodeHashMap regionCodeHashMap; //class object of GetRegionCodeHashMap
     private final String searchType = "areaBasedList";
@@ -20,7 +20,7 @@ public class RegionSearching {
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
 
-    public RegionSearching(String region, String sigungu, GetRegionCodeHashMap regionCode) { //constructor
+    public Finding_AreaCode(String region, String sigungu, GetRegionCodeHashMap regionCode) { //constructor
         this.region = region;
         this.sigungu = sigungu;
         this.regionCodeHashMap = regionCode;
