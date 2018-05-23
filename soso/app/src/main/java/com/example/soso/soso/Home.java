@@ -5,11 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class Home extends AppCompatActivity {
-    Button addPlanBtn;
-    Button checklistBtn;
-    Button recommendBtn;
+    ImageButton addPlanBtn;
+    ImageButton checklistBtn;
+    ImageButton recommendBtn;
+    ImageButton settingBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,7 @@ public class Home extends AppCompatActivity {
         addPlanBtn=findViewById(R.id.addplanBtn);
         checklistBtn=findViewById(R.id.checklistBtn);
         recommendBtn=findViewById(R.id.recommendBtn);
+        settingBtn=findViewById(R.id.settingBtn);
 
         addPlanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
