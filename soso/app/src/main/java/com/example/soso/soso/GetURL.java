@@ -13,19 +13,19 @@ public class GetURL {
 
     private String searchType = "", option = "", keyword = "", contentID = "", contentTypeID = "";
     private String regionCode = "", sigunguCode="";
-    GetRegionCodeHashMap rhm; //object of GetRegionCodeHashMap class
-    Finding_AreaCode rs; //object of Finding_AreaCode class
+    GetArea rhm; //object of GetArea class
+    Searching_basedRegion rs; //object of Searching_basedRegion class
     KeywordSearching ks; //object of KeywordSearching class
     GetDetailInfo GDI; //object of GetDetailInfo class
     //getInformation gi; //object of getInformation class
 
-    public GetURL(GetRegionCodeHashMap ob1){
+    public GetURL(GetArea ob1){
         rhm = ob1;
-    } //constructor for GetRegionCodeHashMap class
+    } //constructor for GetArea class
 
-    public GetURL(Finding_AreaCode rs){
+    public GetURL(Searching_basedRegion rs){
         this.rs = rs;
-    } //construct for Finding_AreaCode class
+    } //construct for Searching_basedRegion class
 
     public GetURL(KeywordSearching ks){this.ks = ks;} //construct for KeywordSearching class
 
@@ -39,7 +39,7 @@ public class GetURL {
         String urlText = "";
 
         try {
-            if(i==0) { //called GetRegionCodeHashMap class
+            if(i==0) { //called GetArea class
                 searchType = rhm.getSearchType();
                 option = rhm.getOption();
                 //Log.i("searchType Test :::", searchType);
@@ -51,7 +51,7 @@ public class GetURL {
 
                 urlText = url.toString();
             }
-            else if(i==1){ //called Finding_AreaCode class
+            else if(i==1){ //called Searching_basedRegion class
                 searchType = rs.getSearchType();
                 regionCode = rs.getAreaCode();
                 sigunguCode = rs.getSigunguCode();
@@ -61,7 +61,7 @@ public class GetURL {
                         "?ServiceKey=" + serviceKey +
                         "&" + "areaCode=" + regionCode+
                         "&" + "sigunguCode=" + sigunguCode +
-                        "&numOfRows=40&pageNo=1"+setting);
+                        "&numOfRows=10&pageNo=1"+setting);
 
                 urlText = url.toString();
             }

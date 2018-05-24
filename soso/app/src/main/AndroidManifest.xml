@@ -25,10 +25,14 @@
         <activity android:name=".Checklist" />
         <activity android:name=".Recommend" />
         <activity android:name=".PlanDetail" />
-        <activity android:name=".SetDetail"/>
-        <activity android:name=".joinActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".Home"/>
+        <activity android:name=".SetDetail" />
+        <activity android:name=".joinActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Home" />
+        <activity
+            android:name=".fragment_Recommend"
+            android:label="@string/title_activity_fragment__search_result"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -43,11 +43,9 @@ public class Home extends AppCompatActivity {
         recommendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Recommend.class);
+                Intent intent = new Intent(getApplicationContext(), fragment_Recommend.class);
                 startActivity(intent);
             }
         });
-
-
     }
 }

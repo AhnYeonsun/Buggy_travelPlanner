@@ -49,6 +49,10 @@ public class RecomListViewAdapter extends BaseAdapter{
 
     public RecomListViewAdapter(){}
     public RecomListViewAdapter(Context c) { }
+
+    public RecomListViewAdapter(Fragment_Recom_AllResult fragment_recom_allResult) {
+    }
+
     @Override
     public int getCount() {
         return recomlistViewItemList.size();

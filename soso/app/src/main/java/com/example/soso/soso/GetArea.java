@@ -12,9 +12,9 @@ import java.util.concurrent.ExecutionException;
 
 // Description : Get region codes and save to hash map class //
 
-public class GetRegionCodeHashMap {
-    public HashMap<String, String> regionCodeHashMap = new HashMap<>(); //Hash Map that saving the region code (etc 서울, 경기도...)
-    public HashMap<String, String[]> sigunguCodeHashMap = new HashMap<>(); //Hash Map that saving the 시,군,구 code(etc 강남구, 남양주시)
+public class GetArea {
+    public HashMap<String, String> regionHashMap = new HashMap<>(); //Hash Map that saving the region code (etc 서울, 경기도...)
+    public HashMap<String, String[]> sigunguHashMap = new HashMap<>(); //Hash Map that saving the 시,군,구 code(etc 강남구, 남양주시)
 
     final private String searchType = "areaCode";
     private String option = "null"; //For sigunguCode searching option. Will saves the areaCode
@@ -23,7 +23,7 @@ public class GetRegionCodeHashMap {
     private int[] codeArr = new int[17]; //Saves the integer of areaCode
 
 
-    public GetRegionCodeHashMap() { } //constructor
+    public GetArea() { } //constructor
 
     public String getSearchType() {
         return this.searchType;
@@ -62,7 +62,7 @@ public class GetRegionCodeHashMap {
 
     // Description : get sigungu code function. //
     public void getSigunguCode(String region) {
-        Iterator<String> iterator = regionCodeHashMap.keySet().iterator(); //iterator for regionCodeHashMap
+        Iterator<String> iterator = regionHashMap.keySet().iterator(); //iterator for regionCodeHashMap
         String resultData = ""; //string value for saving the data
 
         setOption("areaCode=" + region);
@@ -120,7 +120,7 @@ public class GetRegionCodeHashMap {
 
                 //Get the region code//
                 if(getOption().equals("null")) {
-                    regionCodeHashMap.put(name, code); //add data to hash map
+                    regionHashMap.put(name, code); //add data to hash map
                     codeArr[i] = Integer.parseInt(code); //put the region code data(integer) to codeArr
                     Log.i("codeArr test ::: ", name);
                 }
@@ -128,7 +128,7 @@ public class GetRegionCodeHashMap {
                     hashValue[0] = option;
                     hashValue[1] = code;
                     Log.i("CODE test :::", name);
-                    sigunguCodeHashMap.put(name,hashValue); //add data to hash map
+                    sigunguHashMap.put(name,hashValue); //add data to hash map
                 }
             }
         } catch (JSONException e) {
