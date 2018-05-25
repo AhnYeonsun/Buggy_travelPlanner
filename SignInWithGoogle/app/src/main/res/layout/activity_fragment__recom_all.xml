@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment_tourspot">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -14,7 +13,7 @@
         android:background="@drawable/border">
 
         <ListView
-            android:id="@+id/recom_tourspot"
+            android:id="@+id/recom_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/SeSSapGreen"
@@ -25,3 +24,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

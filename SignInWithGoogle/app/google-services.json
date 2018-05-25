@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:317828596958:android:42309282983ec0a3",
+        "mobilesdk_app_id": "1:317828596958:android:e4d3c0b920274572",
         "android_client_info": {
-          "package_name": "com.example.ahn.loginwithgoogle"
+          "package_name": "com.example.ahn.signinwithgoogle"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "317828596958-mdpkedh2ql2kuk56sm8a0jk0n8cqiagr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ahn.signinwithgoogle",
+            "certificate_hash": "894ee17dc6233afd8a1bd4af43ef580e8abe5f2a"
+          }
+        },
         {
           "client_id": "317828596958-k07j1nk99alj0sodnlp83h853i78s9jc.apps.googleusercontent.com",
           "client_type": 3
@@ -33,8 +41,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317828596958-k07j1nk99alj0sodnlp83h853i78s9jc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
@@ -43,18 +56,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:317828596958:android:e4d3c0b920274572",
+        "mobilesdk_app_id": "1:317828596958:android:1f9a067e759e51cf",
         "android_client_info": {
-          "package_name": "com.example.ahn.signinwithgoogle"
+          "package_name": "com.example.ahn.signwithgoogle"
         }
       },
       "oauth_client": [
         {
-          "client_id": "317828596958-mdpkedh2ql2kuk56sm8a0jk0n8cqiagr.apps.googleusercontent.com",
+          "client_id": "317828596958-ks9f6gf1k3d0tj8rur2ruhg9ghs6ll8j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.ahn.signinwithgoogle",
-            "certificate_hash": "894ee17dc6233afd8a1bd4af43ef580e8abe5f2a"
+            "package_name": "com.example.ahn.signwithgoogle",
+            "certificate_hash": "71dd117c8fa334169eb8a73e47d8915cbe42c2ca"
           }
         },
         {

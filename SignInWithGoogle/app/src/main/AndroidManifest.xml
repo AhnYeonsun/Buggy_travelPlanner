@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ahn.signinwithgoogle">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -26,7 +28,14 @@
         <activity
             android:name=".fragment_Recommend"
             android:label="@string/title_activity_fragment__search_result"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".fragment_recom_cultural" />
+        <activity android:name=".fragment_recom_event" />
+        <activity android:name=".fragment_recom_course" />
+        <activity android:name=".fragment_recom_leports" />
+        <activity android:name=".fragment_recom_accom" />
+        <activity android:name=".fragment_recom_shopping" />
+        <activity android:name=".fragment_recom_food"></activity>
     </application>
 
 </manifest>

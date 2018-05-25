@@ -13,7 +13,7 @@
         android:background="@drawable/border">
 
         <ListView
-            android:id="@+id/recom_listview1"
+            android:id="@+id/recom_cultural"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@color/SeSSapGreen"
@@ -24,4 +24,3 @@
     </LinearLayout>
 
 </LinearLayout>
-

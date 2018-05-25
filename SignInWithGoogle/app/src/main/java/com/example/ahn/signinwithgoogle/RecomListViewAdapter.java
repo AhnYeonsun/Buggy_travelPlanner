@@ -46,7 +46,7 @@ public class RecomListViewAdapter extends BaseAdapter{
     
     @Override
     public Object getItem(int position) {
-        System.out.println("************* : " + position);
+        System.out.println("************* : " + recomlistViewItemList.get(position));
         return recomlistViewItemList.get(position);
     }
     
@@ -96,7 +96,7 @@ public class RecomListViewAdapter extends BaseAdapter{
         item.setContentTypeID(contentTypeID);
         item.setMapX(mapX);
         item.setMapY(mapY);
-        item.setMainImg(imgURL);
+        //item.setMainImg(imgURL);
         recomlistViewItemList.add(item);
     }
 

@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -164,64 +163,54 @@ public class fragment_Recommend extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             Bundle bundle = new Bundle(1);
 
-            System.out.println("PLISISISISI :::::" + position);
-//            contentTypeID = "";
-//            Log.d("PPPPPPP ::::::", contentTypeID);
-//            fragment_all FA = new fragment_all();
-//            bundle.putString("contentTypeID", contentTypeID);
-//            FA.setArguments(bundle);
-//            return FA;
             contentTypeID = "";
             switch (position) {
                 case 0:
                     contentTypeID = "";
-                    Log.d("PPPPPPP ::::::", "All"+contentTypeID);
-                    fragment_all FA = new fragment_all();
+                    fragment_Recom_all FA = new fragment_Recom_all();
                     bundle.putString("contentTypeID", "");
                     FA.setArguments(bundle);
                     return FA;
                 case 1:
                     contentTypeID = "12";
-                    Log.d("PPPPPPP ::::::", "Tour"+contentTypeID);
-                    fragment_tourspot FT = new fragment_tourspot();
+                    fragment_Recom_tourspot FT = new fragment_Recom_tourspot();
                     bundle.putString("contentTypeID", "12");
                     FT.setArguments(bundle);
                     return FT;
                 case 2:
                     contentTypeID = "14";
-                    Log.d("PPPPPPP ::::::", "CULTURAL");
-                    fragment_tourspot FG = new fragment_tourspot();
+                    fragment_Recom_tourspot FG = new fragment_Recom_tourspot();
                     bundle.putString("contentTypeID", contentTypeID);
                     FG.setArguments(bundle);
                     return FG;
-                default:
-                    return null;
-                /*
                 case 3:
                     contentTypeID = "15";
-                    Log.d("PPPPPPP ::::::", "EVENT");
-                    break;
+                    fragment_recom_accom FC = new fragment_recom_accom();
+                    bundle.putString("contentTypeID", contentTypeID);
+                    FC.setArguments(bundle);
+                    return FC;
                 case 4:
                     contentTypeID = "25";
-                    Log.d("PPPPPPP ::::::", "COURSE");
+
                     break;
                 case 5:
                     contentTypeID = "28";
-                    Log.d("PPPPPPP ::::::", "LEPORTS");
+
                     break;
                 case 6:
                     contentTypeID = "32";
-                    Log.d("PPPPPPP ::::::", "TOUR");
+
                     break;
                 case 7:
                     contentTypeID = "38";
-                    Log.d("PPPPPPP ::::::", "SHOPPING");
+
                     break;
                 case 8:
                     contentTypeID = "39";
-                    Log.d("PPPPPPP ::::::", "FOOD");
-                    break;*/
+
+                    break;
             }
+            return null;
         }
 
         @Override
@@ -232,7 +221,7 @@ public class fragment_Recommend extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 4;
         }
 
         @Override
@@ -244,8 +233,6 @@ public class fragment_Recommend extends AppCompatActivity {
                     return "Tour spot";
                 case 2:
                     return "Cultural facility";
-
-                    /*
                 case 3:
                     return "Tour spot";
                 case 4:
@@ -257,7 +244,7 @@ public class fragment_Recommend extends AppCompatActivity {
                 case 7:
                     return "Accommodation";
                 case 8:
-                    return "Shopping";*/
+                    return "Shopping";
                 default:
                     return null;
             }
