@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 //Description : Search the specific region's tour data and save the hash map//
 public class Searching_basedRegion {
-    private String region = "", sigungu = ""; //String value region, sigungu that user's selected
+    private String region = "", sigungu = "", contentTypeID = ""; //String value region, sigungu that user's selected
     private GetArea regionCodeO; //class object of GetArea
     private final String searchType = "areaBasedList";
     private String areaCode = "", sigunguCode = "";
@@ -22,10 +22,12 @@ public class Searching_basedRegion {
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
 
-    public Searching_basedRegion(String region, String sigungu, GetArea regionCode) { //constructor
+    public Searching_basedRegion(String region, String sigungu, String contentTypeID, GetArea regionCode, HashMap<String, String[]> hashmap) { //constructor
         this.region = region;
         this.sigungu = sigungu;
+        this.contentTypeID = contentTypeID;
         this.regionCodeO = regionCode;
+        this.tourList = hashmap;
     }
 
     // Description : return the search type for make URL //
@@ -49,6 +51,8 @@ public class Searching_basedRegion {
         return this.sigunguCode;
     }
 
+    public String getContentTypeID(){return this.contentTypeID;}
+
     // Description : bring the URL from GetURL class //
     // Input : none //
     // Output : none //
@@ -69,7 +73,6 @@ public class Searching_basedRegion {
             //System.out.println("Key test :::: "+this.region);
             if (key.equals(this.region)) {
                 areaCode = regionCodeO.regionHashMap.get(key);
-                Log.i("TTTTTTTTT ", regionCodeO.regionHashMap.get(key));
                 break;
             }
         }

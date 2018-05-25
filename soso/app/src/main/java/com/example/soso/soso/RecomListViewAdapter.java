@@ -4,33 +4,16 @@ package com.example.soso.soso;
  * Created by SOSO on 2018-05-14.
  */
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import static java.util.Arrays.*;
 
 
 /**
@@ -38,7 +21,7 @@ import static java.util.Arrays.*;
  */
 
 public class RecomListViewAdapter extends BaseAdapter{
-    private static ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
+    ArrayList<RecomListViewItem> recomlistViewItemList;// =new ArrayList<RecomListViewItem>();
     ImageView iconImageView;
     TextView titleView;
     TextView addressView;
@@ -50,8 +33,10 @@ public class RecomListViewAdapter extends BaseAdapter{
     public RecomListViewAdapter(){}
     public RecomListViewAdapter(Context c) { }
 
-    public RecomListViewAdapter(Fragment_Recom_AllResult fragment_recom_allResult) {
+    public RecomListViewAdapter(ArrayList<RecomListViewItem> recomListViewAdapterArrayList) {
+        recomlistViewItemList = recomListViewAdapterArrayList;
     }
+
 
     @Override
     public int getCount() {
@@ -102,6 +87,7 @@ public class RecomListViewAdapter extends BaseAdapter{
      }*/
     public void addItem(int img, String contentID, String contentTypeID, String name,String address, String mapX, String mapY, String imgURL){
         RecomListViewItem item = new RecomListViewItem();
+     Log.d("hoohohoho",name);
         item.setName(name);
         item.setAddress(address);
         item.setImgId(img);
@@ -112,6 +98,7 @@ public class RecomListViewAdapter extends BaseAdapter{
         item.setMainImg(imgURL);
         recomlistViewItemList.add(item);
     }
+
 
     public void clear(){
         recomlistViewItemList.clear();

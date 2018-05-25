@@ -42,7 +42,7 @@ public class GetURL {
             if(i==0) { //called GetArea class
                 searchType = rhm.getSearchType();
                 option = rhm.getOption();
-                //Log.i("searchType Test :::", searchType);
+
                 URL url = new URL(endPoint +
                         searchType +
                         "?ServiceKey=" + serviceKey +
@@ -55,13 +55,15 @@ public class GetURL {
                 searchType = rs.getSearchType();
                 regionCode = rs.getAreaCode();
                 sigunguCode = rs.getSigunguCode();
-                //Log.i("searchType Test :::", searchType);
+                contentTypeID = rs.getContentTypeID();
+
                 URL url = new URL(endPoint +
                         searchType +
                         "?ServiceKey=" + serviceKey +
+                        "&" + "contentTypeId="+contentTypeID+
                         "&" + "areaCode=" + regionCode+
                         "&" + "sigunguCode=" + sigunguCode +
-                        "&numOfRows=10&pageNo=1"+setting);
+                        "&numOfRows=30&pageNo=1"+setting);
 
                 urlText = url.toString();
             }

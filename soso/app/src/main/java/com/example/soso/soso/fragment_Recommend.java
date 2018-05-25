@@ -1,9 +1,9 @@
 package com.example.soso.soso;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +17,7 @@ import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -30,9 +30,8 @@ public class fragment_Recommend extends AppCompatActivity {
 
     GetArea getArea = new GetArea(); //object of GetArea() function
     Spinner regionSpinnerList, sigunguSpinnerList;
-
-    String region = "", sigungu = "";
-    EditText keywordEditText;
+    Button searchBtn;
+    String region = "", sigungu = "", contentTypeID = "";
     AlertDialog.Builder builder;
     ArrayList<String> regionList, sigunguList;
     ArrayAdapter<String> regionSpinnerAdapter, sigunguSpinnerAdapter;
@@ -46,22 +45,10 @@ public class fragment_Recommend extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_recommend);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
-
-        builder = new AlertDialog.Builder(this);
         getArea.getRegionCode();
 
         // ******* 지역 스피너 리스트 세팅********* //
@@ -93,7 +80,6 @@ public class fragment_Recommend extends AppCompatActivity {
                     sigunguSpinnerList.setAdapter(sigunguSpinnerAdapter);
                     getArea.sigunguHashMap.clear();
                     regionCode = new SearchHashMap(getArea.regionHashMap, parent.getItemAtPosition(position).toString()).searching();
-                    Log.d("ZZZZZZZZZ", regionCode);
                     getArea.getSigunguCode(regionCode);
 
                     Iterator<String> iterator = getArea.sigunguHashMap.keySet().iterator();
@@ -105,13 +91,30 @@ public class fragment_Recommend extends AppCompatActivity {
                     sigunguSpinnerAdapter.notifyDataSetChanged();
                     sigunguSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     // ****************************************** //
+                } else {
+                    check = true;
                 }
-                else{check = true;}
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        searchBtn = findViewById(R.id.searchBtn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set up the ViewPager with the sections adapter.
+                mViewPager = (ViewPager) findViewById(R.id.container);
+                mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+                mViewPager.setAdapter(mSectionsPagerAdapter);
+                TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+                mViewPager.setCurrentItem(1);
+                tabLayout.setupWithViewPager(mViewPager);
+            }
+        });
+
     }
 
     public String getRegionItem() {
@@ -124,6 +127,10 @@ public class fragment_Recommend extends AppCompatActivity {
 
     public GetArea getObject() {
         return getArea;
+    }
+
+    public String getContentTypeID() {
+        return contentTypeID;
     }
 
     @Override
@@ -139,7 +146,7 @@ public class fragment_Recommend extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        System.out.println("IDIDIDIDIDIID :::::" + id);
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -158,17 +165,105 @@ public class fragment_Recommend extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            Bundle bundle = new Bundle(1);
+
+            System.out.println("PLISISISISI :::::" + position);
+//            contentTypeID = "";
+//            Log.d("PPPPPPP ::::::", contentTypeID);
+//            fragment_all FA = new fragment_all();
+//            bundle.putString("contentTypeID", contentTypeID);
+//            FA.setArguments(bundle);
+//            return FA;
+            contentTypeID = "";
             switch (position) {
                 case 0:
-                    return new Fragment_Recom_AllResult();
+                    contentTypeID = "";
+                    Log.d("PPPPPPP ::::::", "All"+contentTypeID);
+                    fragment_all FA = new fragment_all();
+                    bundle.putString("contentTypeID", "");
+                    FA.setArguments(bundle);
+                    return FA;
+                case 1:
+                    contentTypeID = "12";
+                    Log.d("PPPPPPP ::::::", "Tour"+contentTypeID);
+                    fragment_tourspot FT = new fragment_tourspot();
+                    bundle.putString("contentTypeID", "12");
+                    FT.setArguments(bundle);
+                    return FT;
+                case 2:
+                    contentTypeID = "14";
+                    Log.d("PPPPPPP ::::::", "CULTURAL");
+                    fragment_tourspot FG = new fragment_tourspot();
+                    bundle.putString("contentTypeID", contentTypeID);
+                    FG.setArguments(bundle);
+                    return FG;
+                default:
+                    return null;
+                /*
+                case 3:
+                    contentTypeID = "15";
+                    Log.d("PPPPPPP ::::::", "EVENT");
+                    break;
+                case 4:
+                    contentTypeID = "25";
+                    Log.d("PPPPPPP ::::::", "COURSE");
+                    break;
+                case 5:
+                    contentTypeID = "28";
+                    Log.d("PPPPPPP ::::::", "LEPORTS");
+                    break;
+                case 6:
+                    contentTypeID = "32";
+                    Log.d("PPPPPPP ::::::", "TOUR");
+                    break;
+                case 7:
+                    contentTypeID = "38";
+                    Log.d("PPPPPPP ::::::", "SHOPPING");
+                    break;
+                case 8:
+                    contentTypeID = "39";
+                    Log.d("PPPPPPP ::::::", "FOOD");
+                    break;*/
             }
-            return null;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return super.getItemPosition(object);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 1;
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "All";
+                case 1:
+                    return "Tour spot";
+                case 2:
+                    return "Cultural facility";
+
+                    /*
+                case 3:
+                    return "Tour spot";
+                case 4:
+                    return "Event";
+                case 5:
+                    return "Course";
+                case 6:
+                    return "Leports";
+                case 7:
+                    return "Accommodation";
+                case 8:
+                    return "Shopping";*/
+                default:
+                    return null;
+            }
         }
     }
 }
