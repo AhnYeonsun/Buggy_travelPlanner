@@ -106,7 +106,6 @@ public class fragment_Recommend extends AppCompatActivity {
                 mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
                 mViewPager.setAdapter(mSectionsPagerAdapter);
                 TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-                mViewPager.setCurrentItem(1);
                 tabLayout.setupWithViewPager(mViewPager);
             }
         });
@@ -163,52 +162,52 @@ public class fragment_Recommend extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             Bundle bundle = new Bundle(1);
 
-            contentTypeID = "";
             switch (position) {
                 case 0:
-                    contentTypeID = "";
                     fragment_Recom_all FA = new fragment_Recom_all();
                     bundle.putString("contentTypeID", "");
                     FA.setArguments(bundle);
                     return FA;
                 case 1:
-                    contentTypeID = "12";
                     fragment_Recom_tourspot FT = new fragment_Recom_tourspot();
                     bundle.putString("contentTypeID", "12");
                     FT.setArguments(bundle);
                     return FT;
                 case 2:
-                    contentTypeID = "14";
-                    fragment_Recom_tourspot FG = new fragment_Recom_tourspot();
-                    bundle.putString("contentTypeID", contentTypeID);
-                    FG.setArguments(bundle);
-                    return FG;
+                    fragment_recom_cultural Fcul = new fragment_recom_cultural();
+                    bundle.putString("contentTypeID", "14");
+                    Fcul.setArguments(bundle);
+                    return Fcul;
                 case 3:
-                    contentTypeID = "15";
-                    fragment_recom_accom FC = new fragment_recom_accom();
-                    bundle.putString("contentTypeID", contentTypeID);
-                    FC.setArguments(bundle);
-                    return FC;
+                    fragment_recom_event Fevent = new fragment_recom_event();
+                    bundle.putString("contentTypeID", "15");
+                    Fevent.setArguments(bundle);
+                    return Fevent;
                 case 4:
-                    contentTypeID = "25";
-
-                    break;
+                    fragment_recom_course Fcourse = new fragment_recom_course();
+                    bundle.putString("contentTypeID", "25");
+                    Fcourse.setArguments(bundle);
+                    return Fcourse;
                 case 5:
-                    contentTypeID = "28";
-
-                    break;
+                    fragment_recom_leports Fleport = new fragment_recom_leports();
+                    bundle.putString("contentTypeID", "28");
+                    Fleport.setArguments(bundle);
+                    return Fleport;
                 case 6:
-                    contentTypeID = "32";
-
-                    break;
+                    fragment_recom_accom Faccom = new fragment_recom_accom();
+                    bundle.putString("contentTypeID", "32");
+                    Faccom.setArguments(bundle);
+                    return Faccom;
                 case 7:
-                    contentTypeID = "38";
-
-                    break;
+                    fragment_recom_shopping Fshopping = new fragment_recom_shopping();
+                    bundle.putString("contentTypeID", "38");
+                    Fshopping.setArguments(bundle);
+                    return Fshopping;
                 case 8:
-                    contentTypeID = "39";
-
-                    break;
+                    fragment_recom_food Ffood = new fragment_recom_food();
+                    bundle.putString("contentTypeID", "39");
+                    Ffood.setArguments(bundle);
+                    return Ffood;
             }
             return null;
         }
@@ -221,7 +220,7 @@ public class fragment_Recommend extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 9;
         }
 
         @Override
@@ -234,17 +233,17 @@ public class fragment_Recommend extends AppCompatActivity {
                 case 2:
                     return "Cultural facility";
                 case 3:
-                    return "Tour spot";
-                case 4:
                     return "Event";
-                case 5:
+                case 4:
                     return "Course";
-                case 6:
+                case 5:
                     return "Leports";
-                case 7:
+                case 6:
                     return "Accommodation";
-                case 8:
+                case 7:
                     return "Shopping";
+                case 8:
+                    return "Food";
                 default:
                     return null;
             }

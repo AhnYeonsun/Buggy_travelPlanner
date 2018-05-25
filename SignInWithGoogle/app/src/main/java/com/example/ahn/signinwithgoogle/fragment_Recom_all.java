@@ -13,11 +13,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class fragment_Recom_all extends Fragment {
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlan;
+
     View view, main;
     GetArea getArea = new GetArea(); //object of GetArea() function
     RecomListViewAdapter listViewAdapter;
@@ -116,7 +125,11 @@ bundle=getArguments();
                         .setPositiveButton("여기갈랭!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                new GetDetailInfo_addPlan(item, finalMessage); //여기서 item은 내가 선택한 관광지, finalMessage는 관광지의 디테일 정보들
+                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
+                                mAuth = FirebaseAuth.getInstance();
+                                addPlan = FirebaseDatabase.getInstance().getReference();
+                                FirebaseUser mUser = mAuth.getCurrentUser();
+                                addPlan.child("Users").child(mUser.getUid().toString()).child("TravelTemp").child(item.getContentID()).setValue(plan);
                             }
                         })
                         .setNegativeButton("안가 별루얌", new DialogInterface.OnClickListener() {
@@ -133,7 +146,11 @@ bundle=getArguments();
         });
         return view;
     }
-
+    class temp{
+        String title;
+        double mapX;
+        double mapY;
+    }
     public void view_listData() {
         // 리스트뷰 참조 및 Adapter달기
 

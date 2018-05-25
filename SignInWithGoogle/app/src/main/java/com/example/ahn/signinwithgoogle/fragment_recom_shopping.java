@@ -13,11 +13,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class fragment_recom_shopping extends android.support.v4.app.Fragment {
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlan;
+
     View view, main;
     GetArea getArea = new GetArea(); //object of GetArea() function
     RecomListViewAdapter listViewAdapter;
@@ -38,7 +46,7 @@ public class fragment_recom_shopping extends android.support.v4.app.Fragment {
     @SuppressLint("HandlerLeak")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_fragment_recom_tourspot, container, false);
+        view = inflater.inflate(R.layout.activity_fragment_recom_shopping, container, false);
         listview1 = view.findViewById(R.id.recom_shopping);
 
         //listViewAdapter = new RecomListViewAdapter(getActivity());
@@ -75,7 +83,7 @@ public class fragment_recom_shopping extends android.support.v4.app.Fragment {
             mapX = tourspot.get(key)[3];
             mapY = tourspot.get(key)[4];
             imgURL = tourspot.get(key)[2];
-            imgId = R.drawable.attraction;
+            imgId = R.drawable.shopping;
 
             listViewAdapter.addItem(imgId, key, contentTypeID, title, addr, mapX, mapY, imgURL);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
             listViewAdapter.notifyDataSetChanged();
@@ -113,8 +121,11 @@ public class fragment_recom_shopping extends android.support.v4.app.Fragment {
                         .setPositiveButton("여기갈랭!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                new GetDetailInfo_addPlan(item, finalMessage); //여기서 item은 내가 선택한 관광지, finalMessage는 관광지의 디테일 정보
-
+                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
+                                mAuth = FirebaseAuth.getInstance();
+                                addPlan = FirebaseDatabase.getInstance().getReference();
+                                FirebaseUser mUser = mAuth.getCurrentUser();
+                                addPlan.child("Users").child(mUser.getUid().toString()).child("TravelTemp").child(item.getContentID()).setValue(plan);
                             }
                         })
                         .setNegativeButton("안가 별루얌", new DialogInterface.OnClickListener() {
