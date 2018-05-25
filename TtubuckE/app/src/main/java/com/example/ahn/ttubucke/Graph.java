@@ -6,12 +6,9 @@ import java.io.InputStream;
 
 import static java.lang.Math.*;
 
-/**
- * Created by ahn on 2018-05-19.
- */
 
 public class Graph {
-
+    private int a = 1;
     private int n;           //노드들의 수
     private double maps[][];    //노드들간의 가중치 저장할 변수
 
@@ -29,7 +26,7 @@ public class Graph {
                 x2 = ((Vertex) Vertices[j]).vertexX;
                 y2 = ((Vertex) Vertices[j]).vertexY;
                 maps[i][j] = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
-                Log.d(i+" to "+j+" distance : ", String.valueOf(maps[i][j]) + "\n");
+                Log.d(i + " to " + j + " distance : ", String.valueOf(maps[i][j]) + "\n");
             }
         }
     }
@@ -40,7 +37,7 @@ public class Graph {
     public void run(int v) { //시작 노드 번호
         boolean[] check = new boolean[n];     //해당 노드를 방문했는지 체크할 변수
         double currentD;                                //총거리
-        finalDistance = 0.0;
+        finalDistance = Double.MAX_EXPONENT;
         int order[] = new int[n];
         finalOrder = new int[n];
         int count = 0;
@@ -63,9 +60,9 @@ public class Graph {
 //        for (int i=0;i<n;i++) {
 //            System.out.println("Order : " + fin.order[i]);
 //        }
-        Dijkstra(v,currentD,order,check,count);
+        Dijkstra(v, currentD, order, check, count);
         System.out.println("Final Shortest Path Distance : " + finalDistance);
-        for (int i=0;i<n;i++) {
+        for (int i = 0; i < n; i++) {
             System.out.println("Final Shortest Path Order : " + finalOrder[i]);
         }
     }
@@ -86,21 +83,38 @@ public class Graph {
     public void Dijkstra(int v, double TotalDistance, int[] order, boolean[] check, int count) {
         double[] distance = new double[n];
         //distance 초기화
-        for (int i = 0; i < n; i++) {distance[i] = Integer.MAX_VALUE;}
+        for (int i = 0; i < n; i++) {
+            distance[i] = Integer.MAX_VALUE;
+        }
         distance[v] = 0;
         //return 할 객체 생성
         //DistanceAndOrder dij = new DistanceAndOrder(TotalDistance, order);
 
-        check[v] = true; //현재 node true
-        order[count] = v; //현재 순서 저장
-        double tempD;
+//        check[v] = true; //현재 node true
+//        order[count] = v; //현재 순서 저장
 
+        int[] tempO = new int[n];
+        boolean[] tempCheck = new boolean[n];
+        for (int i = 0; i < n; i++) {
+            tempO[i] = order[i];
+            tempCheck[i] = check[i];
+        }
+
+        double tempD;
+        int tempCnt;
+        int tempV;
 
         int cnt = 0;
         for (int i = 0; i < n; i++) {
-            if (check[i]) cnt++;
+            if (tempCheck[i]) cnt++;
         }
         if (cnt == n) { //마지막까지 다 찾았을 때!
+            if (finalDistance > TotalDistance) {
+                finalDistance = TotalDistance;
+                for (int i = 0; i < n; i++) {
+                    finalOrder[i] = order[i];
+                }
+            }
             return;
         } else { //아닐 때!!
             for (int i = 0; i < n; i++) {
@@ -109,42 +123,12 @@ public class Graph {
                     //distance[i] = maps[v][i]; 필요없나??
                     //TotalDistance += maps[v][i]; 아냐.
                     tempD = TotalDistance + maps[v][i];
-                    v = i;
-                    Dijkstra(v, tempD, order, check, count++);
+                    tempV = i;
+                    tempCnt = count + 1;
+                    Dijkstra(tempV, tempD, tempO, tempCheck, tempCnt);
                 }
             }
+            return;
         }
-        return;
     }
 }
-
-
-//        //연결노드 distance갱신
-//        for (int i = 0; i < n; i++) {
-//            if (!check[i] && maps[v][i] != 0) {
-//                distance[i] = maps[v][i];
-//            }
-//        }
-//        for (int a = 0; a < n - 1; a++) {
-//            double min = Integer.MAX_VALUE;
-//            int min_index = -1;
-//
-//            //최소값 찾기
-//            for (int i = 0; i < n; i++) {
-//                if (!check[i] && distance[i] != Integer.MAX_VALUE) {
-//                    if (distance[i] < min) {
-//                        min = distance[i];
-//                        min_index = i;
-//                    }
-//                }
-//            }
-//
-//            check[min_index] = true;
-//
-//        }
-//
-//        //결과값 출력
-//        for (int i = 0; i < n; i++) {
-//            System.out.print(distance[i] + " ");
-//        }
-//        System.out.println("");

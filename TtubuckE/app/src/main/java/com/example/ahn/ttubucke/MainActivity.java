@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
 
         Object[] Vertices = new Object[5];
 
-        Vertices[0] = new Vertex(0, 3.0, 0.0);
-        Vertices[1] = new Vertex(1, 1.0, 1.0);
-        Vertices[2] = new Vertex(2, 3.0, 4.0);
-        Vertices[3] = new Vertex(3, 6.0, 2.0);
-        Vertices[4] = new Vertex(4, 1.0, 5.0);
+        Vertices[0] = new Vertex(0, 0.0, 0.0);
+        Vertices[1] = new Vertex(1, 3.0, 5.0);
+        Vertices[2] = new Vertex(2, 1.0, 1.0);
+//        Vertices[3] = new Vertex(3, 1.0, 1.0);
+//        Vertices[4] = new Vertex(4, 1.0, 5.0);
 
         //node 5개의 graph 그리기
-        Graph graph = new Graph(5);
+        Graph graph = new Graph(3);
         graph.input(Vertices);
         graph.run(0);
         //graph.dijkstra();
