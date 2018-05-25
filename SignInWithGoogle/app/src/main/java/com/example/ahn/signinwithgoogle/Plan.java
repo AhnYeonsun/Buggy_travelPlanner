@@ -1,11 +1,11 @@
 package com.example.ahn.signinwithgoogle;
 
 public class Plan {
-    String title;
-    String address;
-    double mapX;
-    double mapY;
-    String message;
+    public String title;
+    public String address;
+    public double mapX;
+    public double mapY;
+    public String message;
 
     Plan(String t, String a, double x, double y, String m){
         this.title = t;
