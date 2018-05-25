@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ahn.signinwithgoogle.AddPlan">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="3.5">
+
+        <EditText
+            android:id="@+id/plan_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#62000000"
+            android:drawableLeft="@drawable/test"
+            android:hint="   Write your new Travel name"
+            android:padding="5dp"
+            android:textColorHint="#ffffff" />
+
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/plan_name"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="8dp"
+            android:background="#62000000"
+            android:clickable="true"
+            android:drawableLeft="@drawable/test"
+            android:padding="5dp"
+            android:text="   Start Date"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/end_date"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/start_date"
+            android:layout_alignBottom="@+id/start_date"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/start_date"
+            android:background="#62000000"
+            android:clickable="true"
+            android:drawableLeft="@drawable/test"
+            android:padding="5dp"
+            android:text="   End Date"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/createBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/end_date"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:text="Create New Plan!" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_weight="6.5"
+        android:background="@drawable/border">
+
+        <ListView
+            android:id="@+id/planListview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            android:choiceMode="multipleChoice"
+            android:divider="#FFCCCC"
+            android:dividerHeight="2dp"
+            android:listSelector="#add599ff"
+            android:longClickable="true">
+        </ListView>
+    </LinearLayout>
+
+</LinearLayout>

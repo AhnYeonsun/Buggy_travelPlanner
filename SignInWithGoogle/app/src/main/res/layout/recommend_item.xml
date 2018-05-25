@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.ahn.signinwithgoogle.fragment_Recommend"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:padding="3dp"
+    android:background="#dddddd"
+    android:weightSum="10">
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_weight="7"
+    android:orientation="vertical"
+    android:weightSum="5">
+
+    <TextView
+        android:id="@+id/recommendText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:text="@string/spot_name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:padding="3dp" />
+    <TextView
+        android:id="@+id/recommendAdd"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:text="@string/info"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2dp"
+        android:background="#ffffff"
+        android:padding="3dp" />
+</LinearLayout>
+    <ImageView
+        android:id="@+id/recommendImg"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_weight="3"
+        android:src="@drawable/cat"
+        android:background="#ffffff"
+        android:layout_marginLeft="3dp"/>
+</LinearLayout>

@@ -4,7 +4,6 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_100"
     android:orientation="vertical"
     android:weightSum="4">
 
@@ -49,8 +48,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/grey_300">
+        android:layout_weight="1">
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"

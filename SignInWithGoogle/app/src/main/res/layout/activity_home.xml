@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ahn.signinwithgoogle.home">
+    android:layout_gravity="center"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.example.ahn.signinwithgoogle.Home">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="6">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/textGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="MAIN MENU"
+            android:textColor="#ffffff"
+            android:textSize="50sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/addplanBtn"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#fc6a6b"
+                    android:src="@drawable/addplan"
+                    android:text="여행계획"
+                    android:textSize="20sp"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/recommendBtn"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="#f87091"
+                    android:src="@drawable/recommend"
+                    android:text="여행 추천"
+                    android:textSize="20sp"
+                    android:scaleType="centerInside"/>
+
+            </TableRow>
+
+            <TableRow>
+
+                <ImageButton
+                    android:id="@+id/checklistBtn"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="#5f99b8"
+                    android:src="@drawable/check"
+                    android:text="체크리스트"
+                    android:textSize="20sp"
+                    android:scaleType="centerInside"/>
+
+                <ImageButton
+                    android:id="@+id/settingBtn"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="#986b9b"
+                    android:src="@drawable/setting"
+                    android:text="설정"
+                    android:textSize="20sp"
+                    android:scaleType="centerInside"
+                    />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</LinearLayout>
