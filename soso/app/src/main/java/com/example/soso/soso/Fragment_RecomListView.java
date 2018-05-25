@@ -13,18 +13,17 @@ import android.widget.ListView;
 
 import java.util.Iterator;
 
-public class Fragment_Recom_AllResult extends android.support.v4.app.Fragment {
+public class Fragment_RecomListView extends android.support.v4.app.Fragment {
     View view, main;
     GetArea getArea = new GetArea(); //object of GetArea() function
     RecomListViewAdapter listViewAdapter;
     ListView listview1;
     Button searchBtn;
-    private String region = "", sigungu = "";
+    private String region = "", sigungu = "", contentTypeID = "";
     AlertDialog.Builder builder;
-    String contentTypeID = "";
     fragment_Recommend FR;
 
-    public Fragment_Recom_AllResult(){
+    public Fragment_RecomListView(){
 
     }
 
@@ -49,8 +48,8 @@ public class Fragment_Recom_AllResult extends android.support.v4.app.Fragment {
 
                 region = FR.getRegionItem();
                 sigungu = FR.getSigunguItem();
-
-                Searching_basedRegion tour = new Searching_basedRegion(region, sigungu, getArea);
+                contentTypeID = FR.getContentTypeID();
+                Searching_basedRegion tour = new Searching_basedRegion(region, sigungu, contentTypeID, getArea);
                 tour.main();
 
                 Iterator<String> iterator3 = tour.tourList.keySet().iterator();

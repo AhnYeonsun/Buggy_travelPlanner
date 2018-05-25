@@ -4,33 +4,15 @@ package com.example.soso.soso;
  * Created by SOSO on 2018-05-14.
  */
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.Collections;
-
-import javax.net.ssl.HttpsURLConnection;
-
-import static java.util.Arrays.*;
 
 
 /**
@@ -50,7 +32,7 @@ public class RecomListViewAdapter extends BaseAdapter{
     public RecomListViewAdapter(){}
     public RecomListViewAdapter(Context c) { }
 
-    public RecomListViewAdapter(Fragment_Recom_AllResult fragment_recom_allResult) {
+    public RecomListViewAdapter(Fragment_RecomListView fragment_recom_listView) {
     }
 
     @Override

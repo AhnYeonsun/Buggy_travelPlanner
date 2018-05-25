@@ -3,21 +3,18 @@ package com.example.soso.soso;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -31,8 +28,7 @@ public class fragment_Recommend extends AppCompatActivity {
     GetArea getArea = new GetArea(); //object of GetArea() function
     Spinner regionSpinnerList, sigunguSpinnerList;
 
-    String region = "", sigungu = "";
-    EditText keywordEditText;
+    String region = "", sigungu = "", contentTypeID = "";
     AlertDialog.Builder builder;
     ArrayList<String> regionList, sigunguList;
     ArrayAdapter<String> regionSpinnerAdapter, sigunguSpinnerAdapter;
@@ -46,8 +42,8 @@ public class fragment_Recommend extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_recommend);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -93,7 +89,6 @@ public class fragment_Recommend extends AppCompatActivity {
                     sigunguSpinnerList.setAdapter(sigunguSpinnerAdapter);
                     getArea.sigunguHashMap.clear();
                     regionCode = new SearchHashMap(getArea.regionHashMap, parent.getItemAtPosition(position).toString()).searching();
-                    Log.d("ZZZZZZZZZ", regionCode);
                     getArea.getSigunguCode(regionCode);
 
                     Iterator<String> iterator = getArea.sigunguHashMap.keySet().iterator();
@@ -125,6 +120,8 @@ public class fragment_Recommend extends AppCompatActivity {
     public GetArea getObject() {
         return getArea;
     }
+
+    public String getContentTypeID(){return contentTypeID;}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -158,17 +155,43 @@ public class fragment_Recommend extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            contentTypeID="";
             switch (position) {
-                case 0:
-                    return new Fragment_Recom_AllResult();
+                case 1:
+                    contentTypeID = "12";
+                    break;
+                case 2:
+                    contentTypeID = "14";
+                    break;
+                case 3:
+                    contentTypeID = "15";
+                    break;
+                case 4:
+                    contentTypeID = "25";
+                    break;
+                case 5:
+                    contentTypeID = "28";
+                    break;
+                case 6:
+                    contentTypeID = "32";
+                    break;
+                case 7:
+                    contentTypeID = "38";
+                    break;
+                case 8:
+                    contentTypeID = "39";
+                    break;
+                default:
+                    contentTypeID = "";
+                    break;
             }
-            return null;
+            return new Fragment_RecomListView();
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 1;
+            return 9;
         }
     }
 }
