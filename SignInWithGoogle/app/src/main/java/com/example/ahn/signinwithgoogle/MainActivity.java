@@ -64,18 +64,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // [START initialize_auth]
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();//***************************************
         // [END initialize_auth]
 
         mListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser mUser = mAuth.getCurrentUser();
+                FirebaseUser mUser = mAuth.getCurrentUser();//***************************************
 
                 if(mUser != null) {
                     //Go to next Page : HOME
-
-                    
+                    Intent intent = new Intent(getApplicationContext(),home.class);
+                    startActivity(intent);
                 }
             }
         };
