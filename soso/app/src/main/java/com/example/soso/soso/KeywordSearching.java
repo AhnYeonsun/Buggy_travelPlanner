@@ -10,38 +10,33 @@ import java.util.concurrent.ExecutionException;
 //Description : Searching the keyword that user input //
 public class KeywordSearching {
     private final String searchType = "searchKeyword";
-    private String keyword = "";
+    private String keyword = "", regionCode = "", sigunguCode = "";
     private String urlText = "";
     public HashMap<String, String[]> tourList = new HashMap<>();
     private String addr="", ID="", img="", mapX="", mapY="", tel="", title="", typeID="";
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
-    public KeywordSearching(String keyword){
+    public KeywordSearching(String keyword, String regionCode, String sigunguCode){
         this.keyword = keyword;
+        this.regionCode = regionCode;
+        this.sigunguCode = sigunguCode;
     } //constructor
 
-    // Description : return the search type for make URL //
-    // Input : none //
-    // Output : search type = "areaBasedList" //
     public String getSearchType() {
         return this.searchType;
     }
 
-    // Description : return the keyword for make URL //
-    // Input : none //
-    // Output : keyword //
     public String getKeyword(){return this.keyword;}
 
-    // Description : bring the URL from GetURL class //
-    // Input : none //
-    // Output : none //
+    public String getRegionCode(){return this.regionCode;}
+
+    public String getSigunguCode(){return this.sigunguCode;}
+
     public void setURL() {
         this.urlText = new GetURL(this).integrateURL(2);
     }
 
-    // Description : parsing the data //
-    // Input : String value the data //
-    // Output : none //
+    // 데이터 파싱 //
     public void dataParser(String jsonString) {
         try {
             JSONObject jObjectT = new JSONObject(jsonString);
@@ -58,21 +53,14 @@ public class KeywordSearching {
                 JSONObject jObject = jarray.getJSONObject(i);
 
                 //System.out.println(jObject);
-                addr = jObject.optString("addr1");
-                tourInfo[0] = addr;
+                tourInfo[0] = jObject.optString("addr1");
                 ID = jObject.optString("contentid");
-                typeID = jObject.optString("contenttypeid");
-                tourInfo[1] = typeID;
-                img = jObject.optString("firstimage");
-                tourInfo[2] = img;
-                mapX = jObject.optString("mapx");
-                tourInfo[3] = mapX;
-                mapY = jObject.optString("mapy");
-                tourInfo[4] = mapY;
-                tel = jObject.optString("tel");
-                tourInfo[5] = tel;
-                title = jObject.optString("title");
-                tourInfo[6] = title;
+                tourInfo[1] = jObject.optString("contenttypeid");
+                tourInfo[2] = jObject.optString("firstimage");
+                tourInfo[3] = jObject.optString("mapx");
+                tourInfo[4] = jObject.optString("mapy");
+                tourInfo[5] = jObject.optString("tel");
+                tourInfo[6] = jObject.optString("title");
 
                 tourList.put(ID,tourInfo); //add to tour list data
                 //System.out.println(jObject);
@@ -88,8 +76,8 @@ public class KeywordSearching {
     public void main() {
         String resultData = "";
 
-        setURL();
         try {
+            setURL();
             resultData = new ConnectionAPI(urlText).execute().get();
             dataParser((resultData));
         } catch (InterruptedException e) {

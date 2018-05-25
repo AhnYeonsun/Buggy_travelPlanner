@@ -49,6 +49,10 @@ public class RecomListViewAdapter extends BaseAdapter{
 
     public RecomListViewAdapter(){}
     public RecomListViewAdapter(Context c) { }
+
+    public RecomListViewAdapter(Fragment_Recom_AllResult fragment_recom_allResult) {
+    }
+
     @Override
     public int getCount() {
         return recomlistViewItemList.size();
@@ -96,14 +100,16 @@ public class RecomListViewAdapter extends BaseAdapter{
      item.setText(text);
      recomlistViewItemList.add(item);
      }*/
-    public void addItem(int img, String contentID, String contentTypeID, String name,String address, String info){
+    public void addItem(int img, String contentID, String contentTypeID, String name,String address, String mapX, String mapY, String imgURL){
         RecomListViewItem item = new RecomListViewItem();
         item.setName(name);
         item.setAddress(address);
         item.setImgId(img);
-        item.setInfo(info);
         item.setContentID(contentID);
         item.setContentTypeID(contentTypeID);
+        item.setMapX(mapX);
+        item.setMapY(mapY);
+        item.setMainImg(imgURL);
         recomlistViewItemList.add(item);
     }
 

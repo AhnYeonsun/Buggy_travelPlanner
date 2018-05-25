@@ -1,5 +1,7 @@
 package com.example.soso.soso;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,9 +11,9 @@ import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 //Description : Search the specific region's tour data and save the hash map//
-public class RegionSearching {
+public class Searching_basedRegion {
     private String region = "", sigungu = ""; //String value region, sigungu that user's selected
-    private GetRegionCodeHashMap regionCodeHashMap; //class object of GetRegionCodeHashMap
+    private GetArea regionCodeO; //class object of GetArea
     private final String searchType = "areaBasedList";
     private String areaCode = "", sigunguCode = "";
     private String urlText = "";
@@ -20,12 +22,10 @@ public class RegionSearching {
     //addr=address of tour object, ID=unique ID, img=representative image, mapX=x coordinate, mapY=y coordinate, tel=tel number, title=name of tour object, typeID=type of tour object
 
 
-    public RegionSearching(String region, String sigungu, GetRegionCodeHashMap regionCode) { //constructor
+    public Searching_basedRegion(String region, String sigungu, GetArea regionCode) { //constructor
         this.region = region;
         this.sigungu = sigungu;
-        this.regionCodeHashMap = regionCode;
-        //Log.i("Region code ::::", this.region);
-        //Log.i("Sigungu code :::", this.sigungu);
+        this.regionCodeO = regionCode;
     }
 
     // Description : return the search type for make URL //
@@ -60,16 +60,16 @@ public class RegionSearching {
     // Input : none //
     // Output : none //
     public void searchRegionCode() {
-        Iterator<String> iterator1 = regionCodeHashMap.regionCodeHashMap.keySet().iterator();
-        Iterator<String> iterator2 = regionCodeHashMap.sigunguCodeHashMap.keySet().iterator();
+        Iterator<String> iterator1 = regionCodeO.regionHashMap.keySet().iterator();
+        Iterator<String> iterator2 = regionCodeO.sigunguHashMap.keySet().iterator();
 
         //while loop for search the region code in regionCodeHashMap
         while (iterator1.hasNext()) {
             String key = (String) iterator1.next();
             //System.out.println("Key test :::: "+this.region);
             if (key.equals(this.region)) {
-                areaCode = regionCodeHashMap.regionCodeHashMap.get(key);
-                //Log.i("강원도 code :::: ", regionCode.regionCodeHashMap.get(key));
+                areaCode = regionCodeO.regionHashMap.get(key);
+                Log.i("TTTTTTTTT ", regionCodeO.regionHashMap.get(key));
                 break;
             }
         }
@@ -78,7 +78,7 @@ public class RegionSearching {
         while (iterator2.hasNext()) {
             String key = (String) iterator2.next();
             if (key.equals(this.sigungu)) {
-                sigunguCode = regionCodeHashMap.sigunguCodeHashMap.get(key)[1];
+                sigunguCode = regionCodeO.sigunguHashMap.get(key)[1];
             }
             //Log.i("CODE test :::", sigunguCodeHashMap.get(key) + key);
         }

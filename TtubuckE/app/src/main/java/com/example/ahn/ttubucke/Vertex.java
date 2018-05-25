@@ -1,8 +1,5 @@
 package com.example.ahn.ttubucke;
 
-/**
- * Created by ahn on 2018-05-19.
- */
 
 public class Vertex {
     private int vertexID;
