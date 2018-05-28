@@ -30,7 +30,6 @@ public class SetDetail extends AppCompatActivity {
                 setResult(RESULT_OK,intent);
                 Toast.makeText(getApplicationContext(),"어디갈꺼야? "+spot.getText().toString(),Toast.LENGTH_LONG).show();
                 finish();
-
             }
         });
     }

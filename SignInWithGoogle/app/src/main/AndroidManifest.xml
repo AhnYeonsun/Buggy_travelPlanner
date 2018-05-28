@@ -25,18 +25,14 @@
         <activity android:name=".PlanDetail" />
         <activity android:name=".SetDetail" />
         <activity android:name=".Home" />
-        <activity
-            android:name=".fragment_Recommend"
-            android:label="@string/title_activity_fragment__search_result"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".fragment_recom_cultural" />
-        <activity android:name=".fragment_recom_event" />
-        <activity android:name=".fragment_recom_course" />
-        <activity android:name=".fragment_recom_leports" />
-        <activity android:name=".fragment_recom_accom" />
-        <activity android:name=".fragment_recom_shopping" />
-        <activity android:name=".fragment_recom_food" />
-        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".Reccommend"/>
+        <!--<activity android:name=".fragment_recom_cultural" />-->
+        <!--<activity android:name=".fragment_recom_event" />-->
+        <!--<activity android:name=".fragment_recom_course" />-->
+        <!--<activity android:name=".fragment_recom_leports" />-->
+        <!--<activity android:name=".fragment_recom_accom" />-->
+        <!--<activity android:name=".fragment_recom_shopping" />-->
+        <!--<activity android:name=".fragment_recom_food" />-->
     </application>
 
 </manifest>

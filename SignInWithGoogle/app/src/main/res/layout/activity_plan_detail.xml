@@ -21,4 +21,16 @@
         android:descendantFocusability="beforeDescendants"
         android:listSelector="#b6d49d"/>
 
+    <!-- 소윤소윤 : 요기 플로팅 버튼 부분 이모티콘 바꿔주세요~~~~~~-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="26dp"
+        android:src="@android:drawable/ic_dialog_email" />
+
 </RelativeLayout>

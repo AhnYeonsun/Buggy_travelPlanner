@@ -3,6 +3,7 @@ package com.example.ahn.signinwithgoogle;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +20,8 @@ public class PlanDetail extends AppCompatActivity {
 
     ArrayList<GroupItem> arrayList;
 
+    Intent informIntent;
+    FloatingActionButton goRecom;
     ExpandableListView elv;
     DetailedPlanAdapter adapter;
     int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
@@ -27,9 +30,10 @@ public class PlanDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
-        Intent intent = getIntent();
-        String numStr = intent.getStringExtra("date");
+        informIntent = getIntent();
+        String numStr = informIntent.getStringExtra("days");
         num=Integer.parseInt(numStr);
+
         arrayList = new ArrayList<>();
         //여행일수만큼 groupitem 생성
         for(int i=0;i<num+1;i++)//+1해줘야지 마지막날까지 나옴
@@ -60,6 +64,18 @@ public class PlanDetail extends AppCompatActivity {
             }
         });
 
+        goRecom = (FloatingActionButton) findViewById(R.id.fab);
+        goRecom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Reccommend.class);
+                intent.putExtra("title", informIntent.getStringExtra("title"));
+                intent.putExtra("startDay", informIntent.getStringExtra("startDay"));
+                intent.putExtra("endDay", informIntent.getStringExtra("endDay"));
+                intent.putExtra("day", num);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

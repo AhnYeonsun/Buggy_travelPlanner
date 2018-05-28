@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,7 @@ public class fragment_recom_cultural extends android.support.v4.app.Fragment {
     private String key="", title="", addr="", mapX="", mapY="", imgURL="";
     private int imgId = 0;
     AlertDialog.Builder builder;
-    fragment_Recommend FR;
+    Reccommend FR;
     Handler handler;
     HashMap<String, String[]> tourspot = new HashMap<>();
     ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
@@ -52,7 +51,7 @@ public class fragment_recom_cultural extends android.support.v4.app.Fragment {
         //listViewAdapter = new RecomListViewAdapter(getActivity());
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 
-        FR = (fragment_Recommend) getActivity();
+        FR = (Reccommend) getActivity();
         getArea = FR.getObject();
         //searchBtn = FR.findViewById(R.id.searchBtn);
         //searchBtn.setOnClickListener(new View.OnClickListener() {

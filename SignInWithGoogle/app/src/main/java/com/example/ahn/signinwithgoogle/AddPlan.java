@@ -2,10 +2,12 @@ package com.example.ahn.signinwithgoogle;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ public class AddPlan extends AppCompatActivity {
     TextView end_date;
     Button createBtn;
     String startDate = "", endDate="", plan, temp1, temp2;
+    String date1="", date2="";
     DatePickerDialog datePickerDialog;
     boolean check=false;//마지막날짜가 더 늦은지 확인
     private long calDateDays;
@@ -147,14 +150,25 @@ public class AddPlan extends AppCompatActivity {
 
         planListview.setAdapter(adapter);
 
+        planListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                Intent intent = new Intent(getApplicationContext(), PlanDetail.class);
+                intent.putExtra("title", plan_name.getText().toString());
+                intent.putExtra("days", calDateDays+"");
+                intent.putExtra("startDay", date1);
+                intent.putExtra("endDat", date2);
+                startActivity(intent);
+            }
+        });
     }
 
     public void doDifferent() {
         /*String s=date_first.getText().toString();
         String e=date_last.getText().toString();*/
 
-        String date1 = start_date.getText().toString();
-        String date2 = end_date.getText().toString();
+        date1 = start_date.getText().toString();
+        date2 = end_date.getText().toString();
 
         try{ // String Type을 Date Type으로 캐스팅하면서 생기는 예외로 인해 여기서 예외처리 해주지 않으면 컴파일러에서 에러가 발생해서 컴파일을 할 수 없다.
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
