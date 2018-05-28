@@ -35,7 +35,8 @@
         <activity android:name=".fragment_recom_leports" />
         <activity android:name=".fragment_recom_accom" />
         <activity android:name=".fragment_recom_shopping" />
-        <activity android:name=".fragment_recom_food"></activity>
+        <activity android:name=".fragment_recom_food" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

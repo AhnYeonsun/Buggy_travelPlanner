@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/intro"
     tools:context="com.example.ahn.signinwithgoogle.AddPlan">
 
     <RelativeLayout
@@ -19,11 +20,11 @@
             android:id="@+id/plan_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#62000000"
+            android:background="#62ffffff"
             android:drawableLeft="@drawable/test"
             android:hint="   Write your new Travel name"
             android:padding="5dp"
-            android:textColorHint="#ffffff" />
+            android:textColorHint="#000000" />
 
 
         <TextView
@@ -34,12 +35,12 @@
             android:layout_below="@+id/plan_name"
             android:layout_centerVertical="true"
             android:layout_marginTop="8dp"
-            android:background="#62000000"
+            android:background="#2bffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
             android:padding="5dp"
             android:text="   Start Date"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="20sp" />
 
         <TextView
@@ -50,12 +51,12 @@
             android:layout_alignBottom="@+id/start_date"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/start_date"
-            android:background="#62000000"
+            android:background="#62ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
             android:padding="5dp"
             android:text="   End Date"
-            android:textColor="#ffffff"
+            android:textColor="#000000"
             android:textSize="20sp" />
 
         <Button
