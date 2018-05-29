@@ -10,25 +10,25 @@ import android.widget.Toast;
 
 
 public class SetDetail extends AppCompatActivity {
-    Button btn;
-    EditText spot;
+    Button saveBtn;
+    EditText spot, memo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_detail);
 
-        btn=findViewById(R.id.button);
+        saveBtn=findViewById(R.id.saveBtn);
         spot= findViewById(R.id.spot);
+        memo = findViewById(R.id.memo);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(Test.this, MainActivity.class);
                 Intent intent = getIntent();
                 intent.putExtra("spot",spot.getText().toString());
+                intent.putExtra("memo", memo.getText().toString());
                 intent.putExtra("dayposition", intent.getFlags());
                 setResult(RESULT_OK,intent);
-                Toast.makeText(getApplicationContext(),"어디갈꺼야? "+spot.getText().toString(),Toast.LENGTH_LONG).show();
                 finish();
             }
         });

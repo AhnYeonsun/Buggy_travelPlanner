@@ -95,9 +95,10 @@ bundle=getArguments();
         listview1.setAdapter(listViewAdapter);
 
 
-        listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 final RecomListViewItem item = (RecomListViewItem)listViewAdapter.getItem(position);
 
                 GetDetailInfo getDetailInfo = new GetDetailInfo(item.getContentID(), item.getContentTypeID());
@@ -114,7 +115,7 @@ bundle=getArguments();
                 builder = new AlertDialog.Builder(getActivity());
                 final String finalMessage = message;
                 builder.setTitle(item.getName())
-                        .setIcon(item.getMainImg())  //이게 사진 받는 함수고
+                        //.setIcon(item.getMainImg())  //이게 사진 받는 함수고
                         .setMessage(item.getAddress() + "\n" + message) //이게 정보 받아주는 함수
                         //********************************요기에 욘또니가 지도 넣어주면되염 화이또!!!!!!***********//
                         //*****좌표 X 받아오는 함수 : item.getMapX()  **************//
@@ -141,7 +142,6 @@ bundle=getArguments();
                 //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
-                return true;
             }
         });
         return view;

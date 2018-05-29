@@ -18,11 +18,11 @@ import java.util.ArrayList;
  */
 
 public class CreatePlanAdapter extends BaseAdapter {
-    private ArrayList<CreatePlanItem> planItemList = new ArrayList<CreatePlanItem>();
+    public ArrayList<CreatePlanItem> planItemList = new ArrayList<CreatePlanItem>();
     ImageView deleteBtn;
     TextView date, name;
 
-    AlertDialog.Builder builder;
+    private AlertDialog.Builder builder;
 
     public CreatePlanAdapter(Context c)
     {

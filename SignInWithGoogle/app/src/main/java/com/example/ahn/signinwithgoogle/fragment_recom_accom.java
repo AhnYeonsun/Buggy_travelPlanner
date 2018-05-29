@@ -90,9 +90,10 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
         listview1.setAdapter(listViewAdapter);
 
 
-        listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        listview1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 final RecomListViewItem item = (RecomListViewItem)listViewAdapter.getItem(position);
 
                 GetDetailInfo getDetailInfo = new GetDetailInfo(item.getContentID(), item.getContentTypeID());
@@ -125,7 +126,6 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
                                 addPlan = FirebaseDatabase.getInstance().getReference();
                                 FirebaseUser mUser = mAuth.getCurrentUser();
                                 addPlan.child("Users").child(mUser.getUid().toString()).child("TravelTemp").child(item.getContentID()).setValue(plan);
-
                             }
                         })
                         .setNegativeButton("안가 별루얌", new DialogInterface.OnClickListener() {
@@ -137,7 +137,6 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
                 //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
-                return true;
             }
         });
         return view;

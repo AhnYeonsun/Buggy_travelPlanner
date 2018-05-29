@@ -4,52 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.soso.test.Test">
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:inputType="time" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="39dp"
-        android:layout_marginStart="39dp"
-        android:text="시간" />
+    tools:context="com.example.ahn.signinwithgoogle.SetDetail">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editText"
-        android:layout_alignRight="@+id/editText"
-        android:layout_below="@+id/editText"
-        android:layout_marginEnd="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="43dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp"
         android:text="저장" />
 
     <EditText
         android:id="@+id/spot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
-        android:layout_below="@+id/editText"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/saveBtn"
+        android:layout_marginTop="41dp"
         android:ems="10"
         android:hint="장소"
         android:inputType="textPersonName" />
@@ -58,9 +30,37 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="12dp"
+        android:layout_alignBaseline="@+id/spot"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="47dp"
         android:text="어디갈램" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="155dp"
+        android:text="위치" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView"
+        android:layout_marginBottom="203dp"
+        android:text="메모" />
+
+    <EditText
+        android:id="@+id/memo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignStart="@+id/saveBtn"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
 </RelativeLayout>

@@ -1,7 +1,9 @@
 package com.example.ahn.signinwithgoogle;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +32,7 @@ public class AddPlan extends AppCompatActivity {
     DatePickerDialog datePickerDialog;
     boolean check=false;//마지막날짜가 더 늦은지 확인
     private long calDateDays;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +50,7 @@ public class AddPlan extends AppCompatActivity {
 
         planListview = findViewById(R.id.planListview);
         adapter=new CreatePlanAdapter(this);
-
+        builder=new AlertDialog.Builder(this);
 
         start_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +165,32 @@ public class AddPlan extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        planListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
+                builder.setTitle("Delete Journey")
+                        .setMessage("Are you sure to delete "+planItem.getName().toString()+"?")
+                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
+                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                adapter.planItemList.remove(position);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return false;
+            }
+        });
+
     }
 
     public void doDifferent() {
