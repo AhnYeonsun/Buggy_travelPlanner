@@ -20,10 +20,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddPlan" />
-        <activity android:name=".Checklist" />
+        <activity android:name=".AddPlan"
+            android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".Checklist"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".PlanDetail" />
-        <activity android:name=".SetDetail" />
+        <activity android:name=".SetDetail"
+            android:windowSoftInputMode="adjustNothing" />
         <activity android:name=".Home" />
         <activity android:name=".Reccommend"/>
         <!--<activity android:name=".fragment_recom_cultural" />-->

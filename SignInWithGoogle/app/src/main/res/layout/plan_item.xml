@@ -2,36 +2,48 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:padding="3dp"
+    android:background="#dddddd"
+    android:weightSum="10">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        android:weightSum="5">
     <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="51dp"
-        android:layout_weight="2"
-        android:text="date"/>
-    <TextView
-        android:layout_weight="5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/name"
-        android:text="text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:text="My Journey"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:background="#ffffff"
+        android:padding="3dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:id="@+id/date"
+        android:text="yyyy-mm-dd ~ yyyy-mm-dd"
+        android:gravity="center_vertical"
+        android:layout_marginTop="2dp"
+        android:background="#ffffff"
+        android:padding="3dp"
         />
+    </LinearLayout>
     <ImageView
-        android:layout_weight="1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_weight="3"
+        android:background="#ffffff"
+        android:layout_marginLeft="3dp"
         android:clickable="true"
         android:id="@+id/delete"
         android:src="@drawable/bin" />
 
-    <ImageView
-        android:layout_weight="1"
-        android:id="@+id/next"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="right"
-        android:background="@android:color/transparent"
-        android:clickable="true"
-        android:src="@drawable/next" />
 </LinearLayout>

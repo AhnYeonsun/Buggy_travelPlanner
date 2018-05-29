@@ -131,7 +131,8 @@ public class AddPlan extends AppCompatActivity {
                 //일정에 추가
                 doDifferent();
                 if(check){
-                    adapter.addItem(plan_name.getText().toString(),start_date.getText().toString());
+                    String duration = start_date.getText().toString()+" - " +end_date.getText().toString();
+                    adapter.addItem(plan_name.getText().toString(),duration);
                     System.out.println(plan_name.getText().toString()+start_date.getText().toString());
                     plan_name.setText("");
                     start_date.setText("Start Date");
@@ -185,7 +186,7 @@ public class AddPlan extends AppCompatActivity {
             calDateDays = calDate / ( 24*60*60*1000);
             System.out.println(calDate);
             System.out.println(calDateDays);
-            if(calDateDays<0) //마지막날이 더 뒤임
+            if(calDateDays<=0) //마지막날이 더 뒤임
                 check=true;
             calDateDays = Math.abs(calDateDays);
 

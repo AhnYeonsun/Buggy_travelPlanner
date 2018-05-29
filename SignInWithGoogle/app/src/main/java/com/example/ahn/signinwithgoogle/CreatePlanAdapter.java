@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class CreatePlanAdapter extends BaseAdapter {
     private ArrayList<CreatePlanItem> planItemList = new ArrayList<CreatePlanItem>();
     ImageView deleteBtn;
-    ImageView nextBtn;
     TextView date, name;
 
     AlertDialog.Builder builder;
@@ -58,7 +57,6 @@ public class CreatePlanAdapter extends BaseAdapter {
         date=convertView.findViewById(R.id.date);
         name=convertView.findViewById(R.id.name);
         deleteBtn=convertView.findViewById(R.id.delete);
-        nextBtn=convertView.findViewById(R.id.next);
 
         // Data Set(CreatePlanItem)에서 position에 위치한 데이터 참조 획득
         final CreatePlanItem planItem = planItemList.get(position);
