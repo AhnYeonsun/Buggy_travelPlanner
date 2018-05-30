@@ -10,6 +10,15 @@
         <item>전라남도</item>
         <item>경상북도</item>
         <item>경상남도</item>
-
+    </string-array>
+    <string-array name="bubble">
+        <item>#41ffffff</item>
+        <item>#18ffffff</item>
+        <item>#1fffffff</item>
+        <item>#25ffffff</item>
+    </string-array>
+    <string-array name="BubbleAnimations">
+        <item>com.github.glomadrian.grav.generator.animation.SideToSideAnimator</item>
+        <item>com.github.glomadrian.grav.generator.animation.ShakeAnimator</item>
     </string-array>
 </resources>
