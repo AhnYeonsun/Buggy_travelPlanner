@@ -21,6 +21,7 @@
         android:textSize="50sp"
         android:text="세부 여행 계획"
         android:id="@+id/planTitle"
+        android:textStyle="bold"
         android:gravity="center_horizontal|center_vertical"/>
 
 </LinearLayout>

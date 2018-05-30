@@ -2,13 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    >
 
     <TextView
+        android:padding="8dp"
         android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
+        android:background="#caffffff"
+        android:fontFamily="@font/enjoy"
+        android:textSize="22sp"
         android:singleLine="true"/>
 
 </RelativeLayout>
