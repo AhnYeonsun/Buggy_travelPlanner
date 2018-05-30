@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 
@@ -75,8 +77,10 @@ public class RecomListViewAdapter extends BaseAdapter{
         //iconImageView.setImageBitmap(recomListViewItem.getIcon());
         titleView.setText(recomListViewItem.getName()); //이름 가져오기
         addressView.setText(recomListViewItem.getAddress()); //주소가져오기
-        iconImageView.setImageResource(recomlistViewItemList.get(position).getImgId());
-        
+        Glide.with(context).load(recomListViewItem.getMainImg())
+                .placeholder(R.drawable.buggy)
+                .error(R.drawable.buggy)
+                .into(iconImageView);
         return convertView;
     }
     
@@ -88,7 +92,6 @@ public class RecomListViewAdapter extends BaseAdapter{
      }*/
     public void addItem(int img, String contentID, String contentTypeID, String name,String address, String mapX, String mapY, String imgURL){
         RecomListViewItem item = new RecomListViewItem();
-     Log.d("hoohohoho",name);
         item.setName(name);
         item.setAddress(address);
         item.setImgId(img);
@@ -96,7 +99,7 @@ public class RecomListViewAdapter extends BaseAdapter{
         item.setContentTypeID(contentTypeID);
         item.setMapX(mapX);
         item.setMapY(mapY);
-        //item.setMainImg(imgURL);
+        item.setMainImg(imgURL);
         recomlistViewItemList.add(item);
     }
 

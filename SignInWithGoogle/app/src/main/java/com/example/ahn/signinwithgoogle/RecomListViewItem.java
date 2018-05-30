@@ -18,11 +18,9 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class RecomListViewItem {
-    private String text;
     private String url;
     private Bitmap image;
     private Drawable icon;
-    private String info;
 
     private String name;
     private String address;
@@ -98,48 +96,8 @@ public class RecomListViewItem {
 
     public void setMainImg(String imgURL) {
         this.imgURL = imgURL;
-
-        try {
-            this.image = new loadBitmap(this.imgURL).execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
     }
 
-    public Drawable getMainImg(){return changeBitmapToDrawable();}
-
-    public Drawable changeBitmapToDrawable(){
-        Drawable drawableImg = new BitmapDrawable(image);
-        return drawableImg;
-    }
-
-    private class loadBitmap extends AsyncTask<String, Integer, Bitmap> {
-        Bitmap bitmap = null;
-        String url = "";
-
-        public loadBitmap(String url) {
-            this.url = url;
-        }
-
-        @Override
-        public Bitmap doInBackground(String... params) {
-            try {
-                URL url = new URL(this.url);
-                Log.i("URL TEST : ", url.toString());
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.connect();
-
-                InputStream is = conn.getInputStream();
-
-                bitmap = BitmapFactory.decodeStream(is);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return bitmap;
-        }
-    }
-
+    public String getMainImg(){return imgURL;}
 }
 

@@ -46,6 +46,7 @@
         android:layout_height="64dp"
         android:layout_weight="3"
         android:src="@drawable/cat"
+        android:scaleType="fitXY"
         android:background="#ffffff"
         android:layout_marginLeft="3dp"/>
 </LinearLayout>

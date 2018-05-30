@@ -53,7 +53,7 @@ public class fragment_Recom_all extends Fragment {
 
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);
         // listViewAdapter = new RecomListViewAdapter();// Adapter 생성
-bundle=getArguments();
+        bundle=getArguments();
 
         FR = (Reccommend) getActivity();
         getArea = FR.getObject();
@@ -144,8 +144,22 @@ bundle=getArguments();
                 dialog.show();
             }
         });
-        return view;
+
+//        //이거 리스트뷰 길게 누르면 이미지 로딩되게 하구싶은데 몰라....아몰랑
+//        listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                final RecomListViewItem item = (RecomListViewItem)listViewAdapter.getItem(position);
+//                builder = new AlertDialog.Builder(getActivity());
+//
+//                builder.setIcon(item.getMainImg());
+//
+//                return true;
+//            }
+//        });
+       return view;
     }
+
     class temp{
         String title;
         double mapX;
