@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -16,6 +17,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,11 +35,14 @@ public class AddPlan extends AppCompatActivity {
     Button createBtn;
     String startDate = "", endDate="", plan, temp1, temp2;
     String date1="", date2="";
-    String planTitle = "";
+    public String planTitle = "";
     DatePickerDialog datePickerDialog;
     boolean check=false;//마지막날짜가 더 늦은지 확인
     private long calDateDays;
     private AlertDialog.Builder builder;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +137,9 @@ public class AddPlan extends AppCompatActivity {
             }
         });
 
-
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlan = FirebaseDatabase.getInstance().getReference();
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +154,61 @@ public class AddPlan extends AppCompatActivity {
                     start_date.setText("Start Date");
                     end_date.setText("End Date");
                     check=false;
+
+                    //yyyy-MM-dd
+                    int y1 = Integer.parseInt(date1.substring(0,4));
+                    int m1 = Integer.parseInt(date1.substring(5,7));
+                    int d1 = Integer.parseInt(date1.substring(8,10));
+                    int m2 = Integer.parseInt(date2.substring(5,7));
+                    int d2 = Integer.parseInt(date2.substring(8,10));
+                    String[] daysOfNewPlan = new String[(int)calDateDays+1];
+                    String tempDate = date1;
+                    int tempM = m1;
+                    int tempD = d1;
+                    int tempY = y1;
+                    if(m1==m2){
+                        for (int i = 0; i < (int)calDateDays+1; i++){
+                            tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
+                            daysOfNewPlan[i] = tempDate;
+                            tempD++;
+                            Log.d("AAA", tempDate);
+                        }
+                    }
+                    else if(m1 < m2){//달 넘어가는 경우
+                        Log.d("AAA",tempDate);
+                        for (int i = 0; i < (int)calDateDays+1; i++){
+                            tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
+                            daysOfNewPlan[i] = tempDate;
+                            if((tempD==31)&&(tempM==1||tempM==3||tempM==5||tempM==7||tempM==8||tempM==10||tempM==12)){ //31일
+                                if(m1==12){ //12월 31일
+                                    tempM = 1;
+                                    tempD = 1;
+                                    tempY++;
+                                }
+                                else{ //00월 31일
+                                    tempM++;
+                                    tempD = 1;
+                                }
+                            }
+                            else if((tempD==30)&&(tempM==4||tempM==6||tempM==9||tempM==11)){ //30일
+                                tempM++;
+                                tempD = 1;
+                            }
+                            else if((tempD==28)&&(tempM==2)){ //28일
+                                tempM++;
+                                tempD = 1;
+                            }
+                            else{
+                                tempD++;
+                            }
+                            Log.d("BBB",tempDate);
+                        }
+                    }
+
+                    for (int i = 0; i < (int)calDateDays+1; i++) {
+                        ObjectForBlank o1 = new ObjectForBlank(i, "tempString", i);
+                        addPlan.child("Users").child(mUser.getUid()).child(planTitle).child(daysOfNewPlan[i]).setValue(o1);
+                    }
                 }
                 else
                     Toast.makeText(getApplicationContext(),"error: check your last date",Toast.LENGTH_LONG).show();

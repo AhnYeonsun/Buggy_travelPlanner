@@ -1,8 +1,6 @@
 package com.example.ahn.signinwithgoogle;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,8 +24,15 @@ public class PlanDetail extends AppCompatActivity {
     ExpandableListView elv;
     PlanDetailAdapter adapter;
     TextView plan_name;
+    String numStr;
+    String titleStr;
     int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
 
+    PlanDetail(){}
+    PlanDetail(String n, String t){
+        this.numStr = n;
+        this.titleStr = t;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,8 @@ public class PlanDetail extends AppCompatActivity {
         setContentView(R.layout.activity_plan_detail);
 
         informIntent = getIntent();
-        String numStr = informIntent.getStringExtra("days");
-        String titleStr = informIntent.getStringExtra("title");
+        this.numStr = informIntent.getStringExtra("days"); //**************test
+        this.titleStr = informIntent.getStringExtra("title"); //****************test
         num=Integer.parseInt(numStr);
         plan_name=findViewById(R.id.planTitle);
         plan_name.setText(titleStr);
@@ -121,5 +126,18 @@ public class PlanDetail extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setNumStr(String modifyNum){
+        this.numStr = modifyNum;
+    }
+    public void setTitleStr(String modifyTitle){
+        this.titleStr = modifyTitle;
+    }
+    public String getNumStr(){
+        return this.numStr;
+    }
+    public String getTitleStr(){
+        return this.titleStr;
     }
 }

@@ -25,7 +25,7 @@ import java.util.Iterator;
 public class fragment_Recom_all extends Fragment {
 
     private FirebaseAuth mAuth;
-    private DatabaseReference addPlan;
+    private DatabaseReference addRecomAllPlan;
 
     View view, main;
     GetArea getArea = new GetArea(); //object of GetArea() function
@@ -128,9 +128,9 @@ public class fragment_Recom_all extends Fragment {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
                                 mAuth = FirebaseAuth.getInstance();
-                                addPlan = FirebaseDatabase.getInstance().getReference();
+                                addRecomAllPlan = FirebaseDatabase.getInstance().getReference();
                                 FirebaseUser mUser = mAuth.getCurrentUser();
-                                addPlan.child("Users").child(mUser.getUid().toString()).child("TravelTemp").child(item.getContentID()).setValue(plan);
+                                addRecomAllPlan.child("Users").child(mUser.getUid()).child("TravelTemp").child(item.getContentID()).setValue(plan);
                             }
                         })
                         .setNegativeButton("안가 별루얌", new DialogInterface.OnClickListener() {
