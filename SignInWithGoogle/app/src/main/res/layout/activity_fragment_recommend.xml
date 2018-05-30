@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/loginpage"
     tools:context=".Reccommend">
 
     <android.support.design.widget.AppBarLayout
@@ -13,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
+        android:background="#1a4a83"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <!--<android.support.v7.widget.Toolbar-->
@@ -52,8 +54,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:background="#CC9999"
+                android:background="#1a4a83"
+                android:textColor="#ffffff"
                 android:padding="5dp"
+                android:fontFamily="@font/enjoy"
+                android:textSize="20sp"
                 android:text="추천" />
         </RelativeLayout>
 
@@ -65,7 +70,8 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@android:color/holo_orange_light">
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabAll"
