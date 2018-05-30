@@ -156,6 +156,7 @@ public class AddPlan extends AppCompatActivity {
                     check=false;
 
                     //yyyy-MM-dd
+                    //여기서부터 이 버튼 끝까지 DB 넣어주기 위한 코드
                     int y1 = Integer.parseInt(date1.substring(0,4));
                     int m1 = Integer.parseInt(date1.substring(5,7));
                     int d1 = Integer.parseInt(date1.substring(8,10));

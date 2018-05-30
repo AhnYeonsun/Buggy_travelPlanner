@@ -117,9 +117,6 @@ public class fragment_Recom_all extends Fragment {
                 builder.setTitle(item.getName())
                         //.setIcon(item.getMainImg())  //이게 사진 받는 함수고
                         .setMessage(item.getAddress() + "\n" + message) //이게 정보 받아주는 함수
-                        //********************************요기에 욘또니가 지도 넣어주면되염 화이또!!!!!!***********//
-                        //*****좌표 X 받아오는 함수 : item.getMapX()  **************//
-                        //*****좌표 Y 받아오는 함수 : item.getMapY() ***************//
                         .setCancelable(false)
 
                         //******************************여기갈랭! 버튼을 누르면 데이터 베이스에 넣어주기*******************//

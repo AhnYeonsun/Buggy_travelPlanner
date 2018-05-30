@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,6 +143,7 @@ public class Reccommend extends AppCompatActivity {
 //                            informIntent.getStringExtra("startDay");      //이거는 여행 출발 날짜
 //                            informIntent.getStringExtra("endDay");        //여행 마지막 날짜
 //                            days                                          //총 여행 일수
+
                         }
                     });
                     builder.setNegativeButton("생각 좀....", new DialogInterface.OnClickListener() {
