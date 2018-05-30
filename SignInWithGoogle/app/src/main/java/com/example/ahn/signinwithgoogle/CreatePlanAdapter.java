@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class CreatePlanAdapter extends BaseAdapter {
     public ArrayList<CreatePlanItem> planItemList = new ArrayList<CreatePlanItem>();
-    ImageView deleteBtn;
     TextView date, name;
 
     private AlertDialog.Builder builder;
@@ -56,7 +55,6 @@ public class CreatePlanAdapter extends BaseAdapter {
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         date=convertView.findViewById(R.id.date);
         name=convertView.findViewById(R.id.name);
-        deleteBtn=convertView.findViewById(R.id.delete);
 
         // Data Set(CreatePlanItem)에서 position에 위치한 데이터 참조 획득
         final CreatePlanItem planItem = planItemList.get(position);
@@ -64,30 +62,6 @@ public class CreatePlanAdapter extends BaseAdapter {
         date.setText(planItem.getDate());
         name.setText(planItem.getName());
 
-
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                builder.setTitle("Delete Journey")
-                        .setMessage("Are you sure to delete "+planItem.getName().toString()+"?")
-                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                planItemList.remove(position);
-                                notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
         return convertView;
     }
 

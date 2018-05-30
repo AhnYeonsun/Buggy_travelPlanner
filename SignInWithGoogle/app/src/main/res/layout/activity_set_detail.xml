@@ -1,66 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginpage"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:weightSum="10"
     tools:context="com.example.ahn.signinwithgoogle.SetDetail">
 
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="21dp"
-        android:text="저장" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4">
 
-    <EditText
-        android:id="@+id/spot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/saveBtn"
-        android:layout_marginTop="41dp"
-        android:ems="10"
-        android:hint="장소"
-        android:inputType="textPersonName" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="122dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/buggy" />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/spot"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="47dp"
-        android:text="어디갈램" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:background="#ffffff">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="155dp"
-        android:text="위치" />
+        <TextView
+            android:id="@+id/locatontxt"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="43dp"
+            android:fontFamily="@font/enjoy"
+            android:text="어디갈램"
+            android:layout_marginBottom="8dp"
+            android:textSize="40sp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginBottom="203dp"
-        android:text="메모" />
+        <EditText
+            android:id="@+id/spot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/locatontxt"
+            android:ems="10"
+            android:hint="장소를 입력해주세요"
+            android:inputType="textPersonName"
+            android:fontFamily="@font/enjoy"
+            android:textSize="30sp"/>
 
-    <EditText
-        android:id="@+id/memo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignStart="@+id/saveBtn"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        <TextView
+            android:id="@+id/memotxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/enjoy"
+            android:layout_marginBottom="8dp"
+            android:text="메모"
+            android:textSize="40sp" />
 
-</RelativeLayout>
+        <EditText
+            android:id="@+id/memo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/memotxt"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="99dp"
+            android:ems="10"
+            android:hint="간단한 메모를 입력해주세요"
+            android:inputType="textPersonName"
+            android:fontFamily="@font/enjoy"
+            android:textSize="30sp"/>
+
+        <Button
+            android:id="@+id/map"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/saveBtn"
+            android:layout_marginStart="19dp"
+            android:background="#1a4a83"
+            android:fontFamily="@font/enjoy"
+            android:text="위치확인"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="20dp"
+            android:background="#1a4a83"
+            android:fontFamily="@font/enjoy"
+            android:text="저장"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

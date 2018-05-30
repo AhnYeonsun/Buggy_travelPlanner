@@ -5,30 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/background"
+    android:background="@drawable/loginpage"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context="com.example.ahn.signinwithgoogle.Home">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="6">
+        android:layout_height="0dp"
+        android:layout_weight="5">
 
         <TextView
             android:id="@+id/textGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="#7fffffff"
+            android:fontFamily="@font/enjoy"
+            android:padding="5dp"
             android:text="MAIN MENU"
-            android:textColor="#ffffff"
+            android:textColor="#d4000000"
             android:textSize="50sp" />
-
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         android:orientation="vertical">
 
         <TableLayout
@@ -41,59 +44,64 @@
 
             <TableRow>
 
-                <ImageButton
+                <Button
                     android:id="@+id/addplanBtn"
                     android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#fc6a6b"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#88f1acac"
+                    android:fontFamily="@font/enjoy"
+                    android:scaleType="centerInside"
                     android:src="@drawable/addplan"
-                    android:text="여행계획"
-                    android:textSize="20sp"
-                    android:scaleType="centerInside"/>
+                    android:text="여행 추가"
+                    android:textSize="30sp" />
+            </TableRow>
 
-                <ImageButton
+            <TableRow>
+
+                <Button
                     android:id="@+id/recommendBtn"
                     android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:background="#f87091"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#88f1acac"
+                    android:fontFamily="@font/enjoy"
+                    android:scaleType="centerInside"
                     android:src="@drawable/recommend"
                     android:text="여행 추천"
-                    android:textSize="20sp"
-                    android:scaleType="centerInside"/>
+                    android:textSize="30sp" />
 
             </TableRow>
 
             <TableRow>
 
-                <ImageButton
+                <Button
                     android:id="@+id/checklistBtn"
                     android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginTop="4dp"
-                    android:background="#5f99b8"
+                    android:layout_height="60dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#88f1acac"
+                    android:fontFamily="@font/enjoy"
+                    android:scaleType="centerInside"
                     android:src="@drawable/check"
-                    android:text="체크리스트"
-                    android:textSize="20sp"
-                    android:scaleType="centerInside"/>
+                    android:text="버킷리스트"
+                    android:textSize="30sp" />
+            </TableRow>
 
-                <ImageButton
+            <TableRow>
+
+                <Button
                     android:id="@+id/settingBtn"
                     android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:background="#986b9b"
+                    android:layout_height="60dp"
+                    android:background="#88f1acac"
+                    android:fontFamily="@font/enjoy"
+                    android:scaleType="centerInside"
                     android:src="@drawable/setting"
                     android:text="설정"
-                    android:textSize="20sp"
-                    android:scaleType="centerInside"
-                    />
+                    android:textSize="30sp" />
             </TableRow>
+
         </TableLayout>
     </LinearLayout>
 </LinearLayout>

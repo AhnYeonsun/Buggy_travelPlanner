@@ -1,6 +1,8 @@
 package com.example.ahn.signinwithgoogle;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,9 +11,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,16 +24,22 @@ public class PlanDetail extends AppCompatActivity {
     Intent informIntent;
     FloatingActionButton goRecom;
     ExpandableListView elv;
-    DetailedPlanAdapter adapter;
+    PlanDetailAdapter adapter;
+    TextView plan_name;
     int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
+
         informIntent = getIntent();
         String numStr = informIntent.getStringExtra("days");
+        String titleStr = informIntent.getStringExtra("title");
         num=Integer.parseInt(numStr);
+        plan_name=findViewById(R.id.planTitle);
+        plan_name.setText(titleStr);
 
         arrayList = new ArrayList<>();
         //여행일수만큼 groupitem 생성
@@ -43,26 +50,10 @@ public class PlanDetail extends AppCompatActivity {
         }
 
         elv = findViewById(R.id.listview);
-        adapter = new DetailedPlanAdapter(PlanDetail.this, arrayList);
+        adapter = new PlanDetailAdapter(PlanDetail.this, arrayList);
         adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         elv.setAdapter(adapter);
 
-        Button btn = findViewById(R.id.show); //검색기능
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(MainActivity.this, Test.class);
-                //startActivity(intent);
-
-                String all="";
-                for (int i=0; i<arrayList.size(); i++){
-                    for (int j=0; j<arrayList.get(i).getArrayList().size(); j++) {
-                        all += arrayList.get(i).getArrayList().get(j).getValue() + "\n";
-                    }
-                }
-                Toast.makeText(PlanDetail.this, all, Toast.LENGTH_LONG).show();
-            }
-        });
 
         goRecom = (FloatingActionButton) findViewById(R.id.fab);
         goRecom.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +67,32 @@ public class PlanDetail extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+      /*  ////////////////////////
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
+                builder.setTitle("Delete Detail")
+                        .setMessage("Are you sure to delete "+ arrayList.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
+                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
+                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                arrayList.get(groupPosition).getArrayList().remove(childPosition);
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                return true;
+            }
+        });*/
     }
 
     @Override

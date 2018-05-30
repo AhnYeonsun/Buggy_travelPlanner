@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/intro"
+    android:paddingTop="50dp"
+    android:background="@drawable/loginpage"
     tools:context="com.example.ahn.signinwithgoogle.AddPlan">
 
     <RelativeLayout
@@ -22,6 +23,8 @@
             android:background="#62ffffff"
             android:drawableLeft="@drawable/resize_plan"
             android:hint="   Write your new Travel name"
+            android:textSize="30sp"
+            android:fontFamily="@font/enjoy"
             android:padding="5dp"
             android:textColorHint="#000000" />
 
@@ -39,8 +42,9 @@
             android:drawableLeft="@drawable/test"
             android:padding="5dp"
             android:text="   Start Date"
+            android:fontFamily="@font/enjoy"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/end_date"
@@ -55,8 +59,9 @@
             android:drawableLeft="@drawable/test"
             android:padding="5dp"
             android:text="   End Date"
+            android:fontFamily="@font/enjoy"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/createBtn"
@@ -65,8 +70,9 @@
             android:layout_below="@+id/end_date"
             android:layout_marginTop="8dp"
             android:padding="5dp"
-            android:textSize="20sp"
-            android:text="Create New Plan!"
+            android:textSize="50sp"
+            android:text="여행 만들기"
+            android:fontFamily="@font/enjoy"
             android:background="#62ffffff" />
 
     </RelativeLayout>

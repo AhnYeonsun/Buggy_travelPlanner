@@ -23,10 +23,10 @@
         <activity android:name=".AddPlan"
             android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".Checklist"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing" /> //adjustNothing은 레이아웃이 키보드 영향 안받음
         <activity android:name=".PlanDetail" />
         <activity android:name=".SetDetail"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Home" />
         <activity android:name=".Reccommend"/>
         <!--<activity android:name=".fragment_recom_cultural" />-->

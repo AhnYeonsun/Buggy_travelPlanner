@@ -29,6 +29,7 @@ public class AddPlan extends AppCompatActivity {
     Button createBtn;
     String startDate = "", endDate="", plan, temp1, temp2;
     String date1="", date2="";
+    String planTitle = "";
     DatePickerDialog datePickerDialog;
     boolean check=false;//마지막날짜가 더 늦은지 확인
     private long calDateDays;
@@ -137,6 +138,7 @@ public class AddPlan extends AppCompatActivity {
                     String duration = start_date.getText().toString()+" - " +end_date.getText().toString();
                     adapter.addItem(plan_name.getText().toString(),duration);
                     System.out.println(plan_name.getText().toString()+start_date.getText().toString());
+                    planTitle = plan_name.getText().toString();
                     plan_name.setText("");
                     start_date.setText("Start Date");
                     end_date.setText("End Date");
@@ -158,7 +160,8 @@ public class AddPlan extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 Intent intent = new Intent(getApplicationContext(), PlanDetail.class);
-                intent.putExtra("title", plan_name.getText().toString());
+
+                intent.putExtra("title", planTitle);
                 intent.putExtra("days", calDateDays+"");
                 intent.putExtra("startDay", date1);
                 intent.putExtra("endDat", date2);
@@ -187,15 +190,13 @@ public class AddPlan extends AppCompatActivity {
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-                return false;
+                return true;
             }
         });
 
     }
 
     public void doDifferent() {
-        /*String s=date_first.getText().toString();
-        String e=date_last.getText().toString();*/
 
         date1 = start_date.getText().toString();
         date2 = end_date.getText().toString();

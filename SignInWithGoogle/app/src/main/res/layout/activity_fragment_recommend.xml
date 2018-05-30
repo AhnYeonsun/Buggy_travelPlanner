@@ -35,14 +35,16 @@
                 android:id="@+id/regionList"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:entries="@array/province" />
+                android:entries="@array/province"
+                />
 
             <Spinner
                 android:id="@+id/sigunguList"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/regionList" />
+                android:layout_toEndOf="@+id/regionList"
+               />
 
             <Button
                 android:id="@+id/searchBtn"

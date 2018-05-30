@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginpage"
     android:padding="10dp"
     tools:context="com.example.ahn.signinwithgoogle.Checklist">
 
-    <AutoCompleteTextView
+    <android.support.design.widget.TextInputEditText
         android:id="@+id/addBar"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
@@ -15,16 +16,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:completionThreshold="2"
-        android:hint="짐 뭐 챙길까? 고민고민"
+        android:hint="버킷리스트를 작성해 주세요"
+        android:background="#6cffffff"
+        android:padding="5dp"
         android:inputType="text" />
 
     <ImageButton
         android:id="@+id/addbtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/addBar"
         android:background="@android:color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/plus" />
@@ -43,14 +47,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:listSelector="#FF9999"></ListView>
+            android:listSelector="#FF9999"
+            android:background="#91ffffff"></ListView>
 
         <ListView
             android:id="@+id/luggageList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:longClickable="true"></ListView>
+            android:longClickable="true"
+            android:background="#91ffffff"></ListView>
 
     </LinearLayout>
 

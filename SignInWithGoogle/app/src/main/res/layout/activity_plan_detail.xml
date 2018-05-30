@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlanDetail">
+    tools:context=".PlanDetail"
+    android:background="@drawable/loginpage"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:weightSum="10">
 
-    <Button
-        android:id="@+id/show"
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="2">
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="여기는 검색 기능 넣을꺼야... 아마..."
-        android:background="#ff9966"/>
-
-    <ExpandableListView
-        android:id="@+id/listview"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:dividerHeight="0dp"
-        android:groupIndicator="@null"
-        android:layout_below="@+id/show"
-        android:descendantFocusability="beforeDescendants"
-        android:listSelector="#b6d49d"/>
+        android:background="#95ffffff"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/enjoy"
+        android:textSize="50sp"
+        android:text="세부 여행 계획"
+        android:id="@+id/planTitle"
+        android:gravity="center_horizontal|center_vertical"/>
 
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:layout_marginBottom="4dp"
+        >
+        <ExpandableListView
+            android:id="@+id/listview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp"
+            android:divider="#b5d39c"
+            android:groupIndicator="@null"
+            android:textSize="30sp"
+            android:fontFamily="@font/enjoy"
+            android:background="#97ffffff"
+            android:descendantFocusability="beforeDescendants"
+            android:listSelector="#b6d49d"/>
+
+    </LinearLayout>
     <!-- 소윤소윤 : 요기 플로팅 버튼 부분 이모티콘 바꿔주세요~~~~~~-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="bottom|end"
-        android:layout_marginBottom="24dp"
-        android:layout_marginEnd="26dp"
         android:src="@android:drawable/ic_dialog_email" />
 
-</RelativeLayout>
+</LinearLayout>
