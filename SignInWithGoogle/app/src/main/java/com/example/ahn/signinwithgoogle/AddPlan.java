@@ -41,6 +41,8 @@ public class AddPlan extends AppCompatActivity {
     private long calDateDays;
     private AlertDialog.Builder builder;
 
+    public String[] daysOfNewPlan;
+
     private FirebaseAuth mAuth;
     private DatabaseReference addPlan;
 
@@ -162,11 +164,12 @@ public class AddPlan extends AppCompatActivity {
                     int d1 = Integer.parseInt(date1.substring(8,10));
                     int m2 = Integer.parseInt(date2.substring(5,7));
                     int d2 = Integer.parseInt(date2.substring(8,10));
-                    String[] daysOfNewPlan = new String[(int)calDateDays+1];
+                    daysOfNewPlan = new String[(int)calDateDays+1];
                     String tempDate = date1;
                     int tempM = m1;
                     int tempD = d1;
                     int tempY = y1;
+                    Log.d("NNNN :::", calDateDays+"");
                     if(m1==m2){
                         for (int i = 0; i < (int)calDateDays+1; i++){
                             tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
@@ -208,7 +211,8 @@ public class AddPlan extends AppCompatActivity {
 
                     for (int i = 0; i < (int)calDateDays+1; i++) {
                         ObjectForBlank o1 = new ObjectForBlank(i, "tempString", i);
-                        addPlan.child("Users").child(mUser.getUid()).child(planTitle).child(daysOfNewPlan[i]).setValue(o1);
+                        //addPlan.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(o1);
+                        Log.d("BBB", daysOfNewPlan[i]);
                     }
                 }
                 else
@@ -218,8 +222,11 @@ public class AddPlan extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(plan_name.getWindowToken(), 0);
 
                 adapter.notifyDataSetChanged();
+                GetDaysForTravel getDaysForTravel = new GetDaysForTravel(daysOfNewPlan);
+                GetDaysForTravel getDaysForTravel1 = new GetDaysForTravel(planTitle);
             }
         });
+
 
         planListview.setAdapter(adapter);
 
@@ -261,7 +268,9 @@ public class AddPlan extends AppCompatActivity {
             }
         });
 
+
     }
+
 
     public void doDifferent() {
 

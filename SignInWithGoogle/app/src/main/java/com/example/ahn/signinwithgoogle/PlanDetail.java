@@ -28,8 +28,8 @@ public class PlanDetail extends AppCompatActivity {
     String titleStr;
     int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
 
-    PlanDetail(){}
-    PlanDetail(String n, String t){
+    public PlanDetail(){}
+    public PlanDetail(String n, String t){
         this.numStr = n;
         this.titleStr = t;
     }

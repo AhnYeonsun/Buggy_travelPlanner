@@ -14,6 +14,11 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 
@@ -24,6 +29,10 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     GroupViewHolder groupViewHolder;
     ChildViewHolder childViewHolder;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlanDetail;
+
 
     public String spot = "";
     Context mContext;
@@ -94,6 +103,8 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         ExpandableListView eLV = (ExpandableListView) parent;
         eLV.expandGroup(groupPosition);
 
+
+
         groupViewHolder.tvTitle.setText(groupItem.get(groupPosition).getTitle());
 
         groupViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() { //여기서 이제 장소 받아줘야지
@@ -102,7 +113,7 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
                 Intent intent = new Intent(mContext.getApplicationContext(), SetDetail.class);
                 intent.setFlags(groupPosition);//adapter 생성시, 이미 context받아왔으니까...
-                ((Activity)mContext).startActivityForResult(intent,0); //여기서 인텐트 보내가지고 받아오는 정보들을... line 120에서 계속
+                ((Activity)mContext).startActivityForResult(intent,10); //여기서 인텐트 보내가지고 받아오는 정보들을... line 120에서 계속
             }
         });
 
@@ -110,22 +121,42 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         groupViewHolder.btnTransport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { //여기 연선이 해야되는 부분!!
-                groupItem.get(groupPosition).getArrayList().add(new ChildItems("다윤이"));
+                groupItem.get(groupPosition).getArrayList().add(new ChildItems("다윤이",""));
                 getChildrenCount(groupPosition);
                 notifyDataSetChanged();
             }
         });
         return convertView;
     }
+    //@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlanDetail = FirebaseDatabase.getInstance().getReference();
         //여기서 받아가지고 날짜 별로 넣어주는데 이제는 이렇게 안하고 디비에 넣은다음에 가져와야해요
         //일단 아직 스팟밖에 안받아주는데 이건 추후(곧) 추가될 부분
         //dayposition은 들어가는 날짜(ex. 1일차, 2일차 등등)
         //여기서는 디비에 넣어주는 것만 하면됨
         //디비에서 가져와서 업데이트 해줄 listview는 line 134부터 계속
-        spot = data.getStringExtra("spot");
-        groupItem.get(data.getIntExtra("dayposition",0)).getArrayList().add(new ChildItems(spot));
+        //super.onActivityResult(requestCode, resultCode, data);
 
+        spot = data.getStringExtra("spot");
+        Double x = data.getDoubleExtra("MapX", 0);
+        Double y = data.getDoubleExtra("MapY", 0);
+        String memo = data.getStringExtra("memo");
+        groupItem.get(data.getIntExtra("dayposition",0)).getArrayList().add(new ChildItems(spot, memo));
+
+        int index = data.getIntExtra("dayposition",0);
+        Log.d("DDD", spot);
+        Log.d("DDD", index+"");
+
+        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+        String[] AllDays = getDaysForTravel.getPD();
+        Log.d("B", AllDays[0]);
+
+        String planTitle = getDaysForTravel.getTitle();
+        ChildItems childItems = new ChildItems(spot, x, y, memo, AllDays[index]);
+        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(childItems);
         notifyDataSetChanged();
     }
 

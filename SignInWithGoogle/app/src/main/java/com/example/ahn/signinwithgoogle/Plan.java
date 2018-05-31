@@ -6,6 +6,7 @@ public class Plan {
     public double mapX;
     public double mapY;
     public String message;
+    public String Day;
 
     Plan(String t, String a, double x, double y, String m){
         this.title = t;

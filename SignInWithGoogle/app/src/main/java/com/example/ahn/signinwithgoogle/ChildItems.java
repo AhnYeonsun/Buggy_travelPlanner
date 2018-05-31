@@ -1,24 +1,34 @@
 package com.example.ahn.signinwithgoogle;
 
-import android.util.Log;
-
 /**
  * Created by SOSO on 2018-05-20.
  */
 public class ChildItems {
-    String value;
+    String planName = "";
+    public double planMapX = 0;
+    public double planMapY = 0;
+    public String planMessage = "";
+    public String planDay = "";
 
-    public ChildItems(String value) {
-        this.value = value;
+    public ChildItems(String name, String message){
+        this.planName = name;
+        this.planMessage = message;
+    }
+
+    public ChildItems(String name, double x, double y, String m, String d) {
+        this.planName = name;
+        this.planMapX = x;
+        this.planMapY = y;
+        this.planMessage = m;
+        this.planDay = d;
     }
 
     public String getValue() {
-        Log.d("value**********",value);
-        return value;
+        return planName;
 
     }
 
     public void setValue(String value) {
-        this.value = value;
+        this.planName = value;
     }
 }
