@@ -47,7 +47,9 @@ public class SetDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 /// 욘똔리더님 여기에 지도(위치 확인)해주세여
-                
+                //startActivity(new Intent(this, MapActivity.class));
+                Intent goMap = new Intent(getApplicationContext() , MapActivity.class);
+                startActivity(goMap);
             }
         });
     }
