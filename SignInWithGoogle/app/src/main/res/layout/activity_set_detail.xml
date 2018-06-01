@@ -18,10 +18,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="122dp"
-            android:layout_marginTop="50dp"
+            android:layout_centerInParent="true"
             android:src="@drawable/buggy" />
     </RelativeLayout>
 
@@ -37,47 +34,54 @@
             android:layout_height="39dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="43dp"
+            android:layout_marginTop="11dp"
             android:fontFamily="@font/enjoy"
-            android:text="어디갈램"
-            android:layout_marginBottom="8dp"
+            android:text="어디갈래요?"
             android:textSize="40sp" />
 
         <EditText
             android:id="@+id/spot"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_above="@+id/memotxt"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/locatontxt"
+            android:layout_marginBottom="-100dp"
+            android:background="#34aeaeae"
             android:ems="10"
+            android:fontFamily="@font/enjoy"
+            android:gravity="top"
             android:hint="장소를 입력해주세요"
             android:inputType="textPersonName"
-            android:fontFamily="@font/enjoy"
-            android:textSize="30sp"/>
+            android:padding="5dp"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/memotxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
             android:fontFamily="@font/enjoy"
-            android:layout_marginBottom="8dp"
             android:text="메모"
             android:textSize="40sp" />
 
         <EditText
             android:id="@+id/memo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/memotxt"
+            android:layout_height="130dp"
             android:layout_alignParentBottom="true"
+            android:layout_below="@+id/memotxt"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="99dp"
+            android:layout_marginBottom="72dp"
+            android:background="#34aeaeae"
             android:ems="10"
+            android:fontFamily="@font/enjoy"
+            android:gravity="top"
             android:hint="간단한 메모를 입력해주세요"
             android:inputType="textPersonName"
-            android:fontFamily="@font/enjoy"
-            android:textSize="30sp"/>
+            android:padding="5dp"
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/map"

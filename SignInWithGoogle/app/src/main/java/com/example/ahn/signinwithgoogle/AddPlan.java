@@ -153,8 +153,8 @@ public class AddPlan extends AppCompatActivity {
                     System.out.println(plan_name.getText().toString()+start_date.getText().toString());
                     planTitle = plan_name.getText().toString();
                     plan_name.setText("");
-                    start_date.setText("Start Date");
-                    end_date.setText("End Date");
+                    start_date.setText("");
+                    end_date.setText("");
                     check=false;
 
                     //yyyy-MM-dd

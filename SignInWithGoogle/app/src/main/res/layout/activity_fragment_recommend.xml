@@ -46,6 +46,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/regionList"
+                android:minWidth="60dp"
                />
 
             <Button
@@ -54,10 +55,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:background="#1a4a83"
                 android:textColor="#ffffff"
                 android:padding="5dp"
                 android:fontFamily="@font/enjoy"
+                android:background="@drawable/reccomend_background"
                 android:textSize="20sp"
                 android:text="추천" />
         </RelativeLayout>
@@ -147,6 +148,8 @@
         android:layout_gravity="bottom|end"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="26dp"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/resize_float"
+        app:backgroundTint="@color/common_google_signin_btn_text_light_focused"
+        app:rippleColor="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>

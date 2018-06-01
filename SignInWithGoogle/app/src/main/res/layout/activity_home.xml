@@ -57,7 +57,6 @@
                     android:text="여행 추가"
                     android:textSize="30sp" />
             </TableRow>
-
             <TableRow>
 
                 <Button
@@ -72,6 +71,10 @@
                     android:src="@drawable/recommend"
                     android:text="여행 추천"
                     android:textSize="30sp" />
+
+            </TableRow>
+            <TableRow>
+
 
             </TableRow>
 
@@ -102,7 +105,7 @@
                     android:fontFamily="@font/enjoy"
                     android:scaleType="centerInside"
                     android:src="@drawable/setting"
-                    android:text="설정"
+                    android:text="개발자정보"
                     android:textSize="30sp" />
             </TableRow>
 

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginpage"
     android:orientation="vertical"
     android:paddingTop="50dp"
-    android:background="@drawable/loginpage"
     tools:context="com.example.ahn.signinwithgoogle.AddPlan">
 
     <RelativeLayout
@@ -22,11 +22,11 @@
             android:layout_height="wrap_content"
             android:background="#62ffffff"
             android:drawableLeft="@drawable/resize_plan"
-            android:hint="   Write your new Travel name"
-            android:textSize="30sp"
             android:fontFamily="@font/enjoy"
+            android:hint="   여행이름을 적어주세요"
             android:padding="5dp"
-            android:textColorHint="#000000" />
+            android:textColorHint="#000000"
+            android:textSize="30sp" />
 
 
         <TextView
@@ -40,10 +40,10 @@
             android:background="#2bffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
-            android:padding="5dp"
-            android:text="   Start Date"
             android:fontFamily="@font/enjoy"
-            android:textColor="#000000"
+            android:hint="   시작날"
+            android:padding="5dp"
+            android:textColorHint="#000000"
             android:textSize="30sp" />
 
         <TextView
@@ -57,10 +57,10 @@
             android:background="#62ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
-            android:padding="5dp"
-            android:text="   End Date"
             android:fontFamily="@font/enjoy"
-            android:textColor="#000000"
+            android:hint="   마지막날"
+            android:padding="5dp"
+            android:textColorHint="#000000"
             android:textSize="30sp" />
 
         <Button
@@ -69,11 +69,11 @@
             android:layout_height="58dp"
             android:layout_below="@+id/end_date"
             android:layout_marginTop="8dp"
-            android:padding="5dp"
-            android:textSize="50sp"
-            android:text="여행 만들기"
+            android:background="#62ffffff"
             android:fontFamily="@font/enjoy"
-            android:background="#62ffffff" />
+            android:padding="5dp"
+            android:text="여행 만들기"
+            android:textSize="50sp" />
 
     </RelativeLayout>
 
@@ -101,6 +101,7 @@
 
         </ListView>
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
