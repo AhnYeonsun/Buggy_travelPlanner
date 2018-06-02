@@ -50,10 +50,6 @@
         <!-- <activity android:name=".fragment_recom_shopping" /> -->
         <!-- <activity android:name=".fragment_recom_food" /> -->
         <activity android:name=".MapActivity" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme" />
         <activity android:name=".Navigation"
             android:windowSoftInputMode="adjustPan">
         </activity>

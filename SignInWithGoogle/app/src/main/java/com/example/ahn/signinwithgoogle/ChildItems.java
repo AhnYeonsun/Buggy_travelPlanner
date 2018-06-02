@@ -1,8 +1,6 @@
-package com.example.ahn.signinwithgoogle;
+/*package com.example.ahn.signinwithgoogle;
 
-/**
- * Created by SOSO on 2018-05-20.
- */
+
 public class ChildItems {
     String planName = "";
     public double planMapX = 0;
@@ -32,3 +30,4 @@ public class ChildItems {
         this.planName = value;
     }
 }
+*/

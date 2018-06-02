@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +51,12 @@ public class Recommend extends AppCompatActivity {
     String regionCode = new String();
     boolean check = false;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference addRecomByday;
+    private DatabaseReference getTempRecom;
+
+    public int dayIndex;
+
     private ViewPager mViewPager;
 
     @Override
@@ -48,6 +64,14 @@ public class Recommend extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_recommend);
         informIntent = getIntent();
+
+        //Firebase Database setting
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
+        addRecomByday = FirebaseDatabase.getInstance().getReference();
+        getTempRecom = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("TravelTemp");
+        //Iterable<DataSnapshot> iterable = getTempRecom.
+
 
         // ******* 지역 스피너 리스트 세팅********* //
         regionSpinnerList = findViewById(R.id.regionList);
@@ -114,11 +138,11 @@ public class Recommend extends AppCompatActivity {
         });
 
         FloatingActionButton addRecom = (FloatingActionButton) findViewById(R.id.addRecom);
-        addRecom.setOnClickListener(new View.OnClickListener(){
+        addRecom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 days = informIntent.getIntExtra("day", 0);
-                final String[] items = new String[days+1];
+                final String[] items = new String[days + 1];
 
                 if (days != 0) {
                     items[0] = "전체 날짜";
@@ -131,11 +155,13 @@ public class Recommend extends AppCompatActivity {
                     builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            dayIndex = which;
                             Toast.makeText(getApplicationContext(), items[which], Toast.LENGTH_LONG).show(); //items[which]가 유저가 선택한 날짜
                         }
                     });
 
                     //******* 온돈온돈 *********8//
+                    ObjectForBlank objectForBlank = new ObjectForBlank(1,"1",1.1);
                     builder.setPositiveButton("넣어주라줘", new DialogInterface.OnClickListener() { //이때 알고리즘 돌려서 알맞은 날짜에 디비랑 넣어주면 되염
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -144,8 +170,40 @@ public class Recommend extends AppCompatActivity {
 //                            informIntent.getStringExtra("endDay");        //여행 마지막 날짜
 //                            days                                          //총 여행 일수
 
+                            //DB에 Object Plan 형식으로 넣음. 똑같이 가져온 후, 맞은 일차에 넣고 temp 비우면 됨.
+                            //전체 Days, title 불러오기
+                            GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+                            String[] AllDays = getDaysForTravel.getPD();
+                            final String planTitle = getDaysForTravel.getTitle();
+                            if (dayIndex == 0) { //전체 + 알고리즘
+
+                            } else {
+                                //일차에 맞게 넣어주기
+                                // AllDays의 0,1,2,... 는 whichButton의 1,2,3...과 같음. 주의***************
+                                // Temp DB에 있는 객체들에게 날짜 부여 후 메인 플랜 DB에 넣기.
+                                final String setday = AllDays[dayIndex - 1]; //넣어야할 날
+                                ValueEventListener travelTempListener = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                            Plan plan = child.getValue(Plan.class);
+                                            plan.Day = setday;
+                                            addRecomByday.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                };
+                                getTempRecom.addListenerForSingleValueEvent(travelTempListener);
+
+                            }
+
                         }
                     });
+
                     builder.setNegativeButton("생각 좀....", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -157,6 +215,13 @@ public class Recommend extends AppCompatActivity {
             }
 
         });
+
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        getTempRecom.removeValue();
+
     }
 
     public String getRegionItem() {

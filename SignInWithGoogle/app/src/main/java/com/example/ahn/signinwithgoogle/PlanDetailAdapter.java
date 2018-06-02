@@ -27,7 +27,6 @@ import java.util.List;
 // ***** 온돈온돈 ******//
 public class PlanDetailAdapter extends BaseExpandableListAdapter {
     AlertDialog.Builder builder;
-    ArrayList<GroupItem> groupItem;
 
     private List<String> group;
     private HashMap<String, List<String>> child;
