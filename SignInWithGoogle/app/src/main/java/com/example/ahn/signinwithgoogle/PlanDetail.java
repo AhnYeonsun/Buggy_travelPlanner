@@ -1,18 +1,29 @@
 package com.example.ahn.signinwithgoogle;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class PlanDetail extends AppCompatActivity {
@@ -22,10 +33,18 @@ public class PlanDetail extends AppCompatActivity {
     Intent informIntent;
     FloatingActionButton goRecom;
     ExpandableListView elv;
-    PlanDetailAdapter adapter;
+    PlanDetailAdapter listAdapter;
+    List<String> listDataGroup;
+    HashMap<String, List<String>> listDataChild;
     TextView plan_name;
     String numStr;
     String titleStr;
+    Button addBtn, transportBtn;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlanDetail;
+
+
     int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
 
     public PlanDetail(){}
@@ -46,25 +65,77 @@ public class PlanDetail extends AppCompatActivity {
         plan_name=findViewById(R.id.planTitle);
         plan_name.setText(titleStr);
 
-        arrayList = new ArrayList<>();
-        //여행일수만큼 groupitem 생성
-        for(int i=0;i<num+1;i++)//+1해줘야지 마지막날까지 나옴
-        {
-            String s = String.valueOf(i+1);
-            arrayList.add(new GroupItem(s+"일차"));
-        }
+        elv = (ExpandableListView) findViewById(R.id.listview);
+        prepareListData();
+        listAdapter = new PlanDetailAdapter(this,listDataGroup, listDataChild);
 
-        elv = findViewById(R.id.listview);
-        adapter = new PlanDetailAdapter(PlanDetail.this, arrayList);
-        adapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-        elv.setAdapter(adapter);
+        elv.setAdapter(listAdapter);
 
+        //그룹선택할때
+        elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                return false;
+            }
+        });
+
+        //그룹확장
+        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+
+            }
+        });
+
+        //그룹축소
+        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+            }
+        });
+
+        //차일드 클릭할때
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int grouPosition, int chilPosition, long id){
+
+                return false;
+            }
+
+        });
+
+//        //차일드 길게 클릭할때
+//        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
+//                builder.setTitle("Delete Detail")
+//                        .setMessage("Are you sure to delete "+ arrayList.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
+//                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
+//                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                arrayList.get(groupPosition).getArrayList().remove(childPosition);
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        })
+//                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//                return true;
+//            }
+//        });*/
 
         goRecom = (FloatingActionButton) findViewById(R.id.fab);
         goRecom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Reccommend.class);
+                Intent intent = new Intent(getApplicationContext(), Recommend.class);
                 intent.putExtra("title", informIntent.getStringExtra("title"));
                 intent.putExtra("startDay", informIntent.getStringExtra("startDay"));
                 intent.putExtra("endDay", informIntent.getStringExtra("endDay"));
@@ -73,36 +144,47 @@ public class PlanDetail extends AppCompatActivity {
             }
         });
 
-      /*  ////////////////////////
-        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        addBtn = (Button)getLayoutInflater().inflate(R.layout.list_header, null, false).findViewById(R.id.addDetail);
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
-                builder.setTitle("Delete Detail")
-                        .setMessage("Are you sure to delete "+ arrayList.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
-                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                arrayList.get(groupPosition).getArrayList().remove(childPosition);
-                                adapter.notifyDataSetChanged();
-                            }
-                        })
-                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                return true;
+            public void onClick(View v) {
+                Intent goSetDetail = new Intent(getApplicationContext(), SetDetail.class);
+                startActivity(goSetDetail);
             }
-        });*/
+        });
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        adapter.onActivityResult(requestCode, resultCode, data);
+    private void prepareListData(){
+
+    }
+
+
+    /////////////////여기가 setDetail.class에서 인텐트 받아오는곣///////////
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlanDetail = FirebaseDatabase.getInstance().getReference();
+
+        String spot = data.getStringExtra("spot");
+        Double x = data.getDoubleExtra("MapX", 0);
+        Double y = data.getDoubleExtra("MapY", 0);
+        String memo = data.getStringExtra("memo");
+
+//        groupItem.get(data.getIntExtra("dayposition",0)).getArrayList().add(new ChildItems(spot, memo));
+//
+//        int index = data.getIntExtra("dayposition",0);
+//        Log.d("DDD", spot);
+//        Log.d("DDD", index+"");
+//
+//        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+//        String[] AllDays = getDaysForTravel.getPD();
+//        Log.d("B", AllDays[0]);
+//
+//        String planTitle = getDaysForTravel.getTitle();
+//        ChildItems childItems = new ChildItems(spot, x, y, memo, AllDays[index]);
+//        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(childItems);
+//        notifyDataSetChanged();
     }
 
     //액션바 수정해야함 -> 스택에 쌓이는 거 볼수 있도록
@@ -128,16 +210,4 @@ public class PlanDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setNumStr(String modifyNum){
-        this.numStr = modifyNum;
-    }
-    public void setTitleStr(String modifyTitle){
-        this.titleStr = modifyTitle;
-    }
-    public String getNumStr(){
-        return this.numStr;
-    }
-    public String getTitleStr(){
-        return this.titleStr;
-    }
 }

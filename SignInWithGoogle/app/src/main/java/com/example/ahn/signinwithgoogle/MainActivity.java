@@ -71,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mUser = mAuth.getCurrentUser();//***************************************
-
+//////////////
                 if(mUser != null) {
                     //Go to next Page : HOME
-                    Intent intent = new Intent(getApplicationContext(),Home.class);
+                    Intent intent = new Intent(getApplicationContext(),Navigation.class); //원래 home 이었음!!!!!!!!!!!
                     startActivity(intent);
                 }
             }

@@ -37,7 +37,7 @@ public class fragment_Recom_all extends Fragment {
 
     private String region = "", sigungu = "", contentTypeID = "";
     AlertDialog.Builder builder;
-    Reccommend FR;
+    Recommend FR;
     Handler handler;
     int count = 0;
     ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
@@ -55,7 +55,7 @@ public class fragment_Recom_all extends Fragment {
         // listViewAdapter = new RecomListViewAdapter();// Adapter 생성
         bundle=getArguments();
 
-        FR = (Reccommend) getActivity();
+        FR = (Recommend) getActivity();
         getArea = FR.getObject();
 //        searchBtn = FR.findViewById(R.id.searchBtn);
 //        searchBtn.setOnClickListener(new View.OnClickListener() {

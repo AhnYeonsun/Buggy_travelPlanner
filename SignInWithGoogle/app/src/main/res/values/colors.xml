@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="SeSSapGreen">#FFCCCC</color>
     <color name="menuColor">#FF9999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="white_trans">#99FFFFFF</color>
 </resources>

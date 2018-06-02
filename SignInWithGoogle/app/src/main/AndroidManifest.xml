@@ -6,11 +6,12 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-<!--
+
+    <!--
     <meta-data
         android:name="com.kakao.sdk.AppKey"
-        android:value="3dde7e865dc040ff89b50813840dbc02" />-->
-
+        android:value="3dde7e865dc040ff89b50813840dbc02" />
+    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,9 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+        <!--<activity
             android:name=".AddPlan"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing" />-->
         <activity
             android:name=".Checklist"
             android:windowSoftInputMode="adjustNothing" />
@@ -40,7 +41,7 @@
             android:name=".SetDetail"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Home" />
-        <activity android:name=".Reccommend" />
+        <activity android:name=".Recommend" />
         <!-- <activity android:name=".fragment_recom_cultural" /> -->
         <!-- <activity android:name=".fragment_recom_event" /> -->
         <!-- <activity android:name=".fragment_recom_course" /> -->
@@ -48,7 +49,14 @@
         <!-- <activity android:name=".fragment_recom_accom" /> -->
         <!-- <activity android:name=".fragment_recom_shopping" /> -->
         <!-- <activity android:name=".fragment_recom_food" /> -->
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Navigation"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
     </application>
 
 </manifest>

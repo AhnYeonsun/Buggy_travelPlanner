@@ -5,16 +5,23 @@ package com.example.ahn.signinwithgoogle;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class Checklist extends AppCompatActivity {
+public class Checklist extends android.support.v4.app.Fragment {
+    public static Checklist newInstance() {
+        Checklist fragment = new Checklist();
+        return fragment;
+    }
 
     String TAG = "logging";
 
@@ -27,26 +34,26 @@ public class Checklist extends AppCompatActivity {
     EditText addBar; // 추가할 친구들
     AlertDialog.Builder builder; // 꾹 누르면 이벤트 생성(삭제할때 꾹 누르면 알림창떠서 삭제 가능하게, 나중에 추가할 것: 소분류 꾹 누르면 체크리스트에 추가가능하도록)
 
-    String luggageTypeList[]={"여행소지품","미용용품","샤워용품","전자용품","필수용품","일상용품","의약품","기타"};
+    String luggageTypeList[] = {"여행소지품", "미용용품", "샤워용품", "전자용품", "필수용품", "일상용품", "의약품", "기타"};
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checklist);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_checklist, container, false);
 
-        builder=new AlertDialog.Builder(this);
+        builder = new AlertDialog.Builder(getActivity());
 
-        final ListView listview ;
+        final ListView listview;
         final ChecklistListViewAdapter adapter;
-        aboutLuggageType();
-        addBar=findViewById(R.id.addBar);
-        addbtn=findViewById(R.id.addbtn);
+        aboutLuggageType(view);
+        addBar = view.findViewById(R.id.addBar);
+        addbtn = view.findViewById(R.id.addbtn);
 
         // Adapter 생성
-        adapter = new ChecklistListViewAdapter(this);
+        adapter = new ChecklistListViewAdapter(getActivity());
 
         // 리스트뷰 참조 및 Adapter달기
-        listview = (ListView) findViewById(R.id.userItemList);
+        listview = (ListView) view.findViewById(R.id.userItemList);
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,19 +61,20 @@ public class Checklist extends AppCompatActivity {
                 addBar.setText("");
 
                 //입력 후 키보드 감추기
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(addBar.getWindowToken(), 0);
             }
         });
 
         listview.setAdapter(adapter);
-
+        return view;
     }
+
     //대분류
-    public void aboutLuggageType()
+    public void aboutLuggageType(View view)
     {
-        category=findViewById(R.id.luggageType);
-        ArrayAdapter<String> LugguageTypeAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, luggageTypeList);
+        category=view.findViewById(R.id.luggageType);
+        ArrayAdapter<String> LugguageTypeAdapter = new ArrayAdapter<String>(getActivity(), R.layout.support_simple_spinner_dropdown_item, luggageTypeList);
         category.setAdapter(LugguageTypeAdapter);
     }
 }

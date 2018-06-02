@@ -51,4 +51,9 @@
     <string name="tab_text_8">Shopping</string>
     <string name="tab_text_9">Food</string>
     <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="item_1">Create</string>
+    <string name="item_2">Bucketlist</string>
+    <string name="item_3">Info</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

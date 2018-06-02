@@ -2,13 +2,17 @@ package com.example.ahn.signinwithgoogle;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -30,7 +34,11 @@ import java.util.Date;
 
 import es.dmoral.toasty.Toasty;
 
-public class AddPlan extends AppCompatActivity {
+public class AddPlan extends android.support.v4.app.Fragment {
+    public static AddPlan newInstance() {
+        AddPlan fragment = new AddPlan();
+        return fragment;
+    }
     EditText plan_name;
     TextView start_date;
     TextView end_date;
@@ -48,23 +56,23 @@ public class AddPlan extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference addPlan;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_plan);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_add_plan,container,false);
 
-        start_date=findViewById(R.id.start_date);
-        end_date=findViewById(R.id.end_date);
-        createBtn=findViewById(R.id.createBtn);
-        plan_name=findViewById(R.id.plan_name);
+        start_date=view.findViewById(R.id.start_date);
+        end_date=view.findViewById(R.id.end_date);
+        createBtn=view.findViewById(R.id.createBtn);
+        plan_name=view.findViewById(R.id.plan_name);
 
 
         final ListView planListview;
         final CreatePlanAdapter adapter;
 
-        planListview = findViewById(R.id.planListview);
-        adapter=new CreatePlanAdapter(this);
-        builder=new AlertDialog.Builder(this);
+        planListview = view.findViewById(R.id.planListview);
+        adapter=new CreatePlanAdapter(getActivity()); //this -> getActivity()
+        builder=new AlertDialog.Builder(getActivity());
 
         start_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +83,7 @@ public class AddPlan extends AppCompatActivity {
                 int mMonth = c.get(Calendar.MONTH); // current month
                 int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // date picker dialog
-                datePickerDialog = new DatePickerDialog(AddPlan.this,
+                datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -112,7 +120,7 @@ public class AddPlan extends AppCompatActivity {
                 int mMonth = c.get(Calendar.MONTH); // current month
                 int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
                 // date picker dialog
-                datePickerDialog = new DatePickerDialog(AddPlan.this,
+                datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -216,15 +224,15 @@ public class AddPlan extends AppCompatActivity {
                         //addPlan.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(o1);
                         Log.d("BBB", daysOfNewPlan[i]);
                     }
-                    Toasty.success(getApplicationContext(), "성공 : 여행이 만들어졌어요!", Toast.LENGTH_LONG, true).show();
+                    Toasty.success(getActivity().getApplicationContext(), "성공 : 여행이 만들어졌어요!", Toast.LENGTH_LONG, true).show();
                 }
                 else{
                     //Toast.makeText(getApplicationContext(),"error: check your last date",Toast.LENGTH_LONG).show();
-                    Toasty.warning(getApplicationContext(), "오류 : 날짜를 확인해주세요!", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(getActivity().getApplicationContext(), "오류 : 날짜를 확인해주세요!", Toast.LENGTH_LONG, true).show();
                 }
 
                 //입력 후 키보드 감추기
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(plan_name.getWindowToken(), 0);
 
                 adapter.notifyDataSetChanged();
@@ -239,7 +247,7 @@ public class AddPlan extends AppCompatActivity {
         planListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                Intent intent = new Intent(getApplicationContext(), PlanDetail.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), PlanDetail.class);
 
                 intent.putExtra("title", planTitle);
                 intent.putExtra("days", calDateDays+"");
@@ -274,7 +282,7 @@ public class AddPlan extends AppCompatActivity {
             }
         });
 
-
+        return view;
     }
 
 
@@ -311,4 +319,5 @@ public class AddPlan extends AppCompatActivity {
         }
 
     }
+
 }

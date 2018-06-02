@@ -34,7 +34,7 @@ public class fragment_recom_leports extends android.support.v4.app.Fragment {
     private String key="", title="", addr="", mapX="", mapY="", imgURL="";
     private int imgId = 0;
     AlertDialog.Builder builder;
-    Reccommend FR;
+    Recommend FR;
     Handler handler;
     HashMap<String, String[]> tourspot = new HashMap<>();
     ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
@@ -51,7 +51,7 @@ public class fragment_recom_leports extends android.support.v4.app.Fragment {
         //listViewAdapter = new RecomListViewAdapter(getActivity());
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 
-        FR = (Reccommend) getActivity();
+        FR = (Recommend) getActivity();
         getArea = FR.getObject();
         //searchBtn = FR.findViewById(R.id.searchBtn);
         //searchBtn.setOnClickListener(new View.OnClickListener() {

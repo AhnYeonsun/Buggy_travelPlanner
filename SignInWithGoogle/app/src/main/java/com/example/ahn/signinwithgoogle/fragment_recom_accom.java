@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +36,7 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
     private String key="", title="", addr="", mapX="", mapY="", imgURL="";
     private int imgId = 0;
     AlertDialog.Builder builder;
-    Reccommend FR;
+    Recommend FR;
     Handler handler;
     HashMap<String, String[]> tourspot = new HashMap<>();
     ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
@@ -51,7 +53,7 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
         //listViewAdapter = new RecomListViewAdapter(getActivity());
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 
-        FR = (Reccommend) getActivity();
+        FR = (Recommend) getActivity();
         getArea = FR.getObject();
         //searchBtn = FR.findViewById(R.id.searchBtn);
         //searchBtn.setOnClickListener(new View.OnClickListener() {
