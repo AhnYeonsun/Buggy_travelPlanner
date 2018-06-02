@@ -78,8 +78,8 @@ public class RecomListViewAdapter extends BaseAdapter{
         titleView.setText(recomListViewItem.getName()); //이름 가져오기
         addressView.setText(recomListViewItem.getAddress()); //주소가져오기
         Glide.with(context).load(recomListViewItem.getMainImg())
-                .placeholder(R.drawable.buggy)
-                .error(R.drawable.buggy)
+                .placeholder(R.drawable.recommend_default)
+                .error(R.drawable.recommend_default)
                 .into(iconImageView);
         return convertView;
     }

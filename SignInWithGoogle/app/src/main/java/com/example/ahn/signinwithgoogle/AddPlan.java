@@ -28,6 +28,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
+
 public class AddPlan extends AppCompatActivity {
     EditText plan_name;
     TextView start_date;
@@ -214,9 +216,13 @@ public class AddPlan extends AppCompatActivity {
                         //addPlan.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(o1);
                         Log.d("BBB", daysOfNewPlan[i]);
                     }
+                    Toasty.success(getApplicationContext(), "성공 : 여행이 만들어졌어요!", Toast.LENGTH_LONG, true).show();
                 }
-                else
-                    Toast.makeText(getApplicationContext(),"error: check your last date",Toast.LENGTH_LONG).show();
+                else{
+                    //Toast.makeText(getApplicationContext(),"error: check your last date",Toast.LENGTH_LONG).show();
+                    Toasty.warning(getApplicationContext(), "오류 : 날짜를 확인해주세요!", Toast.LENGTH_LONG, true).show();
+                }
+
                 //입력 후 키보드 감추기
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(plan_name.getWindowToken(), 0);
@@ -246,17 +252,17 @@ public class AddPlan extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
-                builder.setTitle("Delete Journey")
-                        .setMessage("Are you sure to delete "+planItem.getName().toString()+"?")
+                builder.setTitle("여행 삭제")
+                        .setMessage(planItem.getName().toString()+"을/를 삭제하시겠습니까?")
                         .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 adapter.planItemList.remove(position);
                                 adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
