@@ -1,6 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-import android.content.ClipData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -28,7 +27,7 @@ public class Navigation extends AppCompatActivity {
                                 selectedFragment = AddPlan.newInstance();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = Checklist.newInstance();
+                                selectedFragment = checklist.newInstance();
                                 break;
                             case R.id.action_item3:
                                 selectedFragment = ItemThreeFragment.newInstance();

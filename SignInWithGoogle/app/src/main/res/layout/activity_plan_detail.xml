@@ -1,52 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".PlanDetail"
     android:background="@drawable/loginpage"
     android:padding="16dp"
-    android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    tools:context=".PlanDetail">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="2">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#95ffffff"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/enjoy"
-        android:textSize="50sp"
-        android:text="세부 여행 계획"
-        android:id="@+id/planTitle"
-        android:textStyle="bold"
-        android:gravity="center_horizontal|center_vertical"/>
-
-</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/planTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="16dp"
+            android:background="#95ffffff"
+            android:fontFamily="@font/enjoy"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="세부 여행 계획"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
         android:layout_marginBottom="4dp"
-        >
+        android:layout_weight="8">
+
         <ExpandableListView
             android:id="@+id/listview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:dividerHeight="0dp"
-            android:divider="#b5d39c"
-            android:groupIndicator="@null"
-            android:textSize="30sp"
-            android:fontFamily="@font/enjoy"
             android:background="#97ffffff"
             android:descendantFocusability="beforeDescendants"
-            android:listSelector="#b6d49d"/>
-
+            android:divider="#b5d39c"
+            android:dividerHeight="0dp"
+            android:fontFamily="@font/enjoy"
+            android:groupIndicator="@null"
+            android:listSelector="#b6d49d"
+            android:textSize="30sp" />
     </LinearLayout>
+
     <!-- 소윤소윤 : 요기 플로팅 버튼 부분 이모티콘 바꿔주세요~~~~~~-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -59,4 +58,4 @@
         app:backgroundTint="@color/common_google_signin_btn_text_light_focused"
         app:rippleColor="@android:color/white" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

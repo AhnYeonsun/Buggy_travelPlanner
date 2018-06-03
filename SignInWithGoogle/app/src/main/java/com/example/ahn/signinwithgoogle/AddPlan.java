@@ -66,7 +66,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
         createBtn=view.findViewById(R.id.createBtn);
         plan_name=view.findViewById(R.id.plan_name);
 
-
         final ListView planListview;
         final CreatePlanAdapter adapter;
 
@@ -179,17 +178,17 @@ public class AddPlan extends android.support.v4.app.Fragment {
                     int tempM = m1;
                     int tempD = d1;
                     int tempY = y1;
-                    Log.d("NNNN :::", calDateDays+"");
+
                     if(m1==m2){
                         for (int i = 0; i < (int)calDateDays+1; i++){
                             tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
                             daysOfNewPlan[i] = tempDate;
                             tempD++;
-                            Log.d("AAA", tempDate);
+
                         }
                     }
                     else if(m1 < m2){//달 넘어가는 경우
-                        Log.d("AAA",tempDate);
+
                         for (int i = 0; i < (int)calDateDays+1; i++){
                             tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
                             daysOfNewPlan[i] = tempDate;
@@ -215,14 +214,12 @@ public class AddPlan extends android.support.v4.app.Fragment {
                             else{
                                 tempD++;
                             }
-                            Log.d("BBB",tempDate);
                         }
                     }
 
                     for (int i = 0; i < (int)calDateDays+1; i++) {
                         ObjectForBlank o1 = new ObjectForBlank(i, "tempString", i);
                         //addPlan.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(o1);
-                        Log.d("BBB", daysOfNewPlan[i]);
                     }
                     Toasty.success(getActivity().getApplicationContext(), "성공 : 여행이 만들어졌어요!", Toast.LENGTH_LONG, true).show();
                 }

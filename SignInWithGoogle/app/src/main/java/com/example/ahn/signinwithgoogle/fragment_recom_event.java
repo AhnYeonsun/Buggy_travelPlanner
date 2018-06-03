@@ -48,16 +48,10 @@ public class fragment_recom_event extends android.support.v4.app.Fragment {
         view = inflater.inflate(R.layout.activity_fragment_recom_event, container, false);
         listview1 = view.findViewById(R.id.recom_event);
 
-        //listViewAdapter = new RecomListViewAdapter(getActivity());
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 
         FR = (Recommend) getActivity();
         getArea = FR.getObject();
-        //searchBtn = FR.findViewById(R.id.searchBtn);
-        //searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
         recomlistViewItemList.clear();
         listview1.setAdapter(listViewAdapter);
 
@@ -116,7 +110,6 @@ public class fragment_recom_event extends android.support.v4.app.Fragment {
                         //*****좌표 Y 받아오는 함수 : item.getMapY() ***************//
                         .setCancelable(false)
 
-                        //******************************여기갈랭! 버튼을 누르면 데이터 베이스에 넣어주기*******************//
                         .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -133,7 +126,6 @@ public class fragment_recom_event extends android.support.v4.app.Fragment {
                                 dialog.cancel();
                             }
                         });
-                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
             }

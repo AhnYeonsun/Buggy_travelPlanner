@@ -1,81 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/loginpage"
-    android:padding="10dp"
-    tools:context="com.example.ahn.signinwithgoogle.Checklist">
-
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/addBar"
-        android:layout_width="330dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:completionThreshold="2"
-        android:hint="버킷리스트를 작성해 주세요"
-        android:background="#6cffffff"
-        android:padding="5dp"
-        android:inputType="text" />
-
-    <ImageButton
-        android:id="@+id/addbtn"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignTop="@+id/addBar"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:src="@drawable/plus" />
-
-
-    <LinearLayout
-        android:id="@+id/table"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/addBar">
-
-        <ListView
-            android:id="@+id/luggageType"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:listSelector="#FF9999"
-            android:background="#91ffffff"></ListView>
-
-        <ListView
-            android:id="@+id/luggageList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:longClickable="true"
-            android:background="#91ffffff"></ListView>
-
-    </LinearLayout>
-
+        android:layout_height="match_parent"
+        android:id="@+id/bucketFragment"
+        android:orientation="vertical"
+        android:background="@drawable/loginpage">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/border">
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/modifyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정"/>
 
         <ListView
-            android:id="@+id/userItemList"
+            android:id="@+id/userBucket"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="8dp"
-            android:layout_weight="2"
             android:choiceMode="multipleChoice"
             android:divider="@color/SeSSapGreen"
             android:dividerHeight="2dp"
             android:longClickable="true"></ListView>
     </LinearLayout>
-</RelativeLayout>
+</FrameLayout>

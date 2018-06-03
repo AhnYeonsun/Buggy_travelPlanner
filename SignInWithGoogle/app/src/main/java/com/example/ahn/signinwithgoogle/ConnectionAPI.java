@@ -26,7 +26,6 @@ public class ConnectionAPI extends AsyncTask<String, Void, String> {
         try {
             URL url = new URL(this.url); //object of URL
 
-            //Log.i("URL test ::: ", url.toString());
             HttpURLConnection connect = (HttpURLConnection) url.openConnection(); //HTTP connection
 
             connect.setRequestProperty("Service-Name", "국문 관광정보 서비스");
@@ -36,7 +35,6 @@ public class ConnectionAPI extends AsyncTask<String, Void, String> {
 
             //If HTTP connection is successful
             if (connect.getResponseCode() == connect.HTTP_OK) {
-                //Log.i("URL test ::: ", url.toString());
                 InputStreamReader tmp = new InputStreamReader(connect.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(tmp);
                 StringBuffer buffer = new StringBuffer();
@@ -45,7 +43,6 @@ public class ConnectionAPI extends AsyncTask<String, Void, String> {
                     buffer.append(str);
                 }
                 receiveMsg = buffer.toString();
-                //Log.i("receiveMsg : ", receiveMsg);
 
                 reader.close();
             } else {
