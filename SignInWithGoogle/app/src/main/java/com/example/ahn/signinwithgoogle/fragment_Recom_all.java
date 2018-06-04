@@ -80,7 +80,6 @@ public class fragment_Recom_all extends Fragment {
             int imgId = 0;
 
             String key = (String) iterator3.next();
-            Log.d("dhidhid",hash.get(key)[6]);
             addr = hash.get(key)[0];
             contentTypeID = hash.get(key)[1];
             title = hash.get(key)[6];
@@ -141,19 +140,6 @@ public class fragment_Recom_all extends Fragment {
                 dialog.show();
             }
         });
-
-//        //이거 리스트뷰 길게 누르면 이미지 로딩되게 하구싶은데 몰라....아몰랑
-//        listview1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                final RecomListViewItem item = (RecomListViewItem)listViewAdapter.getItem(position);
-//                builder = new AlertDialog.Builder(getActivity());
-//
-//                builder.setIcon(item.getMainImg());
-//
-//                return true;
-//            }
-//        });
        return view;
     }
 

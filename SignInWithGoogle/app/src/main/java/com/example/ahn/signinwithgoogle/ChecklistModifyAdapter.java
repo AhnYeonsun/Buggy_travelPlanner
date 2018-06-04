@@ -17,16 +17,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ChecklistListViewAdapter extends BaseAdapter{
+public class ChecklistModifyAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
+    private ArrayList<Checklist_item_Modify> listViewItemList = new ArrayList<Checklist_item_Modify>() ;
     ImageView deleteBtn;
     TextView itemListView;
     CheckBox checkbox;
 
     AlertDialog.Builder builder;
     // ListViewAdapter의 생성자
-    public ChecklistListViewAdapter(Context c) {
+    public ChecklistModifyAdapter(Context c) {
         builder= new AlertDialog.Builder(c);
     }
 
@@ -45,15 +45,16 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.checklist_item, parent, false);
+            convertView = inflater.inflate(R.layout.checklist_item_modify, parent, false);
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         itemListView = (TextView) convertView.findViewById(R.id.itemList) ;
         deleteBtn=convertView.findViewById(R.id.deletebtn);
+        checkbox = convertView.findViewById(R.id.checkbox);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        final ListViewItem listViewItem = listViewItemList.get(position);
+        final Checklist_item_Modify listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         itemListView.setText(listViewItem.getText());
@@ -80,6 +81,14 @@ public class ChecklistListViewAdapter extends BaseAdapter{
                 dialog.show();
             }
         });
+        itemListView.setText(listViewItem.getText());
+
+        if(listViewItem.getCheck()==1){ checkbox.setChecked(true); }
+        else{checkbox.setChecked(false);}
+
+        if(checkbox.isChecked()){}//디비에 넣어줌
+        else{} //디비에서 뺴줌
+
         return convertView;
     }
 
@@ -97,8 +106,16 @@ public class ChecklistListViewAdapter extends BaseAdapter{
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String text) {
-        ListViewItem item = new ListViewItem();
+        Checklist_item_Modify item = new Checklist_item_Modify();
         item.setText(text);
+        listViewItemList.add(item);
+    }
+
+    // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
+    public void addItem(String text, int ischk) {
+        Checklist_item_Modify item = new Checklist_item_Modify();
+        item.setText(text);
+        item.setCheck(ischk);
         listViewItemList.add(item);
     }
 }

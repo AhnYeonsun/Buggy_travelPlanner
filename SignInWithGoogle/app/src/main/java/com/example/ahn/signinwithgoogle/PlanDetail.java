@@ -157,15 +157,7 @@ public class PlanDetail extends AppCompatActivity {
             }
         });
 
-        addBtn = (Button)getLayoutInflater().inflate(R.layout.list_header, null, false).findViewById(R.id.addDetail);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("AAA","yyyyyy");
-                Intent goSetDetail = new Intent(PlanDetail.this, SetDetail.class);
-                startActivityForResult(goSetDetail, 7);
-            }
-        });
+
 
     }
     public List<String> list = new ArrayList<String>();
@@ -216,25 +208,7 @@ public class PlanDetail extends AppCompatActivity {
     }
 
 
-    /////////////////여기가 setDetail.class에서 인텐트 받아오는곣///////////
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-        addPlanDetail = FirebaseDatabase.getInstance().getReference();
 
-        String spot = data.getStringExtra("spot");
-        Double x = data.getDoubleExtra("MapX", 0);
-        Double y = data.getDoubleExtra("MapY", 0);
-        String memo = data.getStringExtra("memo");
-
-        int index = data.getIntExtra("dayposition",0);
-
-        //Plan 형식 : String title, String address, double mapX, double mapY, String message
-        //Plan 형식에 Day 추가한 contructor 만들어야함
-        //ChildItems childItems = new ChildItems(spot, x, y, memo, AllDays[index]);
-        Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
-        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
-    }
 
     //액션바 수정해야함 -> 스택에 쌓이는 거 볼수 있도록
     @Override
@@ -257,6 +231,12 @@ public class PlanDetail extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        prepareListData();
     }
 
 }

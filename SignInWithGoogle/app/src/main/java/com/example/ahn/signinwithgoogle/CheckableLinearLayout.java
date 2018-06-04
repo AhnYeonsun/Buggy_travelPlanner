@@ -41,7 +41,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
         CheckBox cb = findViewById(R.id.checkbox) ;
 
         if (cb.isChecked() != checked) {
-            cb.setChecked(checked) ;
+            cb.setChecked(checked);
         }
 
         // CheckBox 가 아닌 View의 상태 변경.

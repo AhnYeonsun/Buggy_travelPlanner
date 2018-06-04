@@ -29,11 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity
+        <!--
+            <activity
             android:name=".AddPlan"
-            android:windowSoftInputMode="adjustNothing" />-->
+            android:windowSoftInputMode="adjustNothing" />
+        -->
         <activity
-            android:name=".Checklist"
+            android:name=".Checklist_Modify"
             android:windowSoftInputMode="adjustNothing" />
         //adjustNothing은 레이아웃이 키보드 영향 안받음
         <activity android:name=".PlanDetail" />
@@ -50,9 +52,11 @@
         <!-- <activity android:name=".fragment_recom_shopping" /> -->
         <!-- <activity android:name=".fragment_recom_food" /> -->
         <activity android:name=".MapActivity" />
-        <activity android:name=".Navigation"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
+        <activity
+            android:name=".Navigation"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".checklist" />
+        <activity android:name=".checklist_item"></activity>
     </application>
 
 </manifest>

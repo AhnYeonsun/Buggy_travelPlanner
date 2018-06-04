@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +28,15 @@ import java.util.List;
 // ***** 온돈온돈 ******//
 public class PlanDetailAdapter extends BaseExpandableListAdapter {
     AlertDialog.Builder builder;
-
+    Button addBtn;
     private List<String> group;
     private HashMap<String, List<String>> child;
+    private FirebaseAuth mAuth;
+    private DatabaseReference addPlanDetail;
+    private DatabaseReference readplanDetail;
 
-
+    public String[] AllDays;
+    public String planTitle;
 
     public String spot = "";
     Context mContext;
@@ -98,11 +103,18 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
         TextView headerList = (TextView) convertView.findViewById(R.id.date_list);
         headerList.setText(headerTitle);
+
+        addBtn = (Button)convertView.findViewById(R.id.addDetail);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goSetDetail = new Intent(mContext.getApplicationContext(), SetDetail.class);
+                ((Activity)mContext).startActivityForResult(goSetDetail,0);
+            }
+        });
+
         return convertView;
     }
-    //@Override
-
-
 
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
@@ -123,5 +135,26 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+
+    /////////////////여기가 setDetail.class에서 인텐트 받아오는곣///////////
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlanDetail = FirebaseDatabase.getInstance().getReference();
+
+        String spot = data.getStringExtra("spot");
+        Double x = data.getDoubleExtra("MapX", 0);
+        Double y = data.getDoubleExtra("MapY", 0);
+        String memo = data.getStringExtra("memo");
+
+        int index = data.getIntExtra("dayposition",0);
+
+        //Plan 형식 : String title, String address, double mapX, double mapY, String message
+        //Plan 형식에 Day 추가한 contructor 만들어야함
+        //ChildItems childItems = new ChildItems(spot, x, y, memo, AllDays[index]);
+        Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
+        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
+    }
 
 }
