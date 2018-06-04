@@ -1,33 +1,25 @@
-/*package com.example.ahn.signinwithgoogle;
+package com.example.ahn.signinwithgoogle;
 
 
+import android.util.Log;
+
+/**
+ * Created by SOSO on 2018-05-20.
+ */
 public class ChildItems {
-    String planName = "";
-    public double planMapX = 0;
-    public double planMapY = 0;
-    public String planMessage = "";
-    public String planDay = "";
+    String value;
 
-    public ChildItems(String name, String message){
-        this.planName = name;
-        this.planMessage = message;
-    }
-
-    public ChildItems(String name, double x, double y, String m, String d) {
-        this.planName = name;
-        this.planMapX = x;
-        this.planMapY = y;
-        this.planMessage = m;
-        this.planDay = d;
+    public ChildItems(String value) {
+        this.value = value;
     }
 
     public String getValue() {
-        return planName;
+        return value;
 
     }
 
     public void setValue(String value) {
-        this.planName = value;
+        this.value = value;
     }
 }
-*/
+

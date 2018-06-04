@@ -23,9 +23,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -34,8 +36,7 @@ public class PlanDetail extends AppCompatActivity {
     FloatingActionButton goRecom;
     ExpandableListView elv;
     PlanDetailAdapter listAdapter;
-    List<String> listDataGroup;
-    HashMap<String, List<String>> listDataChild;
+    private ArrayList<GroupItem> listDataGroup = new ArrayList<>();
     TextView plan_name;
     String numStr;
     String titleStr;
@@ -49,10 +50,12 @@ public class PlanDetail extends AppCompatActivity {
     public String planTitle;
 
 
-    int num=0; //AddPlan에서 가져올부분임.(날짜 차이)
+    int num = 0; //AddPlan에서 가져올부분임.(날짜 차이)
 
-    public PlanDetail(){}
-    public PlanDetail(String n, String t){
+    public PlanDetail() {
+    }
+
+    public PlanDetail(String n, String t) {
         this.numStr = n;
         this.titleStr = t;
     }
@@ -74,49 +77,49 @@ public class PlanDetail extends AppCompatActivity {
         informIntent = getIntent();
         this.numStr = informIntent.getStringExtra("days"); //**************test
         this.titleStr = informIntent.getStringExtra("title"); //****************test
-        num=Integer.parseInt(numStr);
-        plan_name=findViewById(R.id.planTitle);
+        num = Integer.parseInt(numStr);
+        plan_name = findViewById(R.id.planTitle);
         plan_name.setText(titleStr);
 
-        elv = (ExpandableListView) findViewById(R.id.listview);
-        prepareListData();
-        listAdapter = new PlanDetailAdapter(this,listDataGroup, listDataChild);
+        elv = (ExpandableListView) findViewById(R.id.planDetailListview);
 
-        elv.setAdapter(listAdapter);
+//        prepareListData();
+//        listAdapter = new PlanDetailAdapter(this,listDataGroup, listDataChild);
+//        elv.setAdapter(listAdapter);
 
-        //그룹선택할때
-        elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return false;
-            }
-        });
-
-        //그룹확장
-        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-
-            }
-        });
-
-        //그룹축소
-        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
-
-        //차일드 클릭할때
-        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int grouPosition, int chilPosition, long id){
-
-                return false;
-            }
-
-        });
+//        //그룹선택할때
+//        elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+//            @Override
+//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+//                return false;
+//            }
+//        });
+//
+//        //그룹확장
+//        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//
+//            }
+//        });
+//
+//        //그룹축소
+//        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+//            @Override
+//            public void onGroupCollapse(int groupPosition) {
+//
+//            }
+//        });
+//
+//        //차일드 클릭할때
+//        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v, int grouPosition, int chilPosition, long id){
+//
+//                return false;
+//            }
+//
+//        });
 
 //        //차일드 길게 클릭할때
 //        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -158,85 +161,72 @@ public class PlanDetail extends AppCompatActivity {
         });
 
 
-
     }
-    public List<String> list = new ArrayList<String>();
-    public void prepareListData(){
-        listDataGroup = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
 
+    public void prepareListData() {
+        Log.d("XXX", "in list view");
+        listDataGroup.clear();
         //Adding group data
-        for (int i=0; i<num+1; i++) {
-            listDataGroup.add(AllDays[i]);
+        for (int i = 0; i < num + 1; i++) {
+            listDataGroup.add(new GroupItem(AllDays[i]));
         }
 
-        //Adding child data
-        for (int i=0; i<num+1; i++){
-
-            //readplanDetail는 title까지 내려옴
-            ChildEventListener childEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Plan plan = dataSnapshot.getValue(Plan.class);
-                    list.add(plan.toString());
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Plan plan = child.getValue(Plan.class);
+                    for(int i=0;i<num+1;i++){
+                        if(plan.Day.equals(AllDays[i])) {
+                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title));
+                        }
+                    }
 
                 }
+                listAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+        };
+        readplanDetail.addListenerForSingleValueEvent(valueEventListener);
 
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            };
-            readplanDetail.addChildEventListener(childEventListener);
-            listDataChild.put(listDataGroup.get(i), list);
-            list.clear();
-        }
-    }
-
-
-
-
-    //액션바 수정해야함 -> 스택에 쌓이는 거 볼수 있도록
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds groupItem to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("CC", "1");
+//        listAdapter.onActivityResult(requestCode, resultCode, data);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlanDetail = FirebaseDatabase.getInstance().getReference();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        String spot = data.getStringExtra("spot");
+        Double x = data.getDoubleExtra("MapX", 0);
+        Double y = data.getDoubleExtra("MapY", 0);
+        String memo = data.getStringExtra("memo");
 
-        return super.onOptionsItemSelected(item);
+        int index = data.getIntExtra("dayposition", 0);
+        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+        AllDays = getDaysForTravel.getPD();
+        planTitle = getDaysForTravel.getTitle();
+
+        //Plan 형식 : String title, String address, double mapX, double mapY, String message
+        Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
+        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
+        listDataGroup.get(index).getArrayList().add(new ChildItems(plan.title));
+
+        Log.d("CC", "3");
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         prepareListData();
-    }
+        listAdapter = new PlanDetailAdapter(this, listDataGroup);
 
+        elv.setAdapter(listAdapter);
+        listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+    }
 }

@@ -1,10 +1,10 @@
+
 package com.example.ahn.signinwithgoogle;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,41 +15,27 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-
-// ***** 온돈온돈 ******//
 public class PlanDetailAdapter extends BaseExpandableListAdapter {
     AlertDialog.Builder builder;
-    Button addBtn;
-    private List<String> group;
-    private HashMap<String, List<String>> child;
-    private FirebaseAuth mAuth;
-    private DatabaseReference addPlanDetail;
-    private DatabaseReference readplanDetail;
+    ArrayList<GroupItem> groupItem;
 
-    public String[] AllDays;
-    public String planTitle;
+    GroupViewHolder groupViewHolder;
+    ChildViewHolder childViewHolder;
 
     public String spot = "";
     Context mContext;
-
+    boolean chk = false;
     public LayoutInflater minflater;
-    public PlanDetailAdapter(Context c)
-    {
-        builder=new AlertDialog.Builder(c);
+
+    public PlanDetailAdapter(Context c) {
+        builder = new AlertDialog.Builder(c);
     }
-    public PlanDetailAdapter(Context context, List<String> group, HashMap<String, List<String>> child) {
+
+    public PlanDetailAdapter(Context context, ArrayList<GroupItem> groupItem) {
         this.mContext = context;
-        this.group = group;
-        this.child = child;
+        this.groupItem = groupItem;
     }
 
     public void setInflater(LayoutInflater mInflater) {
@@ -58,32 +44,32 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return group.size();
+        return groupItem.size();
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) {
-        return  this.child.get(this.group.get(groupPosition)).size();
+    public int getChildrenCount(int i) {
+        return groupItem.get(i).getArrayList().size();
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return group.get(groupPosition);
+    public Object getGroup(int i) {
+        return groupItem.get(i);
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return this.child.get(this.group.get(groupPosition)).get(childPosition);
+    public Object getChild(int i, int i2) {
+        return groupItem.get(i).getArrayList().get(i2);
     }
 
     @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
+    public long getGroupId(int i) {
+        return i;
     }
 
     @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+    public long getChildId(int i, int i2) {
+        return i2;
     }
 
     @Override
@@ -94,22 +80,37 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
-
-        if(convertView==null){
-            LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_header, null);
+        Log.d("testing", "GroupView");
+        if (convertView == null) {
+            groupViewHolder = new GroupViewHolder();
+            convertView = minflater.inflate(R.layout.list_header, null);
+            groupViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.date_list);
+            groupViewHolder.btnAdd = (Button) convertView.findViewById(R.id.addDetail);
+            groupViewHolder.btnTransport = (Button) convertView.findViewById(R.id.transport);
+            convertView.setTag(groupViewHolder);
+        } else {
+            groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
+        ExpandableListView eLV = (ExpandableListView) parent;
+        eLV.expandGroup(groupPosition);
 
-        TextView headerList = (TextView) convertView.findViewById(R.id.date_list);
-        headerList.setText(headerTitle);
-
-        addBtn = (Button)convertView.findViewById(R.id.addDetail);
-        addBtn.setOnClickListener(new View.OnClickListener() {
+        groupViewHolder.tvTitle.setText(groupItem.get(groupPosition).getTitle());
+        groupViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() { //여기서 이제 장소 받아줘야지
             @Override
-            public void onClick(View v) {
-                Intent goSetDetail = new Intent(mContext.getApplicationContext(), SetDetail.class);
-                ((Activity)mContext).startActivityForResult(goSetDetail,0);
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext.getApplicationContext(), SetDetail.class);
+                intent.setFlags(groupPosition);//adapter 생성시, 이미 context받아왔으니까...
+                ((Activity) mContext).startActivityForResult(intent, 0);
+                Log.d("CC","5");
+            }
+        });
+
+        groupViewHolder.btnTransport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { //여기 연선이 해야되는 부분!!
+                //groupItem.get(groupPosition).getArrayList().add(new ChildItems("다윤이"));
+                getChildrenCount(groupPosition);
+                notifyDataSetChanged();
             }
         });
 
@@ -118,43 +119,46 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String childText = (String) getChild(groupPosition, childPosition);
+        //Log.d("testing", "ChildView");
 
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_row, null);
+            childViewHolder = new ChildViewHolder();
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.list_row, null);
+
+            childViewHolder.et = (TextView) convertView.findViewById(R.id.childText);
+
+            convertView.setTag(childViewHolder);
+        } else {
+            childViewHolder = (ChildViewHolder) convertView.getTag();
         }
 
-        TextView txtChild = (TextView) convertView.findViewById(R.id.textview);
-        txtChild.setText(childText);
+        if (!groupItem.get(groupPosition).getArrayList().get(childPosition).getValue().equals("")) {
+            childViewHolder.et.setText(groupItem.get(groupPosition).getArrayList().get(childPosition).getValue());
+        }
+        childViewHolder.et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    final EditText Caption = (EditText) v;
+                    groupItem.get(groupPosition).getArrayList().get(childPosition).setValue(Caption.getText().toString());
+                }
+            }
+        });
         return convertView;
     }
 
     @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+    public boolean isChildSelectable(int i, int i2) {
+        return false;
     }
 
+    private class GroupViewHolder {
+        public TextView tvTitle;
+        public Button btnAdd;
+        public Button btnTransport;
+    }
 
-    /////////////////여기가 setDetail.class에서 인텐트 받아오는곣///////////
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
-        addPlanDetail = FirebaseDatabase.getInstance().getReference();
-
-        String spot = data.getStringExtra("spot");
-        Double x = data.getDoubleExtra("MapX", 0);
-        Double y = data.getDoubleExtra("MapY", 0);
-        String memo = data.getStringExtra("memo");
-
-        int index = data.getIntExtra("dayposition",0);
-
-        //Plan 형식 : String title, String address, double mapX, double mapY, String message
-        //Plan 형식에 Day 추가한 contructor 만들어야함
-        //ChildItems childItems = new ChildItems(spot, x, y, memo, AllDays[index]);
-        Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
-        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
+    private class ChildViewHolder {
+        public TextView et;
     }
 
 }

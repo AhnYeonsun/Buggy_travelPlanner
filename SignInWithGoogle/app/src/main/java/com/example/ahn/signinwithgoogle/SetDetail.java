@@ -1,5 +1,6 @@
 package com.example.ahn.signinwithgoogle;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,12 +28,13 @@ public class SetDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = getIntent();
-
+                //Intent intent = new Intent();
                 if(!spot.getText().toString().equals(null))
                 {
                     Log.d("coming?", "yeah");
                     intent.putExtra("spot",spot.getText().toString());
                     intent.putExtra("memo", memo.getText().toString());
+                    Log.d("ZZZZZZZ",intent.getFlags()+"");
                     intent.putExtra("dayposition", intent.getFlags());
                     intent.putExtra("MapX", x);
                     intent.putExtra("MapY", y);
