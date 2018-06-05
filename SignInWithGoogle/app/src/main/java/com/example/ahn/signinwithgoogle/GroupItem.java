@@ -4,9 +4,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by SOSO on 2018-05-20.
- */
 
 public class GroupItem {
 
@@ -15,6 +12,7 @@ public class GroupItem {
 
     public GroupItem(String title) {
         this.title = title;
+        Log.d("GGGTTT",title);
     }
 
     public String getTitle() {

@@ -141,6 +141,7 @@ public class Recommend extends AppCompatActivity {
         addRecom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("recomfloating", "coming?");
                 days = informIntent.getIntExtra("day", 0);
                 final String[] items = new String[days + 1];
 
@@ -172,10 +173,22 @@ public class Recommend extends AppCompatActivity {
 
                             //DB에 Object Plan 형식으로 넣음. 똑같이 가져온 후, 맞은 일차에 넣고 temp 비우면 됨.
                             //전체 Days, title 불러오기
-                            GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
-                            String[] AllDays = getDaysForTravel.getPD();
-                            final String planTitle = getDaysForTravel.getTitle();
+                            //GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+                            //String[] AllDays = getDaysForTravel.getPD();
+                            String[] AllDays = CalculateDays.days;
+                            final String planTitle = CalculateDays.title;
                             if (dayIndex == 0) { //전체 + 알고리즘
+
+
+
+
+
+
+
+
+
+
+
 
                             } else {
                                 //일차에 맞게 넣어주기

@@ -1,4 +1,3 @@
-
 package com.example.ahn.signinwithgoogle;
 
 import android.app.Activity;

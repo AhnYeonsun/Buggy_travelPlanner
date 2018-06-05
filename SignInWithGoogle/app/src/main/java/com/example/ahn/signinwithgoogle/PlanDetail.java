@@ -1,9 +1,11 @@
 package com.example.ahn.signinwithgoogle;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 
@@ -45,12 +46,13 @@ public class PlanDetail extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference addPlanDetail;
     private DatabaseReference readplanDetail;
+    private DatabaseReference forDateDB;
 
     public String[] AllDays;
     public String planTitle;
 
 
-    int num = 0; //AddPlan에서 가져올부분임.(날짜 차이)
+    public int num = 0; //AddPlan에서 가져올부분임.(날짜 차이)
 
     public PlanDetail() {
     }
@@ -65,23 +67,55 @@ public class PlanDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
 
-        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
-        AllDays = getDaysForTravel.getPD();
-        planTitle = getDaysForTravel.getTitle();
+//        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();// 이부분도 수정필........................
+//        AllDays = getDaysForTravel.getPD();
+//        planTitle = getDaysForTravel.getTitle();
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         addPlanDetail = FirebaseDatabase.getInstance().getReference();
-        readplanDetail = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child(planTitle);
 
-        informIntent = getIntent();
-        this.numStr = informIntent.getStringExtra("days"); //**************test
-        this.titleStr = informIntent.getStringExtra("title"); //****************test
-        num = Integer.parseInt(numStr);
-        plan_name = findViewById(R.id.planTitle);
-        plan_name.setText(titleStr);
 
-        elv = (ExpandableListView) findViewById(R.id.planDetailListview);
+//        forDateDB = FirebaseDatabase.getInstance().getReference().child("forDate").child(mUser.getUid());
+//
+//        informIntent = getIntent(); //AddPlan에서 받아주는 곳. 사실상 이름만 받아와서, 나머지 내용들은 DB에서 가져오면 됨.
+//        this.titleStr = informIntent.getStringExtra("title");
+//        Log.d("CHECK21",titleStr);
+//
+//        ValueEventListener valueEventListener = new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot child : dataSnapshot.getChildren()) {
+//                    Log.d("CHECK HERE", child.getKey());
+//                    //Plan plan = child.getValue(Plan.class);
+//                    if (child.getKey().equals(titleStr)) {
+//                        TravelInfo t = child.getValue(TravelInfo.class);
+//                        //title, startDate, endDate, numDates
+//                        num = (int) t.InfoNumDates;
+//                        planTitle = t.InfoTitle;
+//                        String sd = t.InfoStartDate;
+//                        String ed = t.InfoEndDate;
+//                        Log.d("CHECK22",planTitle);
+//                        CalculateDays calculateDays = new CalculateDays(sd, ed, num, planTitle);
+//                        AllDays = calculateDays.days;
+//                        break;
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        };
+//        forDateDB.addListenerForSingleValueEvent(valueEventListener);
+
+//        this.numStr = informIntent.getStringExtra("days");
+//        num = Integer.parseInt(numStr);
+//        plan_name = findViewById(R.id.planTitle);
+//        plan_name.setText(titleStr);
+
+        elv = (ExpandableListView) findViewById(R.id.listview);
 
 //        prepareListData();
 //        listAdapter = new PlanDetailAdapter(this,listDataGroup, listDataChild);
@@ -146,7 +180,7 @@ public class PlanDetail extends AppCompatActivity {
 //                return true;
 //            }
 //        });*/
-
+        informIntent = getIntent();
         goRecom = (FloatingActionButton) findViewById(R.id.fab);
         goRecom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,37 +196,91 @@ public class PlanDetail extends AppCompatActivity {
 
 
     }
+    public void setListFromDatabase(){
 
-    public void prepareListData() {
-        Log.d("XXX", "in list view");
-        listDataGroup.clear();
-        //Adding group data
-        for (int i = 0; i < num + 1; i++) {
-            listDataGroup.add(new GroupItem(AllDays[i]));
-        }
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        forDateDB = FirebaseDatabase.getInstance().getReference().child("forDate").child(mUser.getUid());
 
+        informIntent = getIntent(); //AddPlan에서 받아주는 곳. 사실상 이름만 받아와서, 나머지 내용들은 DB에서 가져오면 됨.
+        this.titleStr = informIntent.getStringExtra("title");
+        //forDateDB에서 여행정보 가져와서 AllDays 같은거 만들어주는 곳.
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Log.d("CHECK HERE", child.getKey());
+                    //Plan plan = child.getValue(Plan.class);
+                    if (child.getKey().equals(titleStr)) {
+                        TravelInfo t = child.getValue(TravelInfo.class);
+                        //title, startDate, endDate, numDates
+                        num = (int) t.InfoNumDates;
+                        Log.d("CHECK22",num+"");
+                        planTitle = t.InfoTitle;
+                        String sd = t.InfoStartDate;
+                        String ed = t.InfoEndDate;
+                        Log.d("CHECK22",planTitle);
+                        CalculateDays calculateDays = new CalculateDays(sd, ed, num, planTitle);
+                        AllDays = calculateDays.days;
+                        Log.d("CHECK22",AllDays[0]);
+                        Log.d("CHECK22",AllDays[1]);
+                        Log.d("CHECK22",AllDays[2]);
+
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        forDateDB.addListenerForSingleValueEvent(valueEventListener);
+    }
+    public void prepareListGroupData() {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+
+        Log.d("XXX", "in list view");
+        Log.d("XXX", "in list view"+num);
+        listDataGroup.clear();
+        //Adding group data
+        for (int i = 0; i < num; i++) {
+            Log.d("XXX", "in group view");
+            listDataGroup.add(new GroupItem(AllDays[i]));
+        }
+    }
+    public void prepareListChildData(){
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        //Users DB에서 불러와서 child item 만들어주는 곳.
+        readplanDetail = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child(planTitle);
+        ValueEventListener valueEventListener2 = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Log.d("XXX", "in value event listener");
                     Plan plan = child.getValue(Plan.class);
-                    for(int i=0;i<num+1;i++){
-                        if(plan.Day.equals(AllDays[i])) {
-                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title));
+                    for (int i = 0; i < num; i++) {
+                        if (plan.Day.equals(AllDays[i])) {
+                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title,""));
                         }
                     }
 
                 }
                 listAdapter.notifyDataSetChanged();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         };
-        readplanDetail.addListenerForSingleValueEvent(valueEventListener);
-
+        readplanDetail.addListenerForSingleValueEvent(valueEventListener2);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -208,25 +296,44 @@ public class PlanDetail extends AppCompatActivity {
         String memo = data.getStringExtra("memo");
 
         int index = data.getIntExtra("dayposition", 0);
-        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
-        AllDays = getDaysForTravel.getPD();
-        planTitle = getDaysForTravel.getTitle();
+        Log.d("RE", index + "");
+//        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
+//        AllDays = getDaysForTravel.getPD();
+//        planTitle = getDaysForTravel.getTitle();
 
         //Plan 형식 : String title, String address, double mapX, double mapY, String message
         Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
         addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
-        listDataGroup.get(index).getArrayList().add(new ChildItems(plan.title));
-
+        listDataGroup.get(index).getArrayList().add(new ChildItems(plan.title,""));
         Log.d("CC", "3");
     }
+
 
     @Override
     public void onResume() {
         super.onResume();
-        prepareListData();
-        listAdapter = new PlanDetailAdapter(this, listDataGroup);
+        setListFromDatabase(); //여행 정보 가져오기
 
-        elv.setAdapter(listAdapter);
-        listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                prepareListGroupData(); //Group 만들기
+                Log.d("RRRRRRR","GROUPPP");
+                //try {
+                    //String temp = readplanDetail.child("Users").getKey();
+                    Log.d("RRRRRRR","ok");
+                    prepareListChildData(); //Child 만들기
+                //}catch (NullPointerException ne){
+
+                //}finally {
+                    Log.d("RRRRRRR","in finally");
+                    listAdapter = new PlanDetailAdapter(PlanDetail.this, listDataGroup);
+                    elv.setAdapter(listAdapter);
+                    listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+                //}
+            }
+        }, 1000);
+
     }
 }

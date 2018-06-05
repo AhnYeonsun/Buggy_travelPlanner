@@ -34,12 +34,11 @@ public class SetDetail extends AppCompatActivity {
                     Log.d("coming?", "yeah");
                     intent.putExtra("spot",spot.getText().toString());
                     intent.putExtra("memo", memo.getText().toString());
-                    Log.d("ZZZZZZZ",intent.getFlags()+"");
                     intent.putExtra("dayposition", intent.getFlags());
                     intent.putExtra("MapX", x);
                     intent.putExtra("MapY", y);
 
-                    setResult(RESULT_OK,intent);
+                    setResult(Activity.RESULT_OK,intent);
                 }
                 finish();
             }
