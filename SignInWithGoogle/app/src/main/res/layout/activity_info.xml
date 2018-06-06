@@ -38,7 +38,7 @@
             android:layout_height="100dp"
             android:background="#ffffff"
             android:clickable="true"
-            android:drawableLeft="@drawable/resize_email"
+            android:drawableLeft="@drawable/resize_web"
             android:gravity="center_vertical|center_horizontal"
             android:padding="20dp"
             android:text="@string/info1"
