@@ -57,6 +57,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Checklist" />
         <activity android:name=".checklist_item"></activity>
+        <activity android:name=".SortingByAlgo"></activity>
     </application>
 
 </manifest>

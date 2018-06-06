@@ -3,6 +3,7 @@ package com.example.ahn.signinwithgoogle;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import es.dmoral.toasty.Toasty;
+
 public class Recommend extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -50,19 +53,27 @@ public class Recommend extends AppCompatActivity {
     ArrayAdapter<String> regionSpinnerAdapter, sigunguSpinnerAdapter;
     String regionCode = new String();
     boolean check = false;
-
+    static int[] Recommends = new int[1];          //추천받은 개수. final이어야해서 크기 1짜리 array로 만듬
     private FirebaseAuth mAuth;
     private DatabaseReference addRecomByday;
+    private DatabaseReference addRecomByAll;
     private DatabaseReference getTempRecom;
 
     public int dayIndex;
 
+    private Object[] Vertices;
+    private int numOfdays;
+    private int[] countByDay;
+    private int tempRecoms;
+    private int restDays;
+    int hold = -1;
     private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment_recommend);
+        hold = -1;
         informIntent = getIntent();
 
         //Firebase Database setting
@@ -140,7 +151,7 @@ public class Recommend extends AppCompatActivity {
         FloatingActionButton addRecom = (FloatingActionButton) findViewById(R.id.addRecom);
         addRecom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 Log.d("recomfloating", "coming?");
                 days = informIntent.getIntExtra("day", 0);
                 final String[] items = new String[days + 1];
@@ -162,7 +173,7 @@ public class Recommend extends AppCompatActivity {
                     });
 
                     //******* 온돈온돈 *********8//
-                    ObjectForBlank objectForBlank = new ObjectForBlank(1,"1",1.1);
+                    ObjectForBlank objectForBlank = new ObjectForBlank(1, "1", 1.1);
                     builder.setPositiveButton("넣어주라줘", new DialogInterface.OnClickListener() { //이때 알고리즘 돌려서 알맞은 날짜에 디비랑 넣어주면 되염
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -178,16 +189,92 @@ public class Recommend extends AppCompatActivity {
                             String[] AllDays = CalculateDays.days;
                             final String planTitle = CalculateDays.title;
                             if (dayIndex == 0) { //전체 + 알고리즘
+                                numOfdays = days;                         //전체 일 수
 
+                                //tempRecoms;                               //남은 추천받은 개수
+                                restDays = numOfdays;                     //남은 일 수
+                                countByDay = new int[numOfdays];        //index 0부터 날짜마다 받아야 할 추천 개수
+                                final Object[][] tempVertices = new Object[1][100];
 
+                                ValueEventListener valueEventListener_1 = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        int recoms = 0;
+                                        int i = 0;
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                            Log.d("RECCCCC", "in>??");
+                                            Plan p = child.getValue(Plan.class);
+                                            Vertex v = new Vertex(Integer.parseInt(child.getKey()), p.mapX, p.mapY);
+                                            tempVertices[0][i] = v;
+                                            i++;
+                                            recoms++;
+                                        }
+                                        Recommends[0] = recoms;
+                                        Log.d("RECCCCCC", Recommends[0] + " 1");
+                                        Log.d("RECCCCCC", i + " 2");
+                                    }
 
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                };
+                                getTempRecom.addListenerForSingleValueEvent(valueEventListener_1);
 
+                                Log.d("RECCCC", "here");
+                                Vertices = new Object[Recommends[0]];
+                                for (int i = 0; i < Recommends[0]; i++) {
+                                    Vertices[i] = tempVertices[0][i];
+                                } // Vertices에 추천받은 객체들이 들어있음*************************************************
+                                Log.d("RECCCCCC", Recommends[0] + " 3");
 
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Log.d("RECCCCC", numOfdays + " days");
+                                        Log.d("RECCCCC", Recommends[0] + " recoms");
+                                        if (numOfdays > Recommends[0]) { //날짜 수보다 추천갯수가 작으면
+                                            Toasty.warning(getApplicationContext(), "Be recommended more!", Toast.LENGTH_SHORT, true).show();
+                                        } else {
+                                            int m = Recommends[0] / numOfdays; //몫
+                                            countByDay[0] = m; //처음과
+                                            countByDay[numOfdays - 1] = m; //마지막 *********************************************
+                                            tempRecoms = Recommends[0];
+                                            tempRecoms = tempRecoms - (2 * m);
+                                            restDays = restDays - 2;
+                                            if(restDays==1){ //첫날, 마지막날 빼고 하루 남았을 경우.
+                                                countByDay[1] = tempRecoms;
+                                            }
+                                            else {
+                                                for (int i = 1; i < numOfdays - 1; i++) {
+                                                    if (tempRecoms > m * restDays) {
+                                                        countByDay[i] = m + 1;
+                                                        tempRecoms = tempRecoms - (m + 1);
+                                                        restDays--;
+                                                    } else {
+                                                        countByDay[i] = m;
+                                                        tempRecoms = tempRecoms - m;
+                                                    }
+                                                }
+                                            }
+                                            Log.d("TEMP", tempRecoms + ""); // 0 이어야함.
 
+                                            Vertices = new Object[Recommends[0]];
+                                            for (int i = 0; i < Recommends[0]; i++) {
+                                                Vertices[i] = tempVertices[0][i];
+                                            }
 
-
-
-
+                                            //Go Algorithm
+                                            //SortingByAlgo.java
+                                            Intent goAlgo = new Intent(getApplicationContext(), SortingByAlgo.class);
+                                            Bundle bundle = new Bundle();
+                                            //bundle.put
+                                            goAlgo.putExtra("Vertices", Vertices);
+                                            goAlgo.putExtra("Nodes", Recommends[0]);
+                                            startActivityForResult(goAlgo, 5);
+                                        }
+                                    }
+                                }, 3000);
 
 
                             } else {
@@ -230,11 +317,84 @@ public class Recommend extends AppCompatActivity {
         });
 
     }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        getTempRecom.removeValue();
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //추천 알고리즘 돌린 순서대로 날짜에 넣어주기
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
+
+        final int Nodes = data.getIntExtra("Nodes", 0);
+        final String[] AllDays = CalculateDays.days;
+        final Object[] Vertices = (Object[]) data.getSerializableExtra("Sorted"); //소팅된 vertex들이 있음.
+
+        Log.d("AGAIN", Nodes+"");
+        for (int i = 0; i < Nodes; i++) {
+            Log.d("AGAIN", ((Vertex)Vertices[i]).getID()+"");
+        }
+
+        title = CalculateDays.title;
+
+        final Object[] Plans = new Object[Recommends[0]];
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index = 0;
+                for (int i = 0; i < Nodes; i++) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        if ((int)((Vertex) Vertices[i]).getID() == Integer.parseInt(child.getKey())) {
+                            Log.d("AGAIN", "##############");
+                            Plan p = child.getValue(Plan.class);
+                            Plans[index] = p;
+                            Log.d("AGAIN","11 "+index+"");
+                            Log.d("AGAIN","11 "+((Plan)Plans[index]).Day);
+                            index++;
+                        }
+                    }
+                }
+                Log.d("AGAIN", "1");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        getTempRecom.addListenerForSingleValueEvent(valueEventListener);
+        Log.d("AGAIN", "2");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("AGAIN", "3");
+                Log.d("AGAIN", ((Plan)Plans[0]).Day);
+                int index = 0;
+                addRecomByAll = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child(title);
+                for (int i = 0; i < days; i++){
+                    Log.d("FIANL", countByDay[i]+"");
+                }
+                for (int i = 0; i < days; i++) {
+                    for (int j = 0; j < countByDay[i]; j++) {
+                        ((Plan) Plans[index]).Day = AllDays[i];
+                        addRecomByAll.push().setValue(Plans[index]);
+                        index++;
+                    }
+                }
+            }
+        },3000);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(hold==-1) {
+            hold = 1;
+        }
+        else {
+            getTempRecom.removeValue();
+            hold=1;
+        }
     }
 
     public String getRegionItem() {
