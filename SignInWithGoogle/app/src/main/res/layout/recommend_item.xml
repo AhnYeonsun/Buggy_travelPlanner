@@ -24,6 +24,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center_vertical"
+        android:fontFamily="@font/enjoy"
         android:background="#ffffff"
         android:padding="3dp" />
     <TextView
@@ -33,6 +34,7 @@
         android:layout_weight="2"
         android:gravity="center_vertical"
         android:layout_marginTop="2dp"
+        android:fontFamily="@font/enjoy"
         android:background="#ffffff"
         android:padding="3dp" />
 </LinearLayout>

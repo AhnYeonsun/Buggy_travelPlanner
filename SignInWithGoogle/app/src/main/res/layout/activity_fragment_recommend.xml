@@ -57,9 +57,10 @@
                 android:layout_alignParentTop="true"
                 android:textColor="#ffffff"
                 android:padding="5dp"
+                android:fontFamily="@font/enjoy"
                 android:background="@drawable/reccomend_background"
-                android:textSize="12sp"
-                android:text="Search" />
+                android:textSize="20sp"
+                android:text="추천" />
         </RelativeLayout>
 
 
@@ -140,14 +141,15 @@
     <!-- 소윤소윤 : 요기 플로팅 버튼 부분 이모티콘 바꿔주세요~~~~~~-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addRecom"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/recommend2"
-        app:backgroundTint="#d01a4a83"
-        app:elevation="24dp"
-        app:rippleColor="@android:color/transparent" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="26dp"
+        android:src="@drawable/resize_float"
+        app:backgroundTint="@color/common_google_signin_btn_text_light_focused"
+        app:rippleColor="@android:color/white" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -2,7 +2,6 @@ package com.example.ahn.signinwithgoogle;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,10 +65,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_add_plan,container,false);
-
-        ProgressDialog di = new ProgressDialog(getActivity());
-        Progress_dialog dialog = new Progress_dialog(di);
-        dialog.execute();
 
         start_date=view.findViewById(R.id.start_date);
         end_date=view.findViewById(R.id.end_date);
@@ -310,17 +305,17 @@ public class AddPlan extends android.support.v4.app.Fragment {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
-                builder.setTitle("Delete Journey")
-                        .setMessage("Are you sure to delete "+planItem.getName().toString()+"?")
+                builder.setTitle("여행 삭제")
+                        .setMessage(planItem.getName().toString()+"을/를 삭제하시겠습니까?")
                         .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 adapter.planItemList.remove(position);
                                 adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();

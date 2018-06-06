@@ -4,17 +4,19 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/plan_border">
+    android:background="#b6d49d">
 
     <TextView
         android:id="@+id/date_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:text="date"
-        android:textSize="20dp" />
+        android:text="소윤이"
+        android:textStyle="bold"
+        android:fontFamily="@font/enjoy"
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/addDetail"

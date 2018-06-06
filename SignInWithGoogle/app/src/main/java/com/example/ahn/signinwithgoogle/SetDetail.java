@@ -15,7 +15,6 @@ public class SetDetail extends AppCompatActivity {
     EditText spot, memo;
     Button map;
     Double x, y;
-    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +27,11 @@ public class SetDetail extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = getIntent();
+                Intent intent = getIntent();
                 //Intent intent = new Intent();
-                if(!spot.getText().toString().equals(""))
+                if(!spot.getText().toString().equals(null))
                 {
+                    Log.d("coming?", "yeah");
                     intent.putExtra("spot",spot.getText().toString());
                     intent.putExtra("memo", memo.getText().toString());
                     intent.putExtra("dayposition", intent.getFlags());
@@ -40,13 +40,9 @@ public class SetDetail extends AppCompatActivity {
 
                     setResult(Activity.RESULT_OK,intent);
                 }
-                else{
-                    setResult(7, intent);
-                }
                 finish();
             }
         });
-
 
         map.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,14 +50,15 @@ public class SetDetail extends AppCompatActivity {
                 /// 욘똔리더님 여기에 지도(위치 확인)해주세여
                 //startActivity(new Intent(this, MapActivity.class));
                 Intent goMap = new Intent(getApplicationContext() , MapActivity.class);
-                startActivity(goMap);
+                startActivityForResult(goMap,4);
             }
         });
     }
 
     @Override
-    public void onBackPressed(){
-        setResult(7, intent);
-        super.onBackPressed();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        x = data.getDoubleExtra("La",0);
+        y = data.getDoubleExtra("Lo",0);
+        Log.d("SETDETAIL", x+" / "+y);
     }
 }

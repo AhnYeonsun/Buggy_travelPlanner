@@ -1,55 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="10"
-    android:orientation="vertical"
-    tools:context=".Checklist">
-    <com.ssomai.android.scalablelayout.ScalableLayout
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:scale_base_width="1440"
-        android:background="@drawable/loginpage"
-        android:padding="16dp"
-        app:scale_base_height="2560">
-        <EditText
-            android:id="@+id/addBar"
+        android:layout_height="match_parent"
+        android:id="@+id/bucketFragment"
+        android:orientation="vertical"
+        android:background="@drawable/loginpage">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/modifyBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColorHint="#000000"
-            android:hint="Write your bucket list"
-            app:scale_textsize="80"
-            android:inputType="text"
-            app:scale_height="180"
-            app:scale_left="30"
-            app:scale_top="20"
-            app:scale_width="1000"/>
-        <ImageButton
-            android:id="@+id/addbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00ffffff"
-            android:scaleType="centerInside"
-            android:src="@drawable/plus"
-            app:scale_height="150"
-            app:scale_left="1100"
-            app:scale_top="30"
-            app:scale_width="150"/>
+            android:text="수정"/>
+
         <ListView
-            android:id="@+id/userItemList"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/userBucket"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:choiceMode="multipleChoice"
-            android:divider="#edadad"
+            android:divider="@color/SeSSapGreen"
             android:dividerHeight="2dp"
-            android:longClickable="true"
             android:background="@drawable/border"
-            app:scale_height="1700"
-            app:scale_left="10"
-            app:scale_top="200"
-            app:scale_width="1500"/>
-    </com.ssomai.android.scalablelayout.ScalableLayout>
-</LinearLayout>
+            android:longClickable="true"></ListView>
+    </LinearLayout>
+</FrameLayout>

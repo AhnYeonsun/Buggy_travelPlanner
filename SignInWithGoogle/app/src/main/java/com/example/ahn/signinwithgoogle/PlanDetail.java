@@ -2,7 +2,6 @@ package com.example.ahn.signinwithgoogle;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -72,9 +70,6 @@ public class PlanDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan_detail);
 
-        ProgressDialog di = new ProgressDialog(this);
-        Progress_dialog dialog = new Progress_dialog(di);
-        dialog.execute();
 //        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();// 이부분도 수정필........................
 //        AllDays = getDaysForTravel.getPD();
 //        planTitle = getDaysForTravel.getTitle();
@@ -139,39 +134,32 @@ public class PlanDetail extends AppCompatActivity {
             }
         });
 
-        elv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(elv.getPackedPositionType(id)==elv.PACKED_POSITION_TYPE_CHILD){
-                    final int groupPosition  = elv.getPackedPositionGroup(id);
-                    final int childPosition = elv.getPackedPositionChild(id);
-                    builder.setTitle("Delete Detail")
-                            .setMessage("Are you sure to delete "+ listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
-                            .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
-                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    listDataGroup.get(groupPosition).getArrayList().remove(childPosition);
-                                    listAdapter.notifyDataSetChanged();
-                                }
-                            })
-                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    return true;
-                }
-                return true;
-            }
-        });
-
+//        //차일드 길게 클릭할때
+//        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+//            @Override
+//            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, final int childPosition, long id) {
+//                builder.setTitle("Delete Detail")
+//                        .setMessage("Are you sure to delete "+ arrayList.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
+//                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
+//                        .setPositiveButton("Yap", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                arrayList.get(groupPosition).getArrayList().remove(childPosition);
+//                                adapter.notifyDataSetChanged();
+//                            }
+//                        })
+//                        .setNegativeButton("Noooo", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int whichButton) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//                return true;
+//            }
+//        });*/
         informIntent = getIntent();
-        plan_name=findViewById(R.id.planTitle);
-        plan_name.setText(informIntent.getStringExtra("title").toString());
         goRecom = (FloatingActionButton) findViewById(R.id.fab);
         goRecom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,13 +221,15 @@ public class PlanDetail extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
 
+        Log.d("XXX", "in list view");
+        Log.d("XXX", "in list view"+num);
         listDataGroup.clear();
         //Adding group data
         for (int i = 0; i < num; i++) {
+            Log.d("XXX", "in group view");
             listDataGroup.add(new GroupItem(AllDays[i]));
         }
     }
-
     public void prepareListChildData(){
 
         mAuth = FirebaseAuth.getInstance();
@@ -250,6 +240,7 @@ public class PlanDetail extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Log.d("XXX", "in value event listener");
                     Plan plan = child.getValue(Plan.class);
                     for (int i = 0; i < num; i++) {
                         if (plan.Day.equals(AllDays[i])) {
@@ -272,39 +263,34 @@ public class PlanDetail extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        Log.d("CC", "1");
 //        listAdapter.onActivityResult(requestCode, resultCode, data);
-        if(resultCode ==7){
-        }
-        else {
-            mAuth = FirebaseAuth.getInstance();
-            FirebaseUser mUser = mAuth.getCurrentUser();
-            addPlanDetail = FirebaseDatabase.getInstance().getReference();
-            String spot = data.getStringExtra("spot");
-            Double x = data.getDoubleExtra("MapX", 0);
-            Double y = data.getDoubleExtra("MapY", 0);
-            String memo = data.getStringExtra("memo");
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        addPlanDetail = FirebaseDatabase.getInstance().getReference();
 
-            int index = data.getIntExtra("dayposition", 0);
+        String spot = data.getStringExtra("spot");
+        Double x = data.getDoubleExtra("MapX", 0);
+        Double y = data.getDoubleExtra("MapY", 0);
+        String memo = data.getStringExtra("memo");
+
+        int index = data.getIntExtra("dayposition", 0);
+        Log.d("RE", index + "");
 //        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
 //        AllDays = getDaysForTravel.getPD();
 //        planTitle = getDaysForTravel.getTitle();
 
-            //Plan 형식 : String title, String address, double mapX, double mapY, String message
-            Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
-            addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
-            listDataGroup.get(index).getArrayList().add(new ChildItems(spot, x, y, memo, AllDays[index]));
-        }
+        //Plan 형식 : String title, String address, double mapX, double mapY, String message
+        Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
+        addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
+        listDataGroup.get(index).getArrayList().add(new ChildItems(spot, x, y, memo, AllDays[index]));
+        Log.d("CC", "3");
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        ProgressDialog di = new ProgressDialog(this);
-        Progress_dialog dialog = new Progress_dialog(di);
-        dialog.execute();
-
         setListFromDatabase(); //여행 정보 가져오기
 
         Handler handler = new Handler();
@@ -312,12 +298,15 @@ public class PlanDetail extends AppCompatActivity {
             @Override
             public void run() {
                 prepareListGroupData(); //Group 만들기
+                Log.d("RRRRRRR","GROUPPP");
                 //try {
                 //String temp = readplanDetail.child("Users").getKey();
+                Log.d("RRRRRRR","ok");
                 prepareListChildData(); //Child 만들기
                 //}catch (NullPointerException ne){
 
                 //}finally {
+                Log.d("RRRRRRR","in finally");
                 listAdapter = new PlanDetailAdapter(PlanDetail.this, listDataGroup, elv);
                 elv.setAdapter(listAdapter);
                 listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
