@@ -18,10 +18,19 @@
         android:background="#c6ffffff">
 
         <ImageView
+            android:id="@+id/iconimg"
             android:layout_width="109dp"
             android:layout_height="102dp"
             android:layout_centerInParent="true"
             android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iconimg"
+            android:layout_centerHorizontal="true"
+            android:text="V 1.0.0"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
@@ -40,9 +49,9 @@
             android:clickable="true"
             android:drawableLeft="@drawable/resize_web"
             android:gravity="center_vertical|center_horizontal"
-            android:padding="20dp"
+            android:padding="10dp"
             android:text="@string/info1"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/info2"
@@ -53,9 +62,9 @@
             android:drawableLeft="@drawable/resize_email"
             android:clickable="true"
             android:gravity="center_vertical|center_horizontal"
-            android:padding="20dp"
+            android:padding="10dp"
             android:text="@string/info2"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
         <TextView
             android:id="@+id/info3"
             android:layout_width="match_parent"
@@ -66,9 +75,9 @@
             android:clickable="true"
             android:gravity="center_vertical|center_horizontal"
             android:drawableLeft="@drawable/resize_developer"
-            android:padding="20dp"
+            android:padding="10dp"
             android:text="@string/info3"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,5 +1,4 @@
 package com.example.ahn.signinwithgoogle;
-
 /**
  * Created by SOSO on 2018-05-14.
  */
@@ -17,16 +16,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ChecklistAdapter extends BaseAdapter{
+public class ChecklistListViewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
-    private ArrayList<Checklist_item_Modify> listViewItemList = new ArrayList<Checklist_item_Modify>() ;
+    private ArrayList<Checklist_item> listViewItemList = new ArrayList<Checklist_item>() ;
     ImageView deleteBtn;
     TextView itemListView;
     CheckBox checkbox;
 
     AlertDialog.Builder builder;
     // ListViewAdapter의 생성자
-    public ChecklistAdapter(Context c) {
+    public ChecklistListViewAdapter(Context c) {
         builder= new AlertDialog.Builder(c);
     }
 
@@ -49,15 +48,40 @@ public class ChecklistAdapter extends BaseAdapter{
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        itemListView = (TextView) convertView.findViewById(R.id.userbucekList) ;
+        itemListView = (TextView) convertView.findViewById(R.id.itemList) ;
         deleteBtn=convertView.findViewById(R.id.deletebtn);
-        checkbox = convertView.findViewById(R.id.checkbox);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        final Checklist_item_Modify listViewItem = listViewItemList.get(position);
+        final Checklist_item listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         itemListView.setText(listViewItem.getText());
+        if(listViewItem.getIsChecked()==0){
+
+        }
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder.setTitle("Delete Bucket List")
+                        .setMessage("Are you sure to delete "+listViewItem.getText().toString()+"?")
+                        .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                listViewItemList.remove(position);
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .setNegativeButton("NO!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
         return convertView;
     }
 
@@ -74,9 +98,10 @@ public class ChecklistAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String text) {
-        Checklist_item_Modify item = new Checklist_item_Modify();
+    public void addItem(String text, int isChecked) {
+        Checklist_item item = new Checklist_item();
         item.setText(text);
+        item.setIsChecked(isChecked);
         listViewItemList.add(item);
     }
 }

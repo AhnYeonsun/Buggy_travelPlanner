@@ -4,118 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginpage"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:weightSum="10"
     tools:context="com.example.ahn.signinwithgoogle.SetDetail">
 
-    <RelativeLayout
+    <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
-
+        android:layout_height="wrap_content"
+        app:scale_base_width="1440"
+        android:background="@drawable/loginpage"
+        app:scale_base_height="2560">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="#85ffffff"
-            android:fontFamily="@font/enjoy"
-            android:padding="20dp"
-            android:text="세부일정 등록"
-            android:textColor="#000000"
-            android:textSize="50dp" />
-    </RelativeLayout>
+            android:background="#1a4a83"
+            android:padding="10dp"
+            android:text="Create New Plan"
+            android:gravity="center_vertical|center_horizontal"
+            android:textColor="#dec03b"
+            app:scale_textsize="100"
+            app:scale_height="250"
+            app:scale_left="50"
+            app:scale_top="250"
+            app:scale_width="1345"
+            android:textStyle="bold"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:background="#ffffff">
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#a5ffffff"
+            app:scale_height="1550"
+            app:scale_left="50"
+            app:scale_top="700"
+            app:scale_width="1345" />
 
         <TextView
             android:id="@+id/locatontxt"
             android:layout_width="wrap_content"
-            android:layout_height="39dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:fontFamily="@font/enjoy"
-            android:text="어디갈래요?"
-            android:textSize="40sp" />
+            android:layout_height="wrap_content"
+            android:text="Visiting Place"
+            app:scale_textsize="100"
+            app:scale_height="300"
+            app:scale_left="490"
+            app:scale_top="800"
+            app:scale_width="800" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/spot"
+            app:scale_height="300"
+            app:scale_left="250"
+            app:scale_top="750"
+            app:scale_width="200" />
         <EditText
             android:id="@+id/spot"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_above="@+id/memotxt"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="-100dp"
-            android:background="#34aeaeae"
-            android:ems="10"
-            android:fontFamily="@font/enjoy"
-            android:gravity="top"
-            android:hint="장소를 입력해주세요"
+            android:layout_height="wrap_content"
+            android:background="#70aeaeae"
+            android:gravity="center_horizontal"
+            android:hint="Write your visiting place"
             android:inputType="textPersonName"
             android:padding="5dp"
-            android:textSize="30sp" />
+            app:scale_textsize="80"
+            app:scale_height="300"
+            app:scale_left="220"
+            app:scale_top="1020"
+            app:scale_width="1000"/>
 
         <TextView
             android:id="@+id/memotxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:fontFamily="@font/enjoy"
-            android:text="메모"
-            android:textSize="40sp" />
+            android:text="Memo"
+            app:scale_textsize="100"
+            app:scale_height="300"
+            app:scale_left="530"
+            app:scale_top="1400"
+            app:scale_width="800"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/memo"
+            app:scale_height="300"
+            app:scale_left="250"
+            app:scale_top="1350"
+            app:scale_width="200" />
+
 
         <EditText
             android:id="@+id/memo"
             android:layout_width="wrap_content"
-            android:layout_height="125dp"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/memotxt"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="100dp"
-            android:background="#34aeaeae"
-            android:ems="10"
-            android:fontFamily="@font/enjoy"
-            android:gravity="top"
-            android:hint="간단한 메모를 입력해주세요"
+            android:layout_height="wrap_content"
+            android:background="#70aeaeae"
+            android:gravity="center_horizontal"
+            android:hint="Write down simple memo"
             android:inputType="textPersonName"
             android:padding="5dp"
-            android:textSize="30sp" />
+            app:scale_textsize="80"
+            app:scale_height="300"
+            app:scale_left="220"
+            app:scale_top="1650"
+            app:scale_width="1000"/>
 
         <Button
             android:id="@+id/map"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/saveBtn"
             android:layout_marginStart="19dp"
             android:background="#1a4a83"
-            android:fontFamily="@font/enjoy"
-            android:text="위치확인"
+            android:text="Location"
             android:textColor="#ffffff"
-            android:textSize="25sp" />
+            app:scale_textsize="60"
+            app:scale_height="180"
+            app:scale_left="220"
+            app:scale_top="2000"
+            app:scale_width="400"
+            />
 
         <Button
             android:id="@+id/saveBtn"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="21dp"
-            android:layout_marginEnd="20dp"
             android:background="#1a4a83"
-            android:fontFamily="@font/enjoy"
-            android:text="저장"
+            android:text="SAVE"
             android:textColor="#ffffff"
-            android:textSize="25sp" />
+            app:scale_textsize="60"
+            app:scale_height="180"
+            app:scale_left="810"
+            app:scale_top="2000"
+            app:scale_width="400"
+            />
 
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 
-    </RelativeLayout>
 
 </LinearLayout>

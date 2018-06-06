@@ -15,6 +15,7 @@ public class SetDetail extends AppCompatActivity {
     EditText spot, memo;
     Button map;
     Double x, y;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +28,10 @@ public class SetDetail extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = getIntent();
+                intent = getIntent();
                 //Intent intent = new Intent();
-                if(!spot.getText().toString().equals(null))
+                if(!spot.getText().toString().equals(""))
                 {
-                    Log.d("coming?", "yeah");
                     intent.putExtra("spot",spot.getText().toString());
                     intent.putExtra("memo", memo.getText().toString());
                     intent.putExtra("dayposition", intent.getFlags());
@@ -40,9 +40,13 @@ public class SetDetail extends AppCompatActivity {
 
                     setResult(Activity.RESULT_OK,intent);
                 }
+                else{
+                    setResult(7, intent);
+                }
                 finish();
             }
         });
+
 
         map.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +57,11 @@ public class SetDetail extends AppCompatActivity {
                 startActivity(goMap);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(7, intent);
+        super.onBackPressed();
     }
 }

@@ -56,8 +56,7 @@
             android:name=".Navigation"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Checklist" />
-        <activity android:name=".checklist_item"></activity>
-        <activity android:name=".SortingByAlgo"></activity>
+        <activity android:name=".Checklist_item"></activity>
     </application>
 
 </manifest>
