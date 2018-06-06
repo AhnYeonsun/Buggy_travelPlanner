@@ -61,10 +61,10 @@ public class ItemThreeFragment extends Fragment {
                }
                else if(position==2)
                {
-                   //정보 위키페이지? 이런데로 이동시킬까...
+                   Uri uri = Uri.parse("https://buggy.imweb.me/");
+                   Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                   startActivity(intent);
                }
-
-
             }
         });
        return view;

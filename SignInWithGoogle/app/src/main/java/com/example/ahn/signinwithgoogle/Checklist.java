@@ -1,12 +1,9 @@
 package com.example.ahn.signinwithgoogle;
 
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class checklist extends android.support.v4.app.Fragment {
-    public static checklist newInstance() {
-        checklist fragment = new checklist();
+public class Checklist extends android.support.v4.app.Fragment {
+    public static Checklist newInstance() {
+        Checklist fragment = new Checklist();
         return fragment;
     }
 

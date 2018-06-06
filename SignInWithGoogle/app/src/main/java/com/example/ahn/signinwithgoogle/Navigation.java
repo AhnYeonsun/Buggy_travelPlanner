@@ -27,7 +27,7 @@ public class Navigation extends AppCompatActivity {
                                 selectedFragment = AddPlan.newInstance();
                                 break;
                             case R.id.action_item2:
-                                selectedFragment = checklist.newInstance();
+                                selectedFragment = Checklist.newInstance();
                                 break;
                             case R.id.action_item3:
                                 selectedFragment = ItemThreeFragment.newInstance();

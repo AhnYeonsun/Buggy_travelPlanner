@@ -26,6 +26,7 @@
             android:choiceMode="multipleChoice"
             android:divider="@color/SeSSapGreen"
             android:dividerHeight="2dp"
+            android:background="@drawable/border"
             android:longClickable="true"></ListView>
     </LinearLayout>
 </FrameLayout>

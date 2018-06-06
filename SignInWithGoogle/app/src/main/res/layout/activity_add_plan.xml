@@ -20,10 +20,10 @@
             android:id="@+id/plan_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#62ffffff"
+            android:background="#a1ffffff"
             android:drawableLeft="@drawable/resize_plan"
-            android:fontFamily="@font/enjoy"
-            android:hint="   여행이름을 적어주세요"
+            android:hint="여행이름을 적어주세요"
+            android:gravity="center_horizontal"
             android:padding="5dp"
             android:textColorHint="#000000"
             android:textSize="30sp" />
@@ -37,14 +37,14 @@
             android:layout_below="@+id/plan_name"
             android:layout_centerVertical="true"
             android:layout_marginTop="8dp"
-            android:background="#2bffffff"
+            android:background="#a1ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
-            android:fontFamily="@font/enjoy"
-            android:hint="   시작날"
+            android:gravity="center_horizontal"
+            android:hint="시작날"
             android:padding="5dp"
             android:textColorHint="#000000"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/end_date"
@@ -54,14 +54,14 @@
             android:layout_alignBottom="@+id/start_date"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/start_date"
-            android:background="#62ffffff"
+            android:background="#a1ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
-            android:fontFamily="@font/enjoy"
-            android:hint="   마지막날"
+            android:hint="마지막날"
             android:padding="5dp"
+            android:gravity="center_horizontal"
             android:textColorHint="#000000"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/createBtn"
@@ -69,11 +69,11 @@
             android:layout_height="58dp"
             android:layout_below="@+id/end_date"
             android:layout_marginTop="8dp"
-            android:background="#62ffffff"
-            android:fontFamily="@font/enjoy"
+            android:background="#a1ffffff"
             android:padding="5dp"
+            android:gravity="center_horizontal"
             android:text="여행 만들기"
-            android:textSize="50sp" />
+            android:textSize="40sp" />
 
     </RelativeLayout>
 

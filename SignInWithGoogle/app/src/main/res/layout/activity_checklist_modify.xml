@@ -19,6 +19,7 @@
         android:layout_margin="8dp"
         android:choiceMode="multipleChoice"
         android:divider="@color/SeSSapGreen"
+        android:background="@drawable/border"
         android:dividerHeight="2dp"
         android:longClickable="true"></ListView>
 

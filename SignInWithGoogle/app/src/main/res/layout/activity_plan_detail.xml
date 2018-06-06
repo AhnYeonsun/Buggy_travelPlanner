@@ -18,11 +18,9 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
             android:background="#95ffffff"
-            android:fontFamily="@font/enjoy"
             android:gravity="center_horizontal|center_vertical"
             android:text="세부 여행 계획"
-            android:textSize="50sp"
-            android:textStyle="bold" />
+            android:textSize="40sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +38,6 @@
             android:descendantFocusability="beforeDescendants"
             android:divider="#b5d39c"
             android:dividerHeight="0dp"
-            android:fontFamily="@font/enjoy"
             android:groupIndicator="@null"
             android:listSelector="#b6d49d"
             android:textSize="30sp" />
