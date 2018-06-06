@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginpage"
+    android:background="#9d66f6"
     android:orientation="vertical"
     android:paddingTop="5dp"
     android:weightSum="6"
@@ -15,9 +15,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:padding="8dp"
         android:layout_weight="1.7"
-        android:background="#78ffffff">
+        android:background="#ffffff">
 
         <EditText
             android:id="@+id/plan_name"
@@ -28,12 +27,13 @@
             android:gravity="center_horizontal"
             android:hint="여행이름을 적어주세요"
             android:padding="5dp"
-            android:textSize="20sp" />
+            android:textColorHint="#000000"
+            android:textSize="30sp" />
 
 
         <TextView
             android:id="@+id/start_date"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/plan_name"
@@ -50,7 +50,7 @@
 
         <TextView
             android:id="@+id/end_date"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/start_date"
             android:layout_alignBottom="@+id/start_date"
@@ -68,15 +68,14 @@
         <Button
             android:id="@+id/createBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="58dp"
             android:layout_below="@+id/end_date"
             android:layout_marginTop="8dp"
-            android:background="#FF1A4A83"
-            android:textColor="#ffffff"
-            android:gravity="center_horizontal|center_vertical"
+            android:background="#a1ffffff"
+            android:gravity="center_horizontal"
             android:padding="5dp"
             android:text="여행 만들기"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
     </RelativeLayout>
 
@@ -85,7 +84,7 @@
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"

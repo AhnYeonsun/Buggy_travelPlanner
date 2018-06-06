@@ -16,6 +16,7 @@
         android:text="소윤이"
         android:textStyle="bold"
         android:fontFamily="@font/enjoy"
+        android:layout_marginLeft="50dp"
         android:textSize="25dp" />
 
     <Button
