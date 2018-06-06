@@ -23,28 +23,18 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
     GroupViewHolder groupViewHolder;
     ChildViewHolder childViewHolder;
 
-    boolean[] groupClickState;
     public String spot = "";
     Context mContext;
     boolean chk = false;
     public LayoutInflater minflater;
-    int lastExpandedGrouPosition = -1;
-    ExpandableListView elv;
 
     public PlanDetailAdapter(Context c) {
         builder = new AlertDialog.Builder(c);
     }
 
-    public PlanDetailAdapter(Context context, ArrayList<GroupItem> groupItem, ExpandableListView elv) {
+    public PlanDetailAdapter(Context context, ArrayList<GroupItem> groupItem) {
         this.mContext = context;
         this.groupItem = groupItem;
-        this.groupClickState = new boolean[groupItem.size()];
-
-        for(int i=0;i<groupClickState.length;i++){
-            groupClickState[i] = false;
-        }
-
-        this.elv = elv;
     }
 
     public void setInflater(LayoutInflater mInflater) {
@@ -100,12 +90,9 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
-        convertView.setClickable(false);
-        elv = (ExpandableListView) parent;
-        elv.expandGroup(groupPosition);
-        if(isExpanded){
-            Log.d("CCAAAAAA","55555555");
-        }
+        ExpandableListView eLV = (ExpandableListView) parent;
+        eLV.expandGroup(groupPosition);
+
         groupViewHolder.tvTitle.setText(groupItem.get(groupPosition).getTitle());
         groupViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() { //여기서 이제 장소 받아줘야지
             @Override
@@ -140,16 +127,12 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
             childViewHolder.et = (TextView) convertView.findViewById(R.id.childText);
 
             convertView.setTag(childViewHolder);
+        } else {
+            childViewHolder = (ChildViewHolder) convertView.getTag();
         }
-//        else {
-//            childViewHolder = (ChildViewHolder) convertView.getTag();
-//        }
-        convertView.setClickable(false);
 
         if (!groupItem.get(groupPosition).getArrayList().get(childPosition).getValue().equals("")) {
-            String title = "", mapX = "", mapY = "", memo = "", planDay = "";
-            title = groupItem.get(groupPosition).getArrayList().get(childPosition).getValue();
-            childViewHolder.et.setText(title);
+            childViewHolder.et.setText(groupItem.get(groupPosition).getArrayList().get(childPosition).getValue());
         }
         childViewHolder.et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -164,27 +147,8 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i2) {
-        return true;
+        return false;
     }
-
-//    @Override
-//    public void onGroupExpanded(int groupPosition) {
-//        groupClickState[groupPosition] =!groupClickState[groupPosition];
-//
-//        if(lastExpandedGrouPosition != -1 && lastExpandedGrouPosition != groupPosition){
-//            elv.collapseGroup(lastExpandedGrouPosition);
-//            groupClickState[las tExpandedGrouPosition] = false;
-//        }
-//
-//        lastExpandedGrouPosition = groupPosition;
-//        super.onGroupExpanded(groupPosition);
-//    }
-
-    @Override
-    public void onGroupCollapsed(int groupPosition) {
-        super.onGroupCollapsed(groupPosition);
-    }
-
 
     private class GroupViewHolder {
         public TextView tvTitle;

@@ -31,13 +31,14 @@
         android:layout_weight="8">
 
         <ExpandableListView
-            android:id="@+id/listviewDetail"
+            android:id="@+id/listview"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#97ffffff"
-
+            android:descendantFocusability="beforeDescendants"
             android:divider="#b5d39c"
             android:dividerHeight="0dp"
+            android:groupIndicator="@null"
             android:listSelector="#b6d49d"
             android:textSize="30sp" />
     </LinearLayout>
