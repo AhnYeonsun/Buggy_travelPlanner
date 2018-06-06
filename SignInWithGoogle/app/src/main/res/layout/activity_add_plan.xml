@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/loginpage"
     android:orientation="vertical"
-    android:paddingTop="50dp"
+    android:paddingTop="5dp"
+    android:weightSum="6"
     tools:context="com.example.ahn.signinwithgoogle.AddPlan">
 
     <RelativeLayout
@@ -14,7 +15,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:layout_weight="2">
+        android:padding="8dp"
+        android:layout_weight="1.7"
+        android:background="#78ffffff">
 
         <EditText
             android:id="@+id/plan_name"
@@ -22,16 +25,15 @@
             android:layout_height="wrap_content"
             android:background="#a1ffffff"
             android:drawableLeft="@drawable/resize_plan"
-            android:hint="여행이름을 적어주세요"
             android:gravity="center_horizontal"
+            android:hint="여행이름을 적어주세요"
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
 
 
         <TextView
             android:id="@+id/start_date"
-            android:layout_width="170dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/plan_name"
@@ -48,7 +50,7 @@
 
         <TextView
             android:id="@+id/end_date"
-            android:layout_width="170dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/start_date"
             android:layout_alignBottom="@+id/start_date"
@@ -57,23 +59,24 @@
             android:background="#a1ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
+            android:gravity="center_horizontal"
             android:hint="마지막날"
             android:padding="5dp"
-            android:gravity="center_horizontal"
             android:textColorHint="#000000"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/createBtn"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/end_date"
             android:layout_marginTop="8dp"
-            android:background="#a1ffffff"
+            android:background="#FF1A4A83"
+            android:textColor="#ffffff"
+            android:gravity="center_horizontal|center_vertical"
             android:padding="5dp"
-            android:gravity="center_horizontal"
             android:text="여행 만들기"
-            android:textSize="40sp" />
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
@@ -82,16 +85,17 @@
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_weight="3.5"
+        android:layout_marginTop="16dp"
+        android:layout_weight="4"
         android:background="@drawable/addplan_border">
 
         <ListView
             android:id="@+id/planListview"
             android:layout_width="match_parent"
-            android:layout_height="340dp"
+            android:layout_height="match_parent"
             android:layout_marginBottom="16dp"
             android:choiceMode="multipleChoice"
             android:divider="#f6d289"
