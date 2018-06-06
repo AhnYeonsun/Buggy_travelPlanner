@@ -3,10 +3,12 @@ package com.example.ahn.signinwithgoogle;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +44,7 @@ public class PlanDetail extends AppCompatActivity {
     String numStr;
     String titleStr;
     Button addBtn, transportBtn;
+    public AlertDialog.Builder builder;
 
     private FirebaseAuth mAuth;
     private DatabaseReference addPlanDetail;
@@ -75,85 +78,61 @@ public class PlanDetail extends AppCompatActivity {
         FirebaseUser mUser = mAuth.getCurrentUser();
         addPlanDetail = FirebaseDatabase.getInstance().getReference();
 
-
-//        forDateDB = FirebaseDatabase.getInstance().getReference().child("forDate").child(mUser.getUid());
-//
-//        informIntent = getIntent(); //AddPlan에서 받아주는 곳. 사실상 이름만 받아와서, 나머지 내용들은 DB에서 가져오면 됨.
-//        this.titleStr = informIntent.getStringExtra("title");
-//        Log.d("CHECK21",titleStr);
-//
-//        ValueEventListener valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                    Log.d("CHECK HERE", child.getKey());
-//                    //Plan plan = child.getValue(Plan.class);
-//                    if (child.getKey().equals(titleStr)) {
-//                        TravelInfo t = child.getValue(TravelInfo.class);
-//                        //title, startDate, endDate, numDates
-//                        num = (int) t.InfoNumDates;
-//                        planTitle = t.InfoTitle;
-//                        String sd = t.InfoStartDate;
-//                        String ed = t.InfoEndDate;
-//                        Log.d("CHECK22",planTitle);
-//                        CalculateDays calculateDays = new CalculateDays(sd, ed, num, planTitle);
-//                        AllDays = calculateDays.days;
-//                        break;
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        };
-//        forDateDB.addListenerForSingleValueEvent(valueEventListener);
-
-//        this.numStr = informIntent.getStringExtra("days");
-//        num = Integer.parseInt(numStr);
-//        plan_name = findViewById(R.id.planTitle);
-//        plan_name.setText(titleStr);
-
         elv = (ExpandableListView) findViewById(R.id.listview);
+        elv.setGroupIndicator(null);
 
-//        prepareListData();
-//        listAdapter = new PlanDetailAdapter(this,listDataGroup, listDataChild);
-//        elv.setAdapter(listAdapter);
 
-//        //그룹선택할때
-//        elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-//            @Override
-//            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-//                return false;
-//            }
-//        });
-//
-//        //그룹확장
-//        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//
-//            }
-//        });
-//
-//        //그룹축소
-//        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-//            @Override
-//            public void onGroupCollapse(int groupPosition) {
-//
-//            }
-//        });
-//
-//        //차일드 클릭할때
-//        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v, int grouPosition, int chilPosition, long id){
-//
-//                return false;
-//            }
-//
-//        });
+        //그룹확장
+        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                //Log.d("BBBBB","GRORORORO");
+            }
+        });
+
+        //그룹축소
+        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+
+            }
+        });
+
+        elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.d("BBBBB","GRORORORO");
+                return false;
+            }
+        });
+        //차일드 클릭할때
+        builder = new AlertDialog.Builder(this);
+        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id){
+                Log.d("VVVV","VVVVV");
+                String title = "", mapX = "", mapY = "", memo = "", planDay = "";
+
+                title = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue();
+                mapX = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapX().toString();
+                mapY = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapY().toString();
+                memo = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getDetailMessage();
+
+                builder.setTitle(title +"정보")
+                        .setMessage("위치 정보   \nX 좌표 : "+mapX+"\bnY 좌표 : "+mapY+"\n\n"+"메모 : "+memo+"\n\n") //이게 정보 받아주는 함수
+                        .setCancelable(false)
+                        .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog dialog = builder.create();    // 알림창 객체 생성
+                dialog.show();
+
+                return false;
+            }
+        });
 
 //        //차일드 길게 클릭할때
 //        elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -265,7 +244,7 @@ public class PlanDetail extends AppCompatActivity {
                     Plan plan = child.getValue(Plan.class);
                     for (int i = 0; i < num; i++) {
                         if (plan.Day.equals(AllDays[i])) {
-                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title,""));
+                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title, plan.mapX, plan.mapY, plan.message, plan.Day));
                         }
                     }
 
@@ -304,7 +283,7 @@ public class PlanDetail extends AppCompatActivity {
         //Plan 형식 : String title, String address, double mapX, double mapY, String message
         Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
         addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
-        listDataGroup.get(index).getArrayList().add(new ChildItems(plan.title,""));
+        listDataGroup.get(index).getArrayList().add(new ChildItems(spot, x, y, memo, AllDays[index]));
         Log.d("CC", "3");
     }
 
@@ -321,16 +300,16 @@ public class PlanDetail extends AppCompatActivity {
                 prepareListGroupData(); //Group 만들기
                 Log.d("RRRRRRR","GROUPPP");
                 //try {
-                    //String temp = readplanDetail.child("Users").getKey();
-                    Log.d("RRRRRRR","ok");
-                    prepareListChildData(); //Child 만들기
+                //String temp = readplanDetail.child("Users").getKey();
+                Log.d("RRRRRRR","ok");
+                prepareListChildData(); //Child 만들기
                 //}catch (NullPointerException ne){
 
                 //}finally {
-                    Log.d("RRRRRRR","in finally");
-                    listAdapter = new PlanDetailAdapter(PlanDetail.this, listDataGroup);
-                    elv.setAdapter(listAdapter);
-                    listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+                Log.d("RRRRRRR","in finally");
+                listAdapter = new PlanDetailAdapter(PlanDetail.this, listDataGroup, elv);
+                elv.setAdapter(listAdapter);
+                listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
                 //}
             }
         }, 1000);
