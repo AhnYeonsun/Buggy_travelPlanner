@@ -53,7 +53,9 @@ public class Recommend extends AppCompatActivity {
     ArrayAdapter<String> regionSpinnerAdapter, sigunguSpinnerAdapter;
     String regionCode = new String();
     boolean check = false;
+
     static int[] Recommends = new int[1];          //추천받은 개수. final이어야해서 크기 1짜리 array로 만듬
+
     private FirebaseAuth mAuth;
     private DatabaseReference addRecomByday;
     private DatabaseReference addRecomByAll;
@@ -67,6 +69,7 @@ public class Recommend extends AppCompatActivity {
     private int tempRecoms;
     private int restDays;
     int hold = -1;
+
     private ViewPager mViewPager;
 
     @Override
@@ -151,19 +154,19 @@ public class Recommend extends AppCompatActivity {
         FloatingActionButton addRecom = (FloatingActionButton) findViewById(R.id.addRecom);
         addRecom.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
+            public void onClick(View v) {
                 Log.d("recomfloating", "coming?");
                 days = informIntent.getIntExtra("day", 0);
                 final String[] items = new String[days + 1];
 
                 if (days != 0) {
-                    items[0] = "전체 날짜";
+                    items[0] = "Entire Journey";
                     for (int i = 1; i <= days; i++) {
-                        items[i] = i + "일에 갈래!";
+                        items[i] = "Date "+ i + "!";
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Recommend.this);
-                    builder.setTitle("언제 갈래?");
+                    builder.setTitle("What date do you want to go?");
                     builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -173,8 +176,8 @@ public class Recommend extends AppCompatActivity {
                     });
 
                     //******* 온돈온돈 *********8//
-                    ObjectForBlank objectForBlank = new ObjectForBlank(1, "1", 1.1);
-                    builder.setPositiveButton("넣어주라줘", new DialogInterface.OnClickListener() { //이때 알고리즘 돌려서 알맞은 날짜에 디비랑 넣어주면 되염
+                    ObjectForBlank objectForBlank = new ObjectForBlank(1,"1",1.1);
+                    builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() { //이때 알고리즘 돌려서 알맞은 날짜에 디비랑 넣어주면 되염
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
 //                            informIntent.getStringExtra("title");         //이거는 여행의 제목
@@ -304,7 +307,7 @@ public class Recommend extends AppCompatActivity {
                         }
                     });
 
-                    builder.setNegativeButton("생각 좀....", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.cancel();
@@ -385,6 +388,7 @@ public class Recommend extends AppCompatActivity {
         },3000);
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -396,6 +400,7 @@ public class Recommend extends AppCompatActivity {
             hold=1;
         }
     }
+
 
     public String getRegionItem() {
         return (String) regionSpinnerList.getSelectedItem();

@@ -109,7 +109,7 @@ public class fragment_recom_leports extends android.support.v4.app.Fragment {
 
                 builder = new AlertDialog.Builder(getActivity());
                 final String finalMessage = message;
-                builder.setTitle(item.getName()+"을/를 추가하시겠습니까?")
+                builder.setTitle("Do you prefer to add "+item.getName()+"?")
                         //.setIcon(item.getMainImg())  //이게 사진 받는 함수고
                         .setMessage(item.getAddress() + "\n" + message) //이게 정보 받아주는 함수
                         //********************************요기에 욘또니가 지도 넣어주면되염 화이또!!!!!!***********//
@@ -118,7 +118,7 @@ public class fragment_recom_leports extends android.support.v4.app.Fragment {
                         .setCancelable(false)
 
                         //******************************여기갈랭! 버튼을 누르면 데이터 베이스에 넣어주기*******************//
-                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
@@ -128,7 +128,7 @@ public class fragment_recom_leports extends android.support.v4.app.Fragment {
                                 addPlan.child("Users").child(mUser.getUid().toString()).child("TravelTemp").child(item.getContentID()).setValue(plan);
                             }
                         })
-                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();

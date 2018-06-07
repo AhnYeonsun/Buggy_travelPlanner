@@ -15,6 +15,7 @@ public class SetDetail extends AppCompatActivity {
     EditText spot, memo;
     Button map;
     Double x, y;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,5 +61,11 @@ public class SetDetail extends AppCompatActivity {
         x = data.getDoubleExtra("La",0);
         y = data.getDoubleExtra("Lo",0);
         Log.d("SETDETAIL", x+" / "+y);
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(7, intent);
+        super.onBackPressed();
     }
 }

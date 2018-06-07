@@ -1,110 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/loginpage"
-    android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:weightSum="6"
     tools:context="com.example.ahn.signinwithgoogle.AddPlan">
 
-    <RelativeLayout
+    <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:padding="8dp"
-        android:layout_weight="1.7"
-        android:background="#78ffffff">
+        android:layout_height="wrap_content"
+        app:scale_base_width="1440"
+        android:background="@drawable/loginpage"
+        app:scale_base_height="2560">
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#78ffffff"
+            android:padding="8dp"
+            app:scale_height="560"
+            app:scale_left="50"
+            app:scale_top="100"
+            app:scale_width="1345" />
 
         <EditText
             android:id="@+id/plan_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#a1ffffff"
             android:drawableLeft="@drawable/resize_plan"
             android:gravity="center_horizontal"
-            android:hint="여행이름을 적어주세요"
+            android:hint="Write your travel name"
             android:padding="5dp"
-            android:textSize="20sp" />
-
+            app:scale_height="150"
+            app:scale_left="100"
+            app:scale_textsize="80"
+            app:scale_top="140"
+            app:scale_width="1260" />
 
         <TextView
             android:id="@+id/start_date"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/plan_name"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="8dp"
             android:background="#a1ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
             android:gravity="center_horizontal"
-            android:hint="시작날"
+            android:hint="start Date"
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:textSize="20sp" />
+            app:scale_height="150"
+            app:scale_left="100"
+            app:scale_textsize="80"
+            app:scale_top="300"
+            app:scale_width="600" />
 
         <TextView
             android:id="@+id/end_date"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/start_date"
-            android:layout_alignBottom="@+id/start_date"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/start_date"
             android:background="#a1ffffff"
             android:clickable="true"
             android:drawableLeft="@drawable/test"
             android:gravity="center_horizontal"
-            android:hint="마지막날"
+            android:hint="Last Date"
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:textSize="20sp" />
+            app:scale_height="150"
+            app:scale_left="755"
+            app:scale_textsize="80"
+            app:scale_top="300"
+            app:scale_width="600" />
 
         <Button
             android:id="@+id/createBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/end_date"
-            android:layout_marginTop="8dp"
             android:background="#FF1A4A83"
-            android:textColor="#ffffff"
             android:gravity="center_horizontal|center_vertical"
             android:padding="5dp"
-            android:text="여행 만들기"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_weight="4"
-        android:background="@drawable/addplan_border">
-
+            android:text="create"
+            android:textColor="#ffffff"
+            app:scale_height="160"
+            app:scale_left="100"
+            app:scale_textsize="80"
+            app:scale_top="465"
+            app:scale_width="1250" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#a5ffffff"
+            app:scale_height="1550"
+            app:scale_left="50"
+            app:scale_top="700"
+            app:scale_width="1345" />
         <ListView
             android:id="@+id/planListview"
-            android:layout_width="match_parent"
-            android:layout_height="365dp"
-            android:layout_marginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:choiceMode="multipleChoice"
             android:divider="#f6d289"
             android:dividerHeight="2dp"
             android:listSelector="#d2eda764"
-            android:longClickable="true">
+            android:longClickable="true"
+            app:scale_height="1550"
+            app:scale_left="50"
+            app:scale_top="700"
+            app:scale_width="1345"/>
 
-        </ListView>
-    </LinearLayout>
-
-
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 </LinearLayout>

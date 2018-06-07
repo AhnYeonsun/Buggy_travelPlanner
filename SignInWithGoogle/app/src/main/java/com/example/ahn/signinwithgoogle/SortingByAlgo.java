@@ -68,10 +68,6 @@ public class SortingByAlgo extends AppCompatActivity {
             Log.d("VERTX", ((Vertex) tempVertices[i]).getX() + "");
             polyline.addPoint(MapPoint.mapPointWithGeoCoord(((Vertex) tempVertices[i]).getX(), ((Vertex) tempVertices[i]).getY()));
         }
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(37.537229, 127.005515));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(37.545024,127.03923));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(37.527896,127.036245));
-//        polyline.addPoint(MapPoint.mapPointWithGeoCoord(37.541889,127.095388));
 
         // Polyline 지도에 올리기.
         mapView.addPolyline(polyline);

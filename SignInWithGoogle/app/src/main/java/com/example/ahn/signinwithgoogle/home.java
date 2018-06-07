@@ -44,7 +44,7 @@ public class Home extends AppCompatActivity {
         checklistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Checklist_Modify.class);
+                Intent intent = new Intent(getApplicationContext(), Checklist.class);
                 startActivity(intent);
             }
         });
