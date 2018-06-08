@@ -1,15 +1,29 @@
 package com.example.ahn.signinwithgoogle;
 
 public class Checklist_item {
-    private String text = "";
-    private  int isChecked = 0;
+    public String list = "";
+    public int check = 0;
 
-    public void setText(String text){
-        this.text = text;
+    public Checklist_item(){}
+    public Checklist_item(String list, int check){
+        this.list = list;
+        this.check = check;
     }
-    public String getText(){return this.text;}
 
-    public void setIsChecked(int isChecked){ this.isChecked = isChecked;}
-    public int getIsChecked(){return this.isChecked;}
+//    //get set TEXT
+    public void setText(String list){
+        this.list = list;
+    }
+//    public String getText(){
+//        return this.list;
+//    }
+//
+//    //get set isCHECKED
+    public void setIsChecked(int check){
+        this.check = check;
+    }
+//    public int getIsChecked(){
+//        return this.check;
+//    }
 }
 

@@ -6,15 +6,29 @@ package com.example.ahn.signinwithgoogle;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+
+//TODO : if CheckBox is checked, DB update.
+//TODO : if CheckBox is deleted, DB update.
+//TODO : show bucket list every update or delete.
 
 public class ChecklistListViewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -22,6 +36,9 @@ public class ChecklistListViewAdapter extends BaseAdapter{
     ImageView deleteBtn;
     TextView itemListView;
     CheckBox checkbox;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference DBrefer;
 
     AlertDialog.Builder builder;
     // ListViewAdapter의 생성자
@@ -41,6 +58,10 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         //final int pos = position;
         final Context context = parent.getContext();
 
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        DBrefer = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,21 +76,75 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         final Checklist_item listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        itemListView.setText(listViewItem.getText());
-        if(listViewItem.getIsChecked()==0){
+        itemListView.setText(listViewItem.list);
+        if(listViewItem.check==0){
 
         }
+
+        //ischeckedListener
+        checkbox =  convertView.findViewById(R.id.checkbox);
+        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
+                final String changePosition = listViewItemList.get(position).list;
+                final int bool;
+                if(b) bool = 1;
+                else bool = 0;
+                ValueEventListener changeListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()){
+                            if((child.getKey()).equals(changePosition)){
+                                Checklist_item c = child.getValue(Checklist_item.class);
+                                c.setIsChecked(bool);
+                                DBrefer.child(changePosition).setValue(c);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                }; DBrefer.addListenerForSingleValueEvent(changeListener);
+            }
+        });
+
+        // 아이템 삭제
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 builder.setTitle("Delete Bucket List")
-                        .setMessage("Are you sure to delete "+listViewItem.getText().toString()+"?")
+                        .setMessage("Are you sure to delete "+listViewItem.list+"?")
                         .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                listViewItemList.remove(position);
+
+                                final String deletePosition = listViewItemList.get(position).list;
+                                Log.d("DELETE", position+"");
+                                Log.d("DELETE", deletePosition);
+
+                                ValueEventListener deleteListener = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child : dataSnapshot.getChildren()){
+                                            if((child.getKey()).equals(deletePosition)){
+                                                Log.d("DELETE",child.getKey());
+                                                DBrefer.child(deletePosition).removeValue();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                }; DBrefer.addListenerForSingleValueEvent(deleteListener);
+
+                                listViewItemList.remove(position); //position 0,1,2,...
                                 notifyDataSetChanged();
+
                             }
                         })
                         .setNegativeButton("NO!", new DialogInterface.OnClickListener() {
@@ -98,10 +173,10 @@ public class ChecklistListViewAdapter extends BaseAdapter{
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(String text, int isChecked) {
+    public void addItem(String list, int check) {
         Checklist_item item = new Checklist_item();
-        item.setText(text);
-        item.setIsChecked(isChecked);
+        item.setText(list);
+        item.setIsChecked(check);
         listViewItemList.add(item);
     }
 }

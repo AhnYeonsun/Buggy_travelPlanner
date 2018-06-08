@@ -59,6 +59,7 @@
             app:scale_width="200" />
         <EditText
             android:id="@+id/spot"
+            android:scrollHorizontally="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#70aeaeae"
@@ -95,6 +96,7 @@
 
         <EditText
             android:id="@+id/memo"
+            android:scrollHorizontally="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#70aeaeae"
