@@ -59,6 +59,7 @@ public class AddPlan extends android.support.v4.app.Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference readPlan;
     private DatabaseReference addDBforDate;
+    private DatabaseReference readUserPlan;
 
 
 
@@ -79,6 +80,7 @@ public class AddPlan extends android.support.v4.app.Fragment {
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser mUser = mAuth.getCurrentUser();
         readPlan = FirebaseDatabase.getInstance().getReference().child("forDate").child(mUser.getUid());
+        readUserPlan = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid());
 
         final ListView planListview;
         final CreatePlanAdapter adapter;
@@ -267,11 +269,11 @@ public class AddPlan extends android.support.v4.app.Fragment {
 //                        }
 //                    }
                     //*************************************************** 여기까지 이동
-                    Toasty.success(getActivity().getApplicationContext(), "성공 : 여행이 만들어졌어요!", Toast.LENGTH_LONG, true).show();
+                    Toasty.success(getActivity().getApplicationContext(), "Success : Make your new Travel!", Toast.LENGTH_LONG, true).show();
                 }
                 else{
                     //Toast.makeText(getApplicationContext(),"error: check your last date",Toast.LENGTH_LONG).show();
-                    Toasty.warning(getActivity().getApplicationContext(), "오류 : 날짜를 확인해주세요!", Toast.LENGTH_LONG, true).show();
+                    Toasty.warning(getActivity().getApplicationContext(), "Error : Check your date format!", Toast.LENGTH_LONG, true).show();
                 }
 
                 //입력 후 키보드 감추기
@@ -309,15 +311,40 @@ public class AddPlan extends android.support.v4.app.Fragment {
         planListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
+                final CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
                 builder.setTitle("Delete Journey")
-                        .setMessage("Are you sure to delete "+planItem.getName().toString()+"?")
+                        .setMessage("Are you sure to delete "+ planItem.getName()+"?")
                         .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 adapter.planItemList.remove(position);
                                 adapter.notifyDataSetChanged();
+
+                                //DB에서도 지우기
+                                //child의 title 가져와야 함.
+                                //DB의 애들과 비교 후, title이 같으면 삭제.
+                                //forDate DB에서도 지워야 함.************************
+                                final String deleteTitle = planItem.getName();
+                                // readplan databaseReference는 Uid까지 내려온 in "forDate"
+                                // readUserPlan databaseReference는 Uid까지 내려옴 in "Users"
+                                ValueEventListener deletePlanListener = new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot child : dataSnapshot.getChildren()){
+                                            if((child.getKey()).equals(deleteTitle)){
+                                                readPlan.child(child.getKey()).removeValue(); //forDate에서 삭제
+                                                readUserPlan.child(child.getKey()).removeValue(); //Users에서 삭제
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                }; readPlan.addListenerForSingleValueEvent(deletePlanListener);
+
                             }
                         })
                         .setNegativeButton("NO", new DialogInterface.OnClickListener() {

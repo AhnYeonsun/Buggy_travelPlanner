@@ -1,12 +1,13 @@
 package com.example.ahn.signinwithgoogle;
-//중분류, 소분류는 나중에 시간이 되면 마무리 짓기
-//지금까지의 체크리스트 기능은 사용자 마음대로 추가 삭제 - update 2018.05.13
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +47,11 @@ public class Checklist extends android.support.v4.app.Fragment {
     ChecklistListViewAdapter adapter;
     Set<String> values;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference getBucketList;
+    private DatabaseReference addUserBucketList;
+    private DatabaseReference getUserBucketList;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -53,12 +67,53 @@ public class Checklist extends android.support.v4.app.Fragment {
         // Adapter 생성
         adapter = new ChecklistListViewAdapter(getActivity());
 
+        //get list from DB to adapter
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        getBucketList = FirebaseDatabase.getInstance().getReference().child("DefaultBucketList");
+        addUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+
+        //**************************************************************************************** default bucketlist를 user bucketlist에 넣음
+        ValueEventListener addUserBucketListListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    Checklist_item c = child.getValue(Checklist_item.class);
+                    addUserBucketList.child(child.getKey()).setValue(c);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }; getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
+        //**************************************************************************************** 한 번만 실행되어야 함!
+
+        getUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+        ValueEventListener getBucketListListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("CHECKLIST", "1");
+                for (DataSnapshot child : dataSnapshot.getChildren()){
+                    Checklist_item c = child.getValue(Checklist_item.class);
+                    Log.d("CHECKLIST", "2 " + c.list);
+                    Log.d("CHECKLIST", "3" + c.check);
+                    adapter.addItem(c.list, c.check);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        }; getUserBucketList.addListenerForSingleValueEvent(getBucketListListener);
+
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) view.findViewById(R.id.userItemList);
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPrefernces();
                 addBar.setText("");
 
                 //입력 후 키보드 감추기
@@ -66,28 +121,15 @@ public class Checklist extends android.support.v4.app.Fragment {
                 imm.hideSoftInputFromWindow(addBar.getWindowToken(), 0);
             }
         });
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("CHECKLIST", "4");
+                listview.setAdapter(adapter);
+            }
+        }, 3000);
 
-        listview.setAdapter(adapter);
         return view;
-    }
-
-    public void sharedPrefernces(){
-        sh_Pref = getActivity().getSharedPreferences(bucketList_FILE,Context.MODE_PRIVATE);
-        toEdit = sh_Pref.edit();
-        values = new HashSet<>();
-        values.add("AAAA");
-        values.add("0");
-        toEdit.putStringSet("A1", values);
-        toEdit.commit();
-    }
-
-    public void applySharedPreference(){
-        sh_Pref = getActivity().getSharedPreferences(bucketList_FILE,Context.MODE_PRIVATE);
-
-//        if(sh_Pref!=null && sh_Pref.contains("A1")){
-//            Set<String> ret = sh_Pref.getStringSet(values, new HashSet<String>());
-//
-//            adapter.addItem(name, isChecked);
-//        }
     }
 }

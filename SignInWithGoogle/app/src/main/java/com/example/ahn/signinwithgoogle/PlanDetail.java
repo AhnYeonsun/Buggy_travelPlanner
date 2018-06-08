@@ -22,6 +22,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -80,7 +81,7 @@ public class PlanDetail extends AppCompatActivity {
 //        planTitle = getDaysForTravel.getTitle();
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser mUser = mAuth.getCurrentUser();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
         addPlanDetail = FirebaseDatabase.getInstance().getReference();
 
         elv = (ExpandableListView) findViewById(R.id.listview);
@@ -146,13 +147,36 @@ public class PlanDetail extends AppCompatActivity {
                     final int groupPosition  = elv.getPackedPositionGroup(id);
                     final int childPosition = elv.getPackedPositionChild(id);
                     builder.setTitle("Delete Detail")
-                            .setMessage("Are you sure to delete "+ listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue().toString()+"?")
+                            .setMessage("Are you sure to delete "+ listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue()+"?")
                             .setCancelable(false) //뒤로 버튼 클릭시 취소 가능 설정
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     listDataGroup.get(groupPosition).getArrayList().remove(childPosition);
                                     listAdapter.notifyDataSetChanged();
+
+                                    //DB에서도 지우기
+                                    //child의 title 가져와야 함.
+                                    //DB의 애들과 비교 후, title이 같으면 삭제.
+                                    final String deleteTitle = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue();
+                                    readplanDetail = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child(planTitle);
+                                    ValueEventListener deleteChildListener = new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot child : dataSnapshot.getChildren()){
+                                                Plan p = child.getValue(Plan.class);
+                                                if((p.title).equals(deleteTitle)){
+                                                    readplanDetail.child(child.getKey()).removeValue();
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    }; readplanDetail.addListenerForSingleValueEvent(deleteChildListener);
+
                                 }
                             })
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
