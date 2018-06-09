@@ -7,6 +7,6 @@
         android:id="@+id/tutorial8"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:src ="#7b2378"
+        android:src ="@drawable/tutorial8"
         android:scaleType="centerInside"/>
 </LinearLayout>

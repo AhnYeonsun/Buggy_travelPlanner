@@ -6,6 +6,6 @@
         android:id="@+id/tutorial3"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:src ="#73ca80"/>
+        android:src ="@drawable/tutorial3"/>
 
 </LinearLayout>

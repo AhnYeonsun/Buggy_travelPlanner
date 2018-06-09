@@ -7,17 +7,20 @@
         android:id="@+id/tutorial11"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="#8a0909" />
+        android:src="@drawable/tutorial11"/>
 
     <Button
         android:id="@+id/close1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="튜토리얼 끝내기"
-        android:layout_gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp"
-        android:textColor="#FFFFFFFF"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="63dp"
+        android:background="#11167b"
+        android:text="Finish tutorial"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:textColor="#fff700" />
 
 </RelativeLayout>
