@@ -20,12 +20,13 @@ public class ChildItems implements Serializable {
         this.plan = plan;
     }
 
-    public ChildItems(String name, double x, double y, String m, String d) {
+    public ChildItems(String name, double x, double y, String m, String d, String a) {
         this.planName = name;
         this.planMapX = x;
         this.planMapY = y;
         this.planMessage = m;
         this.planDay = d;
+        this.address = a;
     }
 
     public String getValue() { return planName; }
@@ -41,5 +42,6 @@ public class ChildItems implements Serializable {
     public Double getPlanMapX(){return this.planMapX;}
     public Double getPlanMapY(){return this.planMapY;}
     public String getDetailMessage(){return this.planMessage;}
+    public String getAddress(){return this.address;}
     public String getDay(){return this.planDay;}
 }

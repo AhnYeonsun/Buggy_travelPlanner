@@ -16,7 +16,7 @@
         android:windowSoftInputMode="stateAlwaysHidden"
         tools:replace="theme, icon, label">
         <!--모듈 라이브러리 사용시 menifest 충돌 병합시켜주는 코드-->
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.ahn.signinwithgoogle.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

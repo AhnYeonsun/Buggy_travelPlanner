@@ -2,7 +2,6 @@ package com.example.ahn.signinwithgoogle;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -45,16 +44,10 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
         view = inflater.inflate(R.layout.activity_fragment_recom_accom, container, false);
         listview1 = view.findViewById(R.id.recom_accom);
 
-        //listViewAdapter = new RecomListViewAdapter(getActivity());
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 
         FR = (Recommend) getActivity();
         getArea = FR.getObject();
-        //searchBtn = FR.findViewById(R.id.searchBtn);
-        //searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
         recomlistViewItemList.clear();
         listview1.setAdapter(listViewAdapter);
 
@@ -107,18 +100,14 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
                 builder = new AlertDialog.Builder(getActivity());
                 final String finalMessage = message;
                 builder.setTitle("Do you prefer to add "+item.getName()+"?")
-                        //.setIcon(item.getMainImg())  //이게 사진 받는 함수고
-                        .setMessage(item.getAddress() + "\n" + message) //이게 정보 받아주는 함수
-                        //********************************요기에 욘또니가 지도 넣어주면되염 화이또!!!!!!***********//
-                        //*****좌표 X 받아오는 함수 : item.getMapX()  **************//
-                        //*****좌표 Y 받아오는 함수 : item.getMapY() ***************//
+                        .setMessage(item.getAddress() + "\n" + message)
                         .setCancelable(false)
 
                         //******************************여기갈랭! 버튼을 누르면 데이터 베이스에 넣어주기*******************//
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
+                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),finalMessage);
                                 mAuth = FirebaseAuth.getInstance();
                                 addPlan = FirebaseDatabase.getInstance().getReference();
                                 FirebaseUser mUser = mAuth.getCurrentUser();
@@ -131,7 +120,6 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
                                 dialog.cancel();
                             }
                         });
-                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
             }

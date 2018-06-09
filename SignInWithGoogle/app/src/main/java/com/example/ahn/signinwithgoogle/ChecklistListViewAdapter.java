@@ -26,10 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-//TODO : if CheckBox is checked, DB update.
-//TODO : if CheckBox is deleted, DB update.
-//TODO : show bucket list every update or delete.
-
 public class ChecklistListViewAdapter extends BaseAdapter{
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
     private ArrayList<Checklist_item> listViewItemList = new ArrayList<Checklist_item>() ;
@@ -83,7 +79,6 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         }
 
         //ischeckedListener
-
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {
@@ -123,8 +118,6 @@ public class ChecklistListViewAdapter extends BaseAdapter{
                             public void onClick(DialogInterface dialog, int whichButton) {
 
                                 final String deletePosition = listViewItemList.get(position).list;
-                                Log.d("DELETE", position+"");
-                                Log.d("DELETE", deletePosition);
 
                                 ValueEventListener deleteListener = new ValueEventListener() {
                                     @Override

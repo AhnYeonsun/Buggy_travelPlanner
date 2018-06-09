@@ -1,7 +1,6 @@
 package com.example.ahn.signinwithgoogle;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,20 +10,14 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,8 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class PlanDetail extends AppCompatActivity {
@@ -74,9 +65,6 @@ public class PlanDetail extends AppCompatActivity {
         ProgressDialog di = new ProgressDialog(this);
         Progress_dialog dialog = new Progress_dialog(di, 2);
         dialog.execute();
-//        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();// 이부분도 수정필........................
-//        AllDays = getDaysForTravel.getPD();
-//        planTitle = getDaysForTravel.getTitle();
 
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser mUser = mAuth.getCurrentUser();
@@ -96,18 +84,20 @@ public class PlanDetail extends AppCompatActivity {
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id){
-                String title = "", mapX = "", mapY = "", memo = "", planDay = "";
+                String title = "", memo = "", address = "";
 
                 title = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue();
-                mapX = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapX().toString();
-                mapY = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapY().toString();
+
                 memo = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getDetailMessage();
+
+                address = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getAddress();
+
                 listDataGroup.get(groupPosition).getArrayList().get(childPosition);
 
                 builder.setTitle(title)
-                        .setMessage("위치 정보   \nX 좌표 : "+mapX+"\bnY 좌표 : "+mapY+"\n\n"+"메모 : "+memo+"\n\n") //이게 정보 받아주는 함수
+                        .setMessage("\n" + "Address : " + address + "\n\nInfo : \n" + memo + "\n\n") //이게 정보 받아주는 함수
                         .setCancelable(false)
-                        .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 dialog.cancel();
@@ -249,7 +239,7 @@ public class PlanDetail extends AppCompatActivity {
                     Plan plan = child.getValue(Plan.class);
                     for (int i = 0; i < num; i++) {
                         if (plan.Day.equals(AllDays[i])) {
-                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title, plan.mapX, plan.mapY, plan.message, plan.Day));
+                            listDataGroup.get(i).getArrayList().add(new ChildItems(plan.title, plan.mapX, plan.mapY, plan.message, plan.Day, plan.address));
                         }
                     }
 
@@ -280,16 +270,14 @@ public class PlanDetail extends AppCompatActivity {
             Double x = data.getDoubleExtra("MapX", 0);
             Double y = data.getDoubleExtra("MapY", 0);
             String memo = data.getStringExtra("memo");
+            String address = data.getStringExtra("Address");
 
             int index = data.getIntExtra("dayposition", 0);
-//        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();
-//        AllDays = getDaysForTravel.getPD();
-//        planTitle = getDaysForTravel.getTitle();
 
             //Plan 형식 : String title, String address, double mapX, double mapY, String message
-            Plan plan = new Plan(spot, "", x, y, memo, AllDays[index]);
+            Plan plan = new Plan(spot, address, x, y, memo, AllDays[index]);
             addPlanDetail.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
-            listDataGroup.get(index).getArrayList().add(new ChildItems(spot, x, y, memo, AllDays[index]));
+            listDataGroup.get(index).getArrayList().add(new ChildItems(spot, x, y, memo, AllDays[index], address));
         }
     }
 

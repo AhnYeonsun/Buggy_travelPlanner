@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,7 +121,7 @@ public class fragment_Recom_all extends Fragment {
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
+                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),finalMessage);
                                 mAuth = FirebaseAuth.getInstance();
                                 addRecomAllPlan = FirebaseDatabase.getInstance().getReference();
                                 FirebaseUser mUser = mAuth.getCurrentUser();

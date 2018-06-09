@@ -15,6 +15,7 @@ public class SetDetail extends AppCompatActivity {
     EditText spot, memo;
     Button map;
     Double x, y;
+    String address;
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class SetDetail extends AppCompatActivity {
                     intent.putExtra("dayposition", intent.getFlags());
                     intent.putExtra("MapX", x);
                     intent.putExtra("MapY", y);
+                    intent.putExtra("Address", address);
 
                     setResult(Activity.RESULT_OK,intent);
                 }
@@ -48,7 +50,6 @@ public class SetDetail extends AppCompatActivity {
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /// 욘똔리더님 여기에 지도(위치 확인)해주세여
                 //startActivity(new Intent(this, MapActivity.class));
                 Intent goMap = new Intent(getApplicationContext() , MapActivity.class);
                 startActivityForResult(goMap,4);
@@ -60,6 +61,7 @@ public class SetDetail extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         x = data.getDoubleExtra("La",0);
         y = data.getDoubleExtra("Lo",0);
+        address = data.getStringExtra("Address");
         Log.d("SETDETAIL", x+" / "+y);
     }
 

@@ -1,7 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-import android.util.Log;
-
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
@@ -26,12 +24,9 @@ public class Graph {
                 x2 = ((Vertex) Vertices[j]).vertexX;
                 y2 = ((Vertex) Vertices[j]).vertexY;
                 maps[i][j] = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
-                Log.d("33652 " + i + " to " + j + " distance : ", String.valueOf(maps[i][j]) + "\n");
             }
             initOrder[0][i] = i;
             initOrder[1][i] = ((Vertex)Vertices[i]).vertexID;
-            Log.d("33652" +"initOrder[0][i] : ",initOrder[0][i]+"");
-            Log.d("33652" +"initOrder[1][i] : ",initOrder[1][i]+"");
         }
     }
 
@@ -65,23 +60,10 @@ public class Graph {
         currentD = 0.0;          //현재 거리 0
         order[0] = initOrder[0][0];
 
-//        DistanceAndOrder fin = Dijkstra(v, currentD, order, check, count); //최종 최단거리와 순서 return됨.
-//        System.out.println("Distance : " + fin.getDistance());
-//        for (int i=0;i<n;i++) {
-//            System.out.println("Order : " + fin.order[i]);
-//        }
         Dijkstra(v, currentD, order, check);
-        Log.d("33652" + " Final Distance : ", finalDistance+"");
-        for (int i = 0; i < n; i++) {
-            Log.d("33652" + " Final Order : ", finalOrder[i]+"");
-        }
     }
 
     public void Dijkstra(int v, double TotalDistance, int[] order, boolean[] check) {
-        Log.d("33652" + " Current1 : ", v+" / "+TotalDistance+"");
-        for (int i = 0; i < n; i++){
-            Log.d("33652" + " Current2 : ", order[i]+" / "+check[i]);
-        }
         double[] distance = new double[n];
         //distance 초기화
         for (int i = 0; i < n; i++) {
@@ -103,20 +85,14 @@ public class Graph {
             if (tempCheck[i]) cnt++;
         }
         if (cnt == n) { //마지막까지 다 찾았을 때!
-            Log.d("33652" + " Last route : ", cnt+"");
             if (finalDistance > TotalDistance) {
                 finalDistance = TotalDistance;
                 for (int i = 0; i < n; i++) {
                     finalOrder[i] = tempO[i];
                 }
             }
-            Log.d("33652" + " tempFin : ", finalDistance+"");
-            for (int i = 0; i < n; i++) {
-                Log.d("33652" + " tempOrd : ", finalOrder[i] + "");
-            }
             return;
         } else { //아닐 때!!
-            Log.d("33652" + " In route : ", cnt+"");
             for (int i = 0; i < n; i++) {
                 //v와 연결된 모든 node 사이의 거리 입력.
                 if (!check[i] && (maps[v][i] != 0)) {

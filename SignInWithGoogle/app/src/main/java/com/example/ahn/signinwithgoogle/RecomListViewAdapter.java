@@ -1,12 +1,7 @@
 package com.example.ahn.signinwithgoogle;
 
-/**
- * Created by SOSO on 2018-05-14.
- */
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by SOSO on 2018-05-14.
- */
 
 public class RecomListViewAdapter extends BaseAdapter{
     ArrayList<RecomListViewItem> recomlistViewItemList;// =new ArrayList<RecomListViewItem>();

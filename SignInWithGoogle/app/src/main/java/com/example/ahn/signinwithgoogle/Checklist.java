@@ -4,17 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -27,7 +24,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Checklist extends android.support.v4.app.Fragment {
@@ -98,11 +94,8 @@ public class Checklist extends android.support.v4.app.Fragment {
         ValueEventListener getBucketListListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("CHECKLIST", "1");
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Checklist_item c = child.getValue(Checklist_item.class);
-                    Log.d("CHECKLIST", "2 " + c.list);
-                    Log.d("CHECKLIST", "3" + c.check);
                     adapter.addItem(c.list, c.check);
                 }
             }
@@ -130,7 +123,6 @@ public class Checklist extends android.support.v4.app.Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("CHECKLIST", "4");
                 listview.setAdapter(adapter);
             }
         }, 3000);

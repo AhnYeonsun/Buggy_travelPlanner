@@ -87,15 +87,12 @@ public class AddPlan extends android.support.v4.app.Fragment {
 
 
         //여기서 리스트 전부 띄워주기!!!!
-
         //readPlan 사용
         //첫 페이지에 DB에서 가져온거 띄워주기!
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    //Plan plan = child.getValue(Plan.class);
-                    //addRecomByday.child("Users").child(mUser.getUid()).child(planTitle).push().setValue(plan);
                     TravelInfo t = child.getValue(TravelInfo.class);
                     String duration = t.InfoStartDate+" - "+t.InfoEndDate;
                     planTitle = t.InfoTitle;
@@ -220,7 +217,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(plan_name.getWindowToken(), 0);
 
-                //얘도 삭제해도 될듯
                 adapter.notifyDataSetChanged();
             }
         });
@@ -236,8 +232,7 @@ public class AddPlan extends android.support.v4.app.Fragment {
                 String tempTitle = planItem.getName().toString();
                 intent.putExtra("title", tempTitle);
 
-                //DB에서 받아오는 title 이름만 intent로 넘겨주면 돼.
-
+                //DB에서 받아오는 title 이름만 intent로
                 startActivity(intent);
             }
         });

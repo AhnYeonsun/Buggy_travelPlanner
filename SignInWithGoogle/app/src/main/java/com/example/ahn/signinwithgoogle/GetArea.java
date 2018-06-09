@@ -45,7 +45,6 @@ public class GetArea {
     // Description : get region code function. //
     public void getRegionCode() {
         String resultData = ""; //string value for saving the data
-
         setOption("null"); //setting the option value for "null"
         setURL();
         try {
@@ -76,20 +75,6 @@ public class GetArea {
                 e.printStackTrace();
             }
 
-        //for loop that number of region codes
-//        for (int i = 0; i < codeArr.length; i++) {
-//            option = "areaCode=" + Integer.toString(codeArr[i]); //setting the option value "areaCode=(number of areaCode)
-//            //Log.i("option test :::", option);
-//            setURL(); //setting the option value
-//            try {
-//                resultData = new ConnectionAPI(urlText).execute().get();
-//                dataParser((resultData));
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (ExecutionException e) {
-//                e.printStackTrace();
-//            }
-//        }
     }
 
 
@@ -112,22 +97,17 @@ public class GetArea {
 
                 JSONObject jObject = jarray.getJSONObject(i); //get object from jarray[i]
 
-                //System.out.println(jObject);
                 code = jObject.optString("code"); //get tag "code" data
                 name = jObject.optString("name"); //get tag "name" data
-                //Log.i("Code test :::: ", code);
-                //Log.i("Name test :::: ", name);
 
                 //Get the region code//
                 if(getOption().equals("null")) {
                     regionHashMap.put(name, code); //add data to hash map
                     codeArr[i] = Integer.parseInt(code); //put the region code data(integer) to codeArr
-                    Log.i("codeArr test ::: ", name);
                 }
                 else{ //Get the sigungu code//
                     hashValue[0] = option;
                     hashValue[1] = code;
-                    Log.i("CODE test :::", name);
                     sigunguHashMap.put(name,hashValue); //add data to hash map
                 }
             }

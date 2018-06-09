@@ -12,7 +12,6 @@ public class GroupItem {
 
     public GroupItem(String title) {
         this.title = title;
-        Log.d("GGGTTT",title);
     }
 
     public String getTitle() {

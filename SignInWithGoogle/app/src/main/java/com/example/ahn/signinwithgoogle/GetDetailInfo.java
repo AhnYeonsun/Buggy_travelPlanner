@@ -1,7 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -65,14 +63,6 @@ public class GetDetailInfo {
             jObjectT = jObjectT.getJSONObject("body"); //take off "body" tag
             jObjectT = jObjectT.getJSONObject("items"); //take off "items" tag
             jObjectT = jObjectT.getJSONObject("item");
-            //JSONArray jarray = jObjectT.getJSONArray("item");
-            //System.out.println(jObjectT);
-            //Log.i("GGGGGGGGGGG", jarray.length()+"");
-            //for loop that saving tour object data to hash map
-           // for (int i = 0; i < jarray.length(); i++) {
-                //JSONObject jObject = jarray.getJSONObject(0);
-
-               // Log.i("GGGGGGGGGGG", jObject.optString("contenttypeid"));
 
                 switch (jObjectT.optString("contenttypeid")) {
                     case "76":

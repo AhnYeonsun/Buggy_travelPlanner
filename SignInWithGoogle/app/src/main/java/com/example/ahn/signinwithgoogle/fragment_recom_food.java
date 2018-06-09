@@ -110,17 +110,14 @@ public class fragment_recom_food extends android.support.v4.app.Fragment {
                 final String finalMessage = message;
                 builder.setTitle("Do you prefer to add "+item.getName()+"?")
                         //.setIcon(item.getMainImg())  //이게 사진 받는 함수고
-                        .setMessage(item.getAddress() + "\n" + message) //이게 정보 받아주는 함수
-                        //********************************요기에 욘또니가 지도 넣어주면되염 화이또!!!!!!***********//
-                        //*****좌표 X 받아오는 함수 : item.getMapX()  **************//
-                        //*****좌표 Y 받아오는 함수 : item.getMapY() ***************//
+                        .setMessage(item.getAddress() + "\n" + message)
                         .setCancelable(false)
 
                         //******************************여기갈랭! 버튼을 누르면 데이터 베이스에 넣어주기*******************//
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),item.getAddress());
+                                Plan plan = new Plan(item.getName(),item.getAddress(), item.getMapX(), item.getMapY(),finalMessage);
                                 mAuth = FirebaseAuth.getInstance();
                                 addPlan = FirebaseDatabase.getInstance().getReference();
                                 FirebaseUser mUser = mAuth.getCurrentUser();
@@ -133,7 +130,6 @@ public class fragment_recom_food extends android.support.v4.app.Fragment {
                                 dialog.cancel();
                             }
                         });
-                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
             }
