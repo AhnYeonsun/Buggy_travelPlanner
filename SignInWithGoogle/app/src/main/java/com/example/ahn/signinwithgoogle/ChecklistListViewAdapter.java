@@ -71,18 +71,19 @@ public class ChecklistListViewAdapter extends BaseAdapter{
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         itemListView = (TextView) convertView.findViewById(R.id.itemList) ;
         deleteBtn=convertView.findViewById(R.id.deletebtn);
+        checkbox =  convertView.findViewById(R.id.checkbox);
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         final Checklist_item listViewItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         itemListView.setText(listViewItem.list);
-        if(listViewItem.check==0){
-
+        if(listViewItem.check==1){
+            checkbox.setChecked(true);
         }
 
         //ischeckedListener
-        checkbox =  convertView.findViewById(R.id.checkbox);
+
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, final boolean b) {

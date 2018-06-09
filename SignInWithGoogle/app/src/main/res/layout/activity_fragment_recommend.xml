@@ -38,6 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:entries="@array/province"
+                android:text="region"
                 />
 
             <Spinner
@@ -47,14 +48,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_toEndOf="@+id/regionList"
                 android:minWidth="60dp"
-               />
+                android:text="sigungu" />
 
             <Button
                 android:id="@+id/searchBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/sigunguList"
                 android:textColor="#ffffff"
                 android:padding="5dp"
                 android:background="@drawable/reccomend_background"
@@ -140,13 +140,13 @@
     <!-- 소윤소윤 : 요기 플로팅 버튼 부분 이모티콘 바꿔주세요~~~~~~-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addRecom"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/recommend2"
-        app:backgroundTint="#d01a4a83"
+        android:src="@drawable/cart"
+        app:backgroundTint="#00fcfcfc"
         app:elevation="24dp"
         app:rippleColor="@android:color/transparent" />
 

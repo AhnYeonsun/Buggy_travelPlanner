@@ -23,20 +23,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="61dp"
-        android:layout_marginRight="61dp"
         android:background="@android:color/transparent"
         android:text="+"
         android:textColor="#0ba480" />
-
-    <Button
-        android:id="@+id/transport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:text="+"
-        android:textColor="#e16e2b" />
 </RelativeLayout>

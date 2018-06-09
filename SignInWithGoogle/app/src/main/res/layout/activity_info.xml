@@ -8,7 +8,7 @@
     android:background="@drawable/loginpage"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".ItemThreeFragment">
+    tools:context=".InfoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -22,7 +22,6 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -46,7 +45,6 @@ public class PlanDetail extends AppCompatActivity {
     TextView plan_name;
     String numStr;
     String titleStr;
-    Button addBtn, transportBtn;
     public AlertDialog.Builder builder;
 
     private FirebaseAuth mAuth;
@@ -74,7 +72,7 @@ public class PlanDetail extends AppCompatActivity {
         setContentView(R.layout.activity_plan_detail);
 
         ProgressDialog di = new ProgressDialog(this);
-        Progress_dialog dialog = new Progress_dialog(di);
+        Progress_dialog dialog = new Progress_dialog(di, 2);
         dialog.execute();
 //        GetDaysForTravel getDaysForTravel = new GetDaysForTravel();// 이부분도 수정필........................
 //        AllDays = getDaysForTravel.getPD();
@@ -87,27 +85,9 @@ public class PlanDetail extends AppCompatActivity {
         elv = (ExpandableListView) findViewById(R.id.listview);
         elv.setGroupIndicator(null);
 
-
-        //그룹확장
-        elv.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                //Log.d("BBBBB","GRORORORO");
-            }
-        });
-
-        //그룹축소
-        elv.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
-        });
-
         elv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.d("BBBBB","GRORORORO");
                 return false;
             }
         });
@@ -116,15 +96,15 @@ public class PlanDetail extends AppCompatActivity {
         elv.setOnChildClickListener(new ExpandableListView.OnChildClickListener(){
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id){
-                Log.d("VVVV","VVVVV");
                 String title = "", mapX = "", mapY = "", memo = "", planDay = "";
 
                 title = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getValue();
                 mapX = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapX().toString();
                 mapY = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getPlanMapY().toString();
                 memo = listDataGroup.get(groupPosition).getArrayList().get(childPosition).getDetailMessage();
+                listDataGroup.get(groupPosition).getArrayList().get(childPosition);
 
-                builder.setTitle(title +"정보")
+                builder.setTitle(title)
                         .setMessage("위치 정보   \nX 좌표 : "+mapX+"\bnY 좌표 : "+mapY+"\n\n"+"메모 : "+memo+"\n\n") //이게 정보 받아주는 함수
                         .setCancelable(false)
                         .setPositiveButton("닫기", new DialogInterface.OnClickListener() {
@@ -224,23 +204,15 @@ public class PlanDetail extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Log.d("CHECK HERE", child.getKey());
-                    //Plan plan = child.getValue(Plan.class);
                     if (child.getKey().equals(titleStr)) {
                         TravelInfo t = child.getValue(TravelInfo.class);
                         //title, startDate, endDate, numDates
                         num = (int) t.InfoNumDates;
-                        Log.d("CHECK22",num+"");
                         planTitle = t.InfoTitle;
                         String sd = t.InfoStartDate;
                         String ed = t.InfoEndDate;
-                        Log.d("CHECK22",planTitle);
                         CalculateDays calculateDays = new CalculateDays(sd, ed, num, planTitle);
                         AllDays = calculateDays.days;
-                        Log.d("CHECK22",AllDays[0]);
-                        Log.d("CHECK22",AllDays[1]);
-                        Log.d("CHECK22",AllDays[2]);
-
                         break;
                     }
                 }
@@ -326,7 +298,7 @@ public class PlanDetail extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         ProgressDialog di = new ProgressDialog(this);
-        Progress_dialog dialog = new Progress_dialog(di);
+        Progress_dialog dialog = new Progress_dialog(di, 2);
         dialog.execute();
 
         setListFromDatabase(); //여행 정보 가져오기

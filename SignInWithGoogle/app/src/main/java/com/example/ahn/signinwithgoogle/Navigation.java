@@ -30,7 +30,7 @@ public class Navigation extends AppCompatActivity {
                                 selectedFragment = Checklist.newInstance();
                                 break;
                             case R.id.action_item3:
-                                selectedFragment = ItemThreeFragment.newInstance();
+                                selectedFragment = InfoFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -48,4 +48,6 @@ public class Navigation extends AppCompatActivity {
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);
     }
+
+
 }

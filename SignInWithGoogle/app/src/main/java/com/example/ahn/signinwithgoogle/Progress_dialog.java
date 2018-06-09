@@ -8,15 +8,21 @@ import android.os.AsyncTask;
 
 public class Progress_dialog extends AsyncTask<Void, Void, Void> {
     ProgressDialog dialog;
+    int type = 0;
 
-    public Progress_dialog(ProgressDialog dialog){
+    public Progress_dialog(ProgressDialog dialog, int type){
         this.dialog = dialog;
+        this.type = type;
     }
 
     @Override
     protected void onPreExecute() {
         dialog.setProgress(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("여행을 가져오는 중이에요!!");
+        if(type == 1) dialog.setMessage("Loading your travel!!");
+        if(type == 2) dialog.setMessage("Loading your plan!!");
+        if(type == 3) dialog.setMessage("Finding shortest path...");
+        if(type == 4) dialog.setMessage("Loading your bucket list!!");
+
         dialog.show();
         super.onPreExecute();
     }
@@ -31,7 +37,7 @@ public class Progress_dialog extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try{
             for(int i=0;i<5;i++){
-                Thread.sleep(250);
+                Thread.sleep(350);
             }
         }catch (InterruptedException e){
             e.printStackTrace();

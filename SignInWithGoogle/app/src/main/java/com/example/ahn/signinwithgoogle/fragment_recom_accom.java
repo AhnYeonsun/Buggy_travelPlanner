@@ -16,8 +16,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +29,6 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
     GetArea getArea = new GetArea(); //object of GetArea() function
     RecomListViewAdapter listViewAdapter;
     ListView listview1;
-    //Button searchBtn;
     private String region = "", sigungu = "", contentTypeID = "";
     private String key="", title="", addr="", mapX="", mapY="", imgURL="";
     private int imgId = 0;
@@ -40,8 +37,6 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
     Handler handler;
     HashMap<String, String[]> tourspot = new HashMap<>();
     ArrayList<RecomListViewItem> recomlistViewItemList =new ArrayList<RecomListViewItem>();
-    SharedPreferences dataBasket;
-    SharedPreferences.Editor toEdit;
     Bundle bundle;
 
     @SuppressLint("HandlerLeak")

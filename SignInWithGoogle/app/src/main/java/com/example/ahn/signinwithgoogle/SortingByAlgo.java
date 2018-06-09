@@ -77,7 +77,18 @@ public class SortingByAlgo extends AppCompatActivity {
         int padding = 100; // px
         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
+        backfloatingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goRecomWithSortedVertices = new Intent();
+                goRecomWithSortedVertices.putExtra("Sorted", tempVertices);
+                goRecomWithSortedVertices.putExtra("Nodes", Nodes);
+                setResult(RESULT_OK, goRecomWithSortedVertices);
+                finish();
+            }
+        });
     }
+
     @Override
     public void onBackPressed () {
         Intent goRecomWithSortedVertices = new Intent();

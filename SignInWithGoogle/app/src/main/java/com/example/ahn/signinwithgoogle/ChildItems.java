@@ -1,6 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-
 import java.io.Serializable;
 
 public class ChildItems implements Serializable {
@@ -10,6 +9,8 @@ public class ChildItems implements Serializable {
     public String planMessage = "";
     public String planDay = "";
     public Plan plan;
+    public String address = "";
+
     public ChildItems(String name, String message){
         this.planName = name;
         this.planMessage = message;
@@ -18,6 +19,7 @@ public class ChildItems implements Serializable {
     public ChildItems(Plan plan){
         this.plan = plan;
     }
+
     public ChildItems(String name, double x, double y, String m, String d) {
         this.planName = name;
         this.planMapX = x;

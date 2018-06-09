@@ -2,20 +2,14 @@ package com.example.ahn.signinwithgoogle;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by SOSO on 2018-05-24.
- */
 
 public class CreatePlanAdapter extends BaseAdapter {
     public ArrayList<CreatePlanItem> planItemList = new ArrayList<CreatePlanItem>();
@@ -27,7 +21,6 @@ public class CreatePlanAdapter extends BaseAdapter {
     {
         builder = new AlertDialog.Builder(c);
     }
-
 
     @Override
     public int getCount() {

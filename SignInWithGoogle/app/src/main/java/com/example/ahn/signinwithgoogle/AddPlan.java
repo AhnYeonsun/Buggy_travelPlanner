@@ -8,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +53,10 @@ public class AddPlan extends android.support.v4.app.Fragment {
     private long calDateDays;
     private AlertDialog.Builder builder;
 
-    public String[] daysOfNewPlan;
-
     private FirebaseAuth mAuth;
     private DatabaseReference readPlan;
     private DatabaseReference addDBforDate;
     private DatabaseReference readUserPlan;
-
 
 
     @Nullable
@@ -69,7 +65,7 @@ public class AddPlan extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.activity_add_plan,container,false);
 
         ProgressDialog di = new ProgressDialog(getActivity());
-        Progress_dialog dialog = new Progress_dialog(di);
+        Progress_dialog dialog = new Progress_dialog(di, 1);
         dialog.execute();
 
         start_date=view.findViewById(R.id.start_date);
@@ -103,7 +99,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
                     TravelInfo t = child.getValue(TravelInfo.class);
                     String duration = t.InfoStartDate+" - "+t.InfoEndDate;
                     planTitle = t.InfoTitle;
-                    Log.d("CHECK1",planTitle);
                     adapter.addItem(planTitle, duration);
                 }
                 adapter.notifyDataSetChanged();
@@ -117,10 +112,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
         readPlan.addListenerForSingleValueEvent(valueEventListener);
 
         planListview.setAdapter(adapter);
-
-
-
-
 
         start_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,58 +208,7 @@ public class AddPlan extends android.support.v4.app.Fragment {
                     final FirebaseUser mUser = mAuth.getCurrentUser();
                     addDBforDate = FirebaseDatabase.getInstance().getReference();
                     addDBforDate.child("forDate").child(mUser.getUid()).child(travelInfo.InfoTitle).setValue(travelInfo);
-                    //travelInfo.toDB(travelInfo);
 
-                    //***********************************************************************이동
-//                    int y1 = Integer.parseInt(date1.substring(0,4));
-//                    int m1 = Integer.parseInt(date1.substring(5,7));
-//                    int d1 = Integer.parseInt(date1.substring(8,10));
-//                    int m2 = Integer.parseInt(date2.substring(5,7));
-//                    int d2 = Integer.parseInt(date2.substring(8,10));
-//                    daysOfNewPlan = new String[(int)calDateDays+1];
-//                    String tempDate = date1;
-//                    int tempM = m1;
-//                    int tempD = d1;
-//                    int tempY = y1;
-//
-//                    if(m1==m2){
-//                        for (int i = 0; i < (int)calDateDays+1; i++){
-//                            tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
-//                            daysOfNewPlan[i] = tempDate;
-//                            tempD++;
-//
-//                        }
-//                    }
-//                    else if(m1 < m2){//달 넘어가는 경우
-//
-//                        for (int i = 0; i < (int)calDateDays+1; i++){
-//                            tempDate = String.valueOf(tempY) + "-" + String.valueOf(tempM) + "-" + String.valueOf(tempD);
-//                            daysOfNewPlan[i] = tempDate;
-//                            if((tempD==31)&&(tempM==1||tempM==3||tempM==5||tempM==7||tempM==8||tempM==10||tempM==12)){ //31일
-//                                if(m1==12){ //12월 31일
-//                                    tempM = 1;
-//                                    tempD = 1;
-//                                    tempY++;
-//                                }
-//                                else{ //00월 31일
-//                                    tempM++;
-//                                    tempD = 1;
-//                                }
-//                            }
-//                            else if((tempD==30)&&(tempM==4||tempM==6||tempM==9||tempM==11)){ //30일
-//                                tempM++;
-//                                tempD = 1;
-//                            }
-//                            else if((tempD==28)&&(tempM==2)){ //28일
-//                                tempM++;
-//                                tempD = 1;
-//                            }
-//                            else{
-//                                tempD++;
-//                            }
-//                        }
-//                    }
-                    //*************************************************** 여기까지 이동
                     Toasty.success(getActivity().getApplicationContext(), "Success : Make your new Travel!", Toast.LENGTH_LONG, true).show();
                 }
                 else{
@@ -282,10 +222,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
 
                 //얘도 삭제해도 될듯
                 adapter.notifyDataSetChanged();
-
-                //밑 두 줄을 여행 눌렀을 때, 설정해 주는 걸로 옮기기
-//                GetDaysForTravel getDaysForTravel = new GetDaysForTravel(daysOfNewPlan);
-//                GetDaysForTravel getDaysForTravel1 = new GetDaysForTravel(planTitle);
             }
         });
 
@@ -299,9 +235,6 @@ public class AddPlan extends android.support.v4.app.Fragment {
                 CreatePlanItem planItem = (CreatePlanItem)adapter.getItem(position);
                 String tempTitle = planItem.getName().toString();
                 intent.putExtra("title", tempTitle);
-//                intent.putExtra("days", calDateDays+"");
-//                intent.putExtra("startDay", date1);
-//                intent.putExtra("endDat", date2);
 
                 //DB에서 받아오는 title 이름만 intent로 넘겨주면 돼.
 
@@ -358,18 +291,9 @@ public class AddPlan extends android.support.v4.app.Fragment {
                 return true;
             }
         });
-
         return view;
     }
 
-//    @Override
-//    public void onResume(){//************************************** 여행 불러오기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        super.onResume();
-//
-//
-//
-//
-//    }
     public void doDifferent() {
 
         date1 = start_date.getText().toString();
@@ -393,15 +317,11 @@ public class AddPlan extends android.support.v4.app.Fragment {
             if(calDateDays<=0) //마지막날이 더 뒤임
                 check=true;
             calDateDays = Math.abs(calDateDays);
-
-            //hi.setText(String.valueOf(calDateDays)); //+1ㅎㅐ줘야지 됨
         }
         catch(ParseException ex)
         {
             // 예외 처리
             ex.printStackTrace();
         }
-
     }
-
 }

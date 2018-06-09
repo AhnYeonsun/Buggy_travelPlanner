@@ -1,5 +1,6 @@
 package com.example.ahn.signinwithgoogle;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,6 +102,7 @@ public class Recommend extends AppCompatActivity {
         regionSpinnerAdapter.notifyDataSetChanged();
         regionSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         regionSpinnerList.setAdapter(regionSpinnerAdapter);
+        regionSpinnerList.setSelection(1);
         // *************************************** //
 
         // ************** 지역스피너 입력 후, 시군구 스피너 리스트 세팅 ****************  //
@@ -124,9 +126,9 @@ public class Recommend extends AppCompatActivity {
                         String key = (String) iterator.next();
                         sigunguSpinnerAdapter.add(key);
                     }
-
                     sigunguSpinnerAdapter.notifyDataSetChanged();
                     sigunguSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    sigunguSpinnerList.setSelection(1);
                     // ****************************************** //
                 } else {
                     check = true;
@@ -155,7 +157,6 @@ public class Recommend extends AppCompatActivity {
         addRecom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("recomfloating", "coming?");
                 days = informIntent.getIntExtra("day", 0);
                 final String[] items = new String[days + 1];
 
@@ -175,7 +176,6 @@ public class Recommend extends AppCompatActivity {
                         }
                     });
 
-                    //******* 온돈온돈 *********8//
                     ObjectForBlank objectForBlank = new ObjectForBlank(1,"1",1.1);
                     builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() { //이때 알고리즘 돌려서 알맞은 날짜에 디비랑 넣어주면 되염
                         @Override
@@ -205,7 +205,6 @@ public class Recommend extends AppCompatActivity {
                                         int recoms = 0;
                                         int i = 0;
                                         for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                            Log.d("RECCCCC", "in>??");
                                             Plan p = child.getValue(Plan.class);
                                             Vertex v = new Vertex(Integer.parseInt(child.getKey()), p.mapX, p.mapY);
                                             tempVertices[0][i] = v;
@@ -213,8 +212,6 @@ public class Recommend extends AppCompatActivity {
                                             recoms++;
                                         }
                                         Recommends[0] = recoms;
-                                        Log.d("RECCCCCC", Recommends[0] + " 1");
-                                        Log.d("RECCCCCC", i + " 2");
                                     }
 
                                     @Override
@@ -223,19 +220,19 @@ public class Recommend extends AppCompatActivity {
                                 };
                                 getTempRecom.addListenerForSingleValueEvent(valueEventListener_1);
 
-                                Log.d("RECCCC", "here");
                                 Vertices = new Object[Recommends[0]];
                                 for (int i = 0; i < Recommends[0]; i++) {
                                     Vertices[i] = tempVertices[0][i];
                                 } // Vertices에 추천받은 객체들이 들어있음*************************************************
-                                Log.d("RECCCCCC", Recommends[0] + " 3");
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Log.d("RECCCCC", numOfdays + " days");
-                                        Log.d("RECCCCC", Recommends[0] + " recoms");
+//                                        ProgressDialog di = new ProgressDialog(getApplicationContext());
+//                                        Progress_dialog dialog = new Progress_dialog(di, 3);
+//                                        dialog.execute();
+
                                         if (numOfdays > Recommends[0]) { //날짜 수보다 추천갯수가 작으면
                                             Toasty.warning(getApplicationContext(), "Be recommended more!", Toast.LENGTH_SHORT, true).show();
                                         } else {
@@ -260,7 +257,6 @@ public class Recommend extends AppCompatActivity {
                                                     }
                                                 }
                                             }
-                                            Log.d("TEMP", tempRecoms + ""); // 0 이어야함.
 
                                             Vertices = new Object[Recommends[0]];
                                             for (int i = 0; i < Recommends[0]; i++) {
@@ -318,7 +314,6 @@ public class Recommend extends AppCompatActivity {
             }
 
         });
-
     }
 
     @Override
@@ -332,10 +327,6 @@ public class Recommend extends AppCompatActivity {
         final String[] AllDays = CalculateDays.days;
         final Object[] Vertices = (Object[]) data.getSerializableExtra("Sorted"); //소팅된 vertex들이 있음.
 
-        Log.d("AGAIN", Nodes+"");
-        for (int i = 0; i < Nodes; i++) {
-            Log.d("AGAIN", ((Vertex)Vertices[i]).getID()+"");
-        }
 
         title = CalculateDays.title;
 
@@ -347,16 +338,12 @@ public class Recommend extends AppCompatActivity {
                 for (int i = 0; i < Nodes; i++) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
                         if ((int)((Vertex) Vertices[i]).getID() == Integer.parseInt(child.getKey())) {
-                            Log.d("AGAIN", "##############");
                             Plan p = child.getValue(Plan.class);
                             Plans[index] = p;
-                            Log.d("AGAIN","11 "+index+"");
-                            Log.d("AGAIN","11 "+((Plan)Plans[index]).Day);
                             index++;
                         }
                     }
                 }
-                Log.d("AGAIN", "1");
             }
 
             @Override
@@ -365,18 +352,12 @@ public class Recommend extends AppCompatActivity {
             }
         };
         getTempRecom.addListenerForSingleValueEvent(valueEventListener);
-        Log.d("AGAIN", "2");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("AGAIN", "3");
-                Log.d("AGAIN", ((Plan)Plans[0]).Day);
                 int index = 0;
                 addRecomByAll = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child(title);
-                for (int i = 0; i < days; i++){
-                    Log.d("FIANL", countByDay[i]+"");
-                }
                 for (int i = 0; i < days; i++) {
                     for (int j = 0; j < countByDay[i]; j++) {
                         ((Plan) Plans[index]).Day = AllDays[i];
@@ -459,42 +440,37 @@ public class Recommend extends AppCompatActivity {
                     return FA;
                 case 1:
                     fragment_Recom_tourspot FT = new fragment_Recom_tourspot();
-                    bundle.putString("contentTypeID", "12");
+                    bundle.putString("contentTypeID", "76");
                     FT.setArguments(bundle);
                     return FT;
                 case 2:
                     fragment_recom_cultural Fcul = new fragment_recom_cultural();
-                    bundle.putString("contentTypeID", "14");
+                    bundle.putString("contentTypeID", "78");
                     Fcul.setArguments(bundle);
                     return Fcul;
                 case 3:
                     fragment_recom_event Fevent = new fragment_recom_event();
-                    bundle.putString("contentTypeID", "15");
+                    bundle.putString("contentTypeID", "85");
                     Fevent.setArguments(bundle);
                     return Fevent;
                 case 4:
-                    fragment_recom_course Fcourse = new fragment_recom_course();
-                    bundle.putString("contentTypeID", "25");
-                    Fcourse.setArguments(bundle);
-                    return Fcourse;
-                case 5:
                     fragment_recom_leports Fleport = new fragment_recom_leports();
-                    bundle.putString("contentTypeID", "28");
+                    bundle.putString("contentTypeID", "75");
                     Fleport.setArguments(bundle);
                     return Fleport;
-                case 6:
+                case 5:
                     fragment_recom_accom Faccom = new fragment_recom_accom();
-                    bundle.putString("contentTypeID", "32");
+                    bundle.putString("contentTypeID", "80");
                     Faccom.setArguments(bundle);
                     return Faccom;
-                case 7:
+                case 6:
                     fragment_recom_shopping Fshopping = new fragment_recom_shopping();
-                    bundle.putString("contentTypeID", "38");
+                    bundle.putString("contentTypeID", "79");
                     Fshopping.setArguments(bundle);
                     return Fshopping;
-                case 8:
+                case 7:
                     fragment_recom_food Ffood = new fragment_recom_food();
-                    bundle.putString("contentTypeID", "39");
+                    bundle.putString("contentTypeID", "82");
                     Ffood.setArguments(bundle);
                     return Ffood;
             }
@@ -509,7 +485,7 @@ public class Recommend extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 9;
+            return 8;
         }
 
         @Override
@@ -524,14 +500,12 @@ public class Recommend extends AppCompatActivity {
                 case 3:
                     return "Event";
                 case 4:
-                    return "Course";
-                case 5:
                     return "Leports";
-                case 6:
+                case 5:
                     return "Accommodation";
-                case 7:
+                case 6:
                     return "Shopping";
-                case 8:
+                case 7:
                     return "Food";
                 default:
                     return null;

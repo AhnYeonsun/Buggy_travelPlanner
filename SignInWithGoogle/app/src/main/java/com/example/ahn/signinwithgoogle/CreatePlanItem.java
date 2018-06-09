@@ -1,9 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-/**
- * Created by SOSO on 2018-05-25.
- */
-
 public class CreatePlanItem {
     private String date;
     private String name;

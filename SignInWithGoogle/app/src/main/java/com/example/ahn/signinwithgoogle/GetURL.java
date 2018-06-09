@@ -8,7 +8,7 @@ import java.net.URL;
 //Description : make URL how bring the URL data from other class//
 public class GetURL {
     private final String serviceKey = "Rc%2FaF%2FUtrBXVonYiqMAc0tttIxuHrlVynLgI7aWtcpTsIbk5rzsrUPA8fSqT0MYU%2BaE3xMZ2jtX3jxf220chCg%3D%3D";
-    private final String endPoint = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/";
+    private final String endPoint = "http://api.visitkorea.or.kr/openapi/service/rest/EngService/";
     private final String setting = "&arrange=B&MobileOS=ETC&MobileApp=TestApp&_type=json";
 
     private String searchType = "", option = "", keyword = "", contentID = "", contentTypeID = "";
@@ -45,7 +45,7 @@ public class GetURL {
 
                 URL url = new URL(endPoint +
                         searchType +
-                        "?ServiceKey=" + serviceKey +
+                        "?serviceKey=" + serviceKey +
                         "&numOfRows=100&pageNo=1&" + this.option +
                         setting);
 
@@ -59,11 +59,11 @@ public class GetURL {
 
                 URL url = new URL(endPoint +
                         searchType +
-                        "?ServiceKey=" + serviceKey +
+                        "?serviceKey=" + serviceKey +
                         "&" + "contentTypeId="+contentTypeID+
                         "&" + "areaCode=" + regionCode+
                         "&" + "sigunguCode=" + sigunguCode +
-                        "&numOfRows=30&pageNo=1"+setting);
+                        "&numOfRows=30&pageNo=1"+setting+"&introYN=Y");
 
                 urlText = url.toString();
             }
@@ -74,7 +74,7 @@ public class GetURL {
                 sigunguCode = ks.getSigunguCode();
                 URL url = new URL(endPoint +
                 searchType +
-                "?ServiceKey=" + serviceKey +
+                "?serviceKey=" + serviceKey +
                         "&"+"areaCode="+regionCode+
                         "&"+"sigunguCode="+sigunguCode+
                 "&keyword=" + keyword +
@@ -88,10 +88,10 @@ public class GetURL {
                 contentTypeID = GDI.getContentTypeID();
                 URL url = new URL(endPoint +
                 searchType +
-                "?ServiceKey=" + serviceKey +
+                "?serviceKey=" + serviceKey +
                 "&contentId=" + contentID +
                 "&contentTypeId=" + contentTypeID +
-                setting);
+                setting+"&introYN=Y");
 
                 urlText = url.toString();
             }

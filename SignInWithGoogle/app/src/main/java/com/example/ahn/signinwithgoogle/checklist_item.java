@@ -10,11 +10,11 @@ public class Checklist_item {
         this.check = check;
     }
 
-//    //get set TEXT
+    //    //get set TEXT
     public void setText(String list){
         this.list = list;
     }
-//    public String getText(){
+    //    public String getText(){
 //        return this.list;
 //    }
 //
@@ -26,4 +26,3 @@ public class Checklist_item {
 //        return this.check;
 //    }
 }
-

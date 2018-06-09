@@ -1,9 +1,5 @@
 package com.example.ahn.signinwithgoogle;
 
-/**
- * Created by SOSO on 2018-05-14.
- */
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
@@ -23,9 +19,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
     @Override
     public boolean isChecked() {
         CheckBox cb =  findViewById(R.id.checkbox) ;
-
         return cb.isChecked() ;
-        // return mIsChecked ;
     }
     //현재 checked 상태를 바꿈(UI에 반영)
     @Override
@@ -43,7 +37,6 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable{
         if (cb.isChecked() != checked) {
             cb.setChecked(checked);
         }
-
         // CheckBox 가 아닌 View의 상태 변경.
     }
 

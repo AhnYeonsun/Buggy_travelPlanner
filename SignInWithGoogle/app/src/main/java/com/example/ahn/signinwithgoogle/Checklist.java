@@ -1,4 +1,6 @@
 package com.example.ahn.signinwithgoogle;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -34,6 +36,14 @@ public class Checklist extends android.support.v4.app.Fragment {
         return fragment;
     }
 
+    public class firstExe{
+        public int firstCheck;
+        public firstExe(){}
+        public void setFirstCheck(int firstCheck){
+            this.firstCheck = firstCheck;
+        }
+    }
+
     //Log.d(TAG, variable);
     SharedPreferences sh_Pref;
     SharedPreferences.Editor toEdit;
@@ -51,18 +61,23 @@ public class Checklist extends android.support.v4.app.Fragment {
     private DatabaseReference getBucketList;
     private DatabaseReference addUserBucketList;
     private DatabaseReference getUserBucketList;
+    private DatabaseReference firstCheck;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //View view= super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.activity_checklist, container, false);
-        builder=new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(getActivity());
 
-        final ListView listview ;
+        ProgressDialog di = new ProgressDialog(getActivity());
+        Progress_dialog dialog = new Progress_dialog(di, 4);
+        dialog.execute();
 
-        addBar=view.findViewById(R.id.addBar);
-        addbtn=view.findViewById(R.id.addbtn);
+        final ListView listview;
+
+        addBar = view.findViewById(R.id.addBar);
+        addbtn = view.findViewById(R.id.addbtn);
 
         // Adapter 생성
         adapter = new ChecklistListViewAdapter(getActivity());
@@ -73,29 +88,18 @@ public class Checklist extends android.support.v4.app.Fragment {
         getBucketList = FirebaseDatabase.getInstance().getReference().child("DefaultBucketList");
         addUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
 
-        //**************************************************************************************** default bucketlist를 user bucketlist에 넣음
-        ValueEventListener addUserBucketListListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()){
-                    Checklist_item c = child.getValue(Checklist_item.class);
-                    addUserBucketList.child(child.getKey()).setValue(c);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        }; getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
-        //**************************************************************************************** 한 번만 실행되어야 함!
+        try {
+            firstCheck = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+        }catch (NullPointerException e){
+            UpdateBucketListDB();
+        }
 
         getUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
         ValueEventListener getBucketListListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("CHECKLIST", "1");
-                for (DataSnapshot child : dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Checklist_item c = child.getValue(Checklist_item.class);
                     Log.d("CHECKLIST", "2 " + c.list);
                     Log.d("CHECKLIST", "3" + c.check);
@@ -107,7 +111,8 @@ public class Checklist extends android.support.v4.app.Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        }; getUserBucketList.addListenerForSingleValueEvent(getBucketListListener);
+        };
+        getUserBucketList.addListenerForSingleValueEvent(getBucketListListener);
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) view.findViewById(R.id.userItemList);
@@ -131,5 +136,46 @@ public class Checklist extends android.support.v4.app.Fragment {
         }, 3000);
 
         return view;
+    }
+
+    private void UpdateBucketListDB(){
+        ValueEventListener addUserBucketListListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Checklist_item c = child.getValue(Checklist_item.class);
+                    addUserBucketList.child(child.getKey()).setValue(c);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
+    }
+
+    private void checkFirst() {
+        sh_Pref = getActivity().getSharedPreferences("Pref", Context.MODE_PRIVATE);
+        boolean isFirst = sh_Pref.getBoolean("isBucket", false);
+
+        if (!isFirst) {
+            ValueEventListener addUserBucketListListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        Checklist_item c = child.getValue(Checklist_item.class);
+                        addUserBucketList.child(child.getKey()).setValue(c);
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+            getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
+        }
+        sh_Pref.edit().putBoolean("isFirst", true).apply();
     }
 }

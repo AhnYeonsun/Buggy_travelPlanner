@@ -28,7 +28,6 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
     Context mContext;
     boolean chk = false;
     public LayoutInflater minflater;
-    int lastExpandedGrouPosition = -1;
     ExpandableListView elv;
 
     public PlanDetailAdapter(Context c) {
@@ -89,13 +88,11 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        Log.d("testing", "GroupView");
         if (convertView == null) {
             groupViewHolder = new GroupViewHolder();
             convertView = minflater.inflate(R.layout.list_header, null);
             groupViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.date_list);
             groupViewHolder.btnAdd = (Button) convertView.findViewById(R.id.addDetail);
-            groupViewHolder.btnTransport = (Button) convertView.findViewById(R.id.transport);
             convertView.setTag(groupViewHolder);
         } else {
             groupViewHolder = (GroupViewHolder) convertView.getTag();
@@ -103,9 +100,7 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         convertView.setClickable(false);
         elv = (ExpandableListView) parent;
         elv.expandGroup(groupPosition);
-        if(isExpanded){
-            Log.d("CCAAAAAA","55555555");
-        }
+
         groupViewHolder.tvTitle.setText(groupItem.get(groupPosition).getTitle());
         groupViewHolder.btnAdd.setOnClickListener(new View.OnClickListener() { //여기서 이제 장소 받아줘야지
             @Override
@@ -113,19 +108,8 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
                 Intent intent = new Intent(mContext.getApplicationContext(), SetDetail.class);
                 intent.setFlags(groupPosition);//adapter 생성시, 이미 context받아왔으니까...
                 ((Activity) mContext).startActivityForResult(intent, 0);
-                Log.d("CC","5");
             }
         });
-
-        groupViewHolder.btnTransport.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { //여기 연선이 해야되는 부분!!
-                //groupItem.get(groupPosition).getArrayList().add(new ChildItems("다윤이"));
-                getChildrenCount(groupPosition);
-                notifyDataSetChanged();
-            }
-        });
-
         return convertView;
     }
 
@@ -141,9 +125,6 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
 
             convertView.setTag(childViewHolder);
         }
-//        else {
-//            childViewHolder = (ChildViewHolder) convertView.getTag();
-//        }
         convertView.setClickable(false);
 
         if (!groupItem.get(groupPosition).getArrayList().get(childPosition).getValue().equals("")) {
@@ -167,18 +148,7 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-//    @Override
-//    public void onGroupExpanded(int groupPosition) {
-//        groupClickState[groupPosition] =!groupClickState[groupPosition];
-//
-//        if(lastExpandedGrouPosition != -1 && lastExpandedGrouPosition != groupPosition){
-//            elv.collapseGroup(lastExpandedGrouPosition);
-//            groupClickState[las tExpandedGrouPosition] = false;
-//        }
-//
-//        lastExpandedGrouPosition = groupPosition;
-//        super.onGroupExpanded(groupPosition);
-//    }
+
 
     @Override
     public void onGroupCollapsed(int groupPosition) {
@@ -189,7 +159,6 @@ public class PlanDetailAdapter extends BaseExpandableListAdapter {
     private class GroupViewHolder {
         public TextView tvTitle;
         public Button btnAdd;
-        public Button btnTransport;
     }
 
     private class ChildViewHolder {

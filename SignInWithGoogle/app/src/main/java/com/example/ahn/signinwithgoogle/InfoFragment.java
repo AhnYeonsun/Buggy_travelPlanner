@@ -1,6 +1,7 @@
 package com.example.ahn.signinwithgoogle;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,19 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-public class ItemThreeFragment extends Fragment {
-    public static ItemThreeFragment newInstance() {
-        ItemThreeFragment fragment = new ItemThreeFragment();
+public class InfoFragment extends Fragment {
+    public static InfoFragment newInstance() {
+        InfoFragment fragment = new InfoFragment();
         return fragment;
     }
 
@@ -52,6 +45,13 @@ public class ItemThreeFragment extends Fragment {
             }
         });
 
+        info3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Tutorial.class);
+                startActivity(intent);
+            }
+        });
        return view;
     }
 

@@ -73,81 +73,73 @@ public class GetDetailInfo {
                 //JSONObject jObject = jarray.getJSONObject(0);
 
                // Log.i("GGGGGGGGGGG", jObject.optString("contenttypeid"));
+
                 switch (jObjectT.optString("contenttypeid")) {
-                    case "12":
-                        detailInfoHashMap.put("문의 및 안내 :", jObjectT.optString("infocenter"));
-                        detailInfoHashMap.put("개장일 :", jObjectT.optString("opendate"));
-                        detailInfoHashMap.put("쉬는 날 :", jObjectT.optString("restdate"));
-                        detailInfoHashMap.put("이용 시기 :", jObjectT.optString("useseason"));
-                        detailInfoHashMap.put("이용 시간 :", jObjectT.optString("usestime"));
+                    case "76":
+                        detailInfoHashMap.put("< Info center >\n ", removeTag(jObjectT.optString("infocenter")+"\n"+"\n"));
+                        detailInfoHashMap.put("< Opening date >\n ", removeTag(jObjectT.optString("opendate")+"\n"+"\n"));
+                        detailInfoHashMap.put("< Closed >\n", removeTag(jObjectT.optString("restdate")+"\n"));
+                        detailInfoHashMap.put("< Operation time >\n ", removeTag(jObjectT.optString("usestime")+"\n"+"\n"));
+                        detailInfoHashMap.put("< Use season >\n", removeTag(jObjectT.optString("useseason")+"\n"+"\n"));
                         break;
 
-                    case "14":
-                        detailInfoHashMap.put("할인 정보 :" , jObjectT.optString("discountinfo"));
-                        detailInfoHashMap.put("문의 및 정보 :", jObjectT.optString("infocenterculture"));
-                        detailInfoHashMap.put("쉬는 날 :", jObjectT.optString("restdate"));
-                        detailInfoHashMap.put("이용 요금", jObjectT.optString("usefee"));
-                        detailInfoHashMap.put("이용 시간", jObjectT.optString("usetimeculture"));
+                    case "78":
+                        detailInfoHashMap.put("< Info center > \n", removeTag(jObjectT.optString("infocenterculture")+"\n\n")) ;
+                        detailInfoHashMap.put("< Closed > \n", removeTag(jObjectT.optString("restdate")+"\n\n"));
+                        detailInfoHashMap.put("< Operation time > \n", removeTag(jObjectT.optString("usetimeculture")+"\n\n"));
+                        detailInfoHashMap.put("< Admission > \n", removeTag(jObjectT.optString("usefee")+"\n\n"));
+                        detailInfoHashMap.put("< Discount Info >\n" , removeTag(jObjectT.optString("discountinfo")+"\n\n"));
+                        detailInfoHashMap.put("< Operation time >\n", removeTag(jObjectT.optString("usetimeculture")+"\n\n"));
                         break;
 
-                    case "15":
-                        detailInfoHashMap.put("예매처 :" , jObjectT.optString("bookingplace"));
-                        detailInfoHashMap.put("할인 정보 :" , jObjectT.optString("discountinfofestival"));
-                        detailInfoHashMap.put("행사 종료일 :" , jObjectT.optString("eventenddate"));
-                        detailInfoHashMap.put("행사 홈페이지 :" , jObjectT.optString("eventhomepage"));
-                        detailInfoHashMap.put("행사 장소 :" , jObjectT.optString("eventplace"));
-                        detailInfoHashMap.put("행사 시작일 :" , jObjectT.optString("eventstartdate"));
-                        detailInfoHashMap.put("관람 소요시간 :" , jObjectT.optString("spendtimefestival"));
-                        detailInfoHashMap.put("이용 요금 :" , jObjectT.optString("usetimefestival"));
+                    case "85":
+                        detailInfoHashMap.put("< Place >\n" , removeTag(jObjectT.optString("eventplace")+"\n\n"));
+                        detailInfoHashMap.put("< Start date >\n" , removeTag(jObjectT.optString("eventstartdate")+"\n\n"));
+                        detailInfoHashMap.put("< End date >\n" , removeTag(jObjectT.optString("eventenddate")+"\n\n"));
+                        detailInfoHashMap.put("< Homepage > \n" , removeTag(jObjectT.optString("eventhomepage")+"\n\n"));
+                        detailInfoHashMap.put("< Booking >\n" , removeTag(jObjectT.optString("bookingplace")+"\n\n"));
+                        detailInfoHashMap.put("< Spending time >\n" , removeTag(jObjectT.optString("spendtimefestival")+"\n\n"));
+                        detailInfoHashMap.put("< Discount Info >\n " , removeTag(jObjectT.optString("discountinfofestival")+"\n\n"));
                         break;
 
-                    case "25":
-                        detailInfoHashMap.put("코스 총 거리 :" , jObjectT.optString("distance"));
-                        detailInfoHashMap.put("문의 및 안내 :" , jObjectT.optString("infocentertourcourse"));
-                        detailInfoHashMap.put("코스 일정 :" , jObjectT.optString("schedule"));
-                        detailInfoHashMap.put("코스 총 소요시간 :" , jObjectT.optString("taketime"));
-                        detailInfoHashMap.put("코스 테마 :" , jObjectT.optString("theme"));
+                    case "75":
+                        detailInfoHashMap.put("< Info center >\n" , removeTag(jObjectT.optString("infocenterleports")+"\n\n"));
+                        detailInfoHashMap.put("< Open period >\n" , removeTag(jObjectT.optString("openperiod")+"\n\n"));
+                        detailInfoHashMap.put("< Closed >\n" , removeTag(jObjectT.optString("restdateleports")+"\n\n"));
+                        detailInfoHashMap.put("< Spending time >\n" , removeTag(jObjectT.optString("usetimeleports")+"\n\n"));
+                        detailInfoHashMap.put("< Reservation >\n" , removeTag(jObjectT.optString("reservation")+"\n\n"));
+                        detailInfoHashMap.put("< Admission >\n" , removeTag(jObjectT.optString("usefeeleports")+"\n\n"));
                         break;
 
-                    case "28":
-                        detailInfoHashMap.put("문의 및 안내 :" , jObjectT.optString("infocenterleports"));
-                        detailInfoHashMap.put("개장 기간 :" , jObjectT.optString("openperiod"));
-                        detailInfoHashMap.put("예약 안내 :" , jObjectT.optString("reservation"));
-                        detailInfoHashMap.put("쉬는 날 :" , jObjectT.optString("restdateleports"));
-                        detailInfoHashMap.put("입장료 :" , jObjectT.optString("usefeeleports"));
-                        detailInfoHashMap.put("이용 시간 :" , jObjectT.optString("usetimeleports"));
+                    case "80":
+                        detailInfoHashMap.put("< Info center >\n " , removeTag(jObjectT.optString("infocenterlodging")+"\n\n"));
+                        detailInfoHashMap.put("< Booking >\n " , removeTag(jObjectT.optString("reservationurl")+"\n\n"));
+                        detailInfoHashMap.put("< Room type >\n " , removeTag(jObjectT.optString("roomtype")+"\n\n"));
+                        detailInfoHashMap.put("< Room type >\n" , removeTag(jObjectT.optString("roomtype")+"\n\n"));
+                        detailInfoHashMap.put("< Can cooking? >\n" , removeTag(jObjectT.optString("chkcooking")+"\n\n"));
+                        detailInfoHashMap.put("< facility >\n" , removeTag(jObjectT.optString("subfacility")+"\n\n"));
                         break;
 
-                    case "32":
-                        detailInfoHashMap.put("취사 가능 여부 :" , jObjectT.optString("chkcooking"));
-                        detailInfoHashMap.put("문의 및 안내 :" , jObjectT.optString("infocenterlodging"));
-                        detailInfoHashMap.put("예약 안내 :" , jObjectT.optString("reservationurl"));
-                        detailInfoHashMap.put("객실 유형 :" , jObjectT.optString("roomtype"));
-                        detailInfoHashMap.put("부대 시설 :" , jObjectT.optString("subfacility"));
+                    case "79":
+                        detailInfoHashMap.put("< Info center >\n" , removeTag(jObjectT.optString("infocentershopping")+"\n\n"));
+                        detailInfoHashMap.put("< Open date >\n" , removeTag(jObjectT.optString("opendateshopping")+"\n\n"));
+                        detailInfoHashMap.put("< Closed >\n" , removeTag(jObjectT.optString("restdateshopping")+"\n\n"));
+                        detailInfoHashMap.put("< Operation time >\n" , removeTag(jObjectT.optString("opentime")+"\n\n"));
+                        detailInfoHashMap.put("< Fair day >\n " , removeTag(jObjectT.optString("fairday")+"\n\n"));
                         break;
 
-                    case "38":
-                        detailInfoHashMap.put("장서는 날" , jObjectT.optString("fairday"));
-                        detailInfoHashMap.put("문의 및 안내 :" , jObjectT.optString("infocentershopping"));
-                        detailInfoHashMap.put("개장일 :" , jObjectT.optString("opendateshopping"));
-                        detailInfoHashMap.put("영업 시간 :" , jObjectT.optString("opentime"));
-                        detailInfoHashMap.put("쉬는 날 :" , jObjectT.optString("restdateshopping"));
-                        break;
-
-                    case "39":
-                        detailInfoHashMap.put("신용카드 가능 여부 :" , jObjectT.optString("chkcreditcardfood"));
-                        detailInfoHashMap.put("할인 정보 :" , jObjectT.optString("discountinfofood"));
-                        detailInfoHashMap.put("대표 메뉴 :" , jObjectT.optString("firstmenu"));
-                        detailInfoHashMap.put("문의 및 안내 :" , jObjectT.optString("infocenterfood"));
-                        detailInfoHashMap.put("영업 시간 :" , jObjectT.optString("opentimefood"));
-                        detailInfoHashMap.put("쉬는 날 :" , jObjectT.optString("restdatefood"));
+                    case "82":
+                        detailInfoHashMap.put("< Info center >\n" , removeTag(jObjectT.optString("infocenterfood")+"\n\n"));
+                        detailInfoHashMap.put("< Open time >\n" , removeTag(jObjectT.optString("opentimefood")+"\n\n"));
+                        detailInfoHashMap.put("< Closed >\n" , removeTag(jObjectT.optString("restdatefood")+"\n\n"));
+                        detailInfoHashMap.put("< Main menu >\n" , removeTag(jObjectT.optString("firstmenu")+"\n\n"));
+                        detailInfoHashMap.put("< Discount Info >\n" , removeTag(jObjectT.optString("discountinfofood")+"\n\n"));
+                        detailInfoHashMap.put("< Can credit card? >\n" , removeTag(jObjectT.optString("chkcreditcardfood")+"\n\n"));
                         break;
                 }
-                //System.out.println(jObject);
-                //codeArr[i] = code;
-                //System.out.println(code);
-
         } catch (JSONException e) {
+            e.printStackTrace();
+        }catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -159,13 +151,16 @@ public class GetDetailInfo {
         setURL();
         try {
             resultData = new ConnectionAPI(urlText).execute().get();
-            Log.i("TTTTTTTT", resultData);
             dataParser(resultData);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+    }
+
+    public String removeTag(String html) throws Exception {
+        return html.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
     }
 
 
