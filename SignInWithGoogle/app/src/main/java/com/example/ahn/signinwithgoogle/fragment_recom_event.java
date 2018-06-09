@@ -47,6 +47,8 @@ public class fragment_recom_event extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_fragment_recom_event, container, false);
         listview1 = view.findViewById(R.id.recom_event);
+        recomlistViewItemList.clear();
+        tourspot.clear();
 
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 

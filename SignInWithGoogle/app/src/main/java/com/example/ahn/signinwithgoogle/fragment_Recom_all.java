@@ -49,17 +49,14 @@ public class fragment_Recom_all extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_fragment__recom_all, container, false);
         listview1 = view.findViewById(R.id.recom_all);
+        recomlistViewItemList.clear();
+        hash.clear();
 
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);
-        // listViewAdapter = new RecomListViewAdapter();// Adapter 생성
         bundle=getArguments();
 
         FR = (Recommend) getActivity();
         getArea = FR.getObject();
-//        searchBtn = FR.findViewById(R.id.searchBtn);
-//        searchBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
         RecomListViewItem item = new RecomListViewItem();
 
         recomlistViewItemList.clear();
@@ -85,7 +82,6 @@ public class fragment_Recom_all extends Fragment {
             mapX = hash.get(key)[4];
             mapY = hash.get(key)[3];
             imgURL = hash.get(key)[2];
-            imgId = classification(hash.get(key)[1]);
 
             listViewAdapter.addItem(imgId, key, contentTypeID, title, addr, mapX, mapY, imgURL);//컨텐츠 타입, 이름, 주소 보내기, // 정보도 보내야할 것 같음
             listViewAdapter.notifyDataSetChanged();
@@ -134,7 +130,6 @@ public class fragment_Recom_all extends Fragment {
                                 dialog.cancel();
                             }
                         });
-                //startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://look?p="+item.getMapX()+","+item.getMapY())));
                 AlertDialog dialog = builder.create();    // 알림창 객체 생성
                 dialog.show();
             }
@@ -142,47 +137,5 @@ public class fragment_Recom_all extends Fragment {
        return view;
     }
 
-    class temp{
-        String title;
-        double mapX;
-        double mapY;
-    }
-    public void view_listData() {
-        // 리스트뷰 참조 및 Adapter달기
-
-
-    }
-
-    public int classification(String content) {
-        int temp = 0;
-
-        switch (content) {
-            case "12":
-                temp = R.drawable.attraction;//관광지
-                break;
-            case "14":
-                temp = R.drawable.culture; //문화시설
-                break;
-            case "15":
-                temp = R.drawable.festival; //축제,공연,행사
-                break;
-            case "25":
-                temp = R.drawable.travel; //여행코스
-                break;
-            case "28":
-                temp = R.drawable.leisure; //레포츠
-                break;
-            case "32":
-                temp = R.drawable.hotel; //숙박
-                break;
-            case "38":
-                temp = R.drawable.shopping; //쇼핑
-                break;
-            case "39":
-                temp = R.drawable.restaurant; //음식
-                break;
-        }
-        return temp;
-    }
 }
 

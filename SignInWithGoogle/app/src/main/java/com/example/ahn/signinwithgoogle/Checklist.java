@@ -32,15 +32,6 @@ public class Checklist extends android.support.v4.app.Fragment {
         return fragment;
     }
 
-    public class firstExe{
-        public int firstCheck;
-        public firstExe(){}
-        public void setFirstCheck(int firstCheck){
-            this.firstCheck = firstCheck;
-        }
-    }
-
-    //Log.d(TAG, variable);
     SharedPreferences sh_Pref;
     SharedPreferences.Editor toEdit;
 
@@ -62,7 +53,6 @@ public class Checklist extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //View view= super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.activity_checklist, container, false);
         builder = new AlertDialog.Builder(getActivity());
 
@@ -84,28 +74,20 @@ public class Checklist extends android.support.v4.app.Fragment {
         getBucketList = FirebaseDatabase.getInstance().getReference().child("DefaultBucketList");
         addUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
 
-        try {
-            firstCheck = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
-        }catch (NullPointerException e){
-            UpdateBucketListDB();
-        }
-
-        getUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
-        ValueEventListener getBucketListListener = new ValueEventListener() {
+        //If first data load to User's DB, then initialize bucketList
+        firstCheck = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+        ValueEventListener checkNullListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Checklist_item c = child.getValue(Checklist_item.class);
-                    adapter.addItem(c.list, c.check);
-                }
+                if(!(dataSnapshot.exists()))
+                    UpdateBucketListDB();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        };
-        getUserBucketList.addListenerForSingleValueEvent(getBucketListListener);
+        }; firstCheck.addListenerForSingleValueEvent(checkNullListener);
 
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) view.findViewById(R.id.userItemList);
@@ -148,26 +130,35 @@ public class Checklist extends android.support.v4.app.Fragment {
         getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
     }
 
-    private void checkFirst() {
-        sh_Pref = getActivity().getSharedPreferences("Pref", Context.MODE_PRIVATE);
-        boolean isFirst = sh_Pref.getBoolean("isBucket", false);
+    @Override
+    public void onResume(){
+        super.onResume();
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser mUser = mAuth.getCurrentUser();
 
-        if (!isFirst) {
-            ValueEventListener addUserBucketListListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        Checklist_item c = child.getValue(Checklist_item.class);
-                        addUserBucketList.child(child.getKey()).setValue(c);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Load Users bucketList
+                getUserBucketList = FirebaseDatabase.getInstance().getReference().child("Users").child(mUser.getUid()).child("BucketList");
+                ValueEventListener getBucketListListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            Checklist_item c = child.getValue(Checklist_item.class);
+                            adapter.addItem(c.list, c.check);
+                        }
                     }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
 
-                }
-            };
-            getBucketList.addListenerForSingleValueEvent(addUserBucketListListener);
-        }
-        sh_Pref.edit().putBoolean("isFirst", true).apply();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                };
+                getUserBucketList.addListenerForSingleValueEvent(getBucketListListener);
+            }
+        }, 1000);
+
     }
 }

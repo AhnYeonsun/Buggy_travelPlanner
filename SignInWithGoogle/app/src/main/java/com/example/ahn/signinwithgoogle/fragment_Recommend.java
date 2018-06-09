@@ -166,42 +166,37 @@ public class fragment_Recommend extends AppCompatActivity {
                     return FA;
                 case 1:
                     fragment_Recom_tourspot FT = new fragment_Recom_tourspot();
-                    bundle.putString("contentTypeID", "12");
+                    bundle.putString("contentTypeID", "76");
                     FT.setArguments(bundle);
                     return FT;
                 case 2:
                     fragment_recom_cultural Fcul = new fragment_recom_cultural();
-                    bundle.putString("contentTypeID", "14");
+                    bundle.putString("contentTypeID", "78");
                     Fcul.setArguments(bundle);
                     return Fcul;
                 case 3:
                     fragment_recom_event Fevent = new fragment_recom_event();
-                    bundle.putString("contentTypeID", "15");
+                    bundle.putString("contentTypeID", "85");
                     Fevent.setArguments(bundle);
                     return Fevent;
                 case 4:
-                    fragment_recom_course Fcourse = new fragment_recom_course();
-                    bundle.putString("contentTypeID", "25");
-                    Fcourse.setArguments(bundle);
-                    return Fcourse;
-                case 5:
                     fragment_recom_leports Fleport = new fragment_recom_leports();
-                    bundle.putString("contentTypeID", "28");
+                    bundle.putString("contentTypeID", "75");
                     Fleport.setArguments(bundle);
                     return Fleport;
-                case 6:
+                case 5:
                     fragment_recom_accom Faccom = new fragment_recom_accom();
-                    bundle.putString("contentTypeID", "32");
+                    bundle.putString("contentTypeID", "80");
                     Faccom.setArguments(bundle);
                     return Faccom;
-                case 7:
+                case 6:
                     fragment_recom_shopping Fshopping = new fragment_recom_shopping();
-                    bundle.putString("contentTypeID", "38");
+                    bundle.putString("contentTypeID", "79");
                     Fshopping.setArguments(bundle);
                     return Fshopping;
-                case 8:
+                case 7:
                     fragment_recom_food Ffood = new fragment_recom_food();
-                    bundle.putString("contentTypeID", "39");
+                    bundle.putString("contentTypeID", "82");
                     Ffood.setArguments(bundle);
                     return Ffood;
             }
@@ -216,7 +211,7 @@ public class fragment_Recommend extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 9;
+            return 8;
         }
 
         @Override
@@ -231,14 +226,12 @@ public class fragment_Recommend extends AppCompatActivity {
                 case 3:
                     return "Event";
                 case 4:
-                    return "Course";
-                case 5:
                     return "Leports";
-                case 6:
+                case 5:
                     return "Accommodation";
-                case 7:
+                case 6:
                     return "Shopping";
-                case 8:
+                case 7:
                     return "Food";
                 default:
                     return null;

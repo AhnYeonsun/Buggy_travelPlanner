@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -122,8 +123,6 @@ public class PlanDetail extends AppCompatActivity {
                             .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    listDataGroup.get(groupPosition).getArrayList().remove(childPosition);
-                                    listAdapter.notifyDataSetChanged();
 
                                     //DB에서도 지우기
                                     //child의 title 가져와야 함.
@@ -137,6 +136,7 @@ public class PlanDetail extends AppCompatActivity {
                                                 Plan p = child.getValue(Plan.class);
                                                 if((p.title).equals(deleteTitle)){
                                                     readplanDetail.child(child.getKey()).removeValue();
+                                                    onResume();
                                                 }
                                             }
                                         }
@@ -147,6 +147,8 @@ public class PlanDetail extends AppCompatActivity {
                                         }
                                     }; readplanDetail.addListenerForSingleValueEvent(deleteChildListener);
 
+                                    listDataGroup.get(groupPosition).getArrayList().remove(childPosition);
+                                    listAdapter.notifyDataSetChanged();
                                 }
                             })
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -295,19 +297,17 @@ public class PlanDetail extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                prepareListGroupData(); //Group 만들기
-                //try {
-                //String temp = readplanDetail.child("Users").getKey();
-                prepareListChildData(); //Child 만들기
-                //}catch (NullPointerException ne){
 
-                //}finally {
+                prepareListGroupData(); //Group 만들기
+
+                prepareListChildData(); //Child 만들기
+
                 listAdapter = new PlanDetailAdapter(PlanDetail.this, listDataGroup, elv);
                 elv.setAdapter(listAdapter);
                 listAdapter.setInflater((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
-                //}
+
             }
-        }, 1000);
+        }, 2000);
 
     }
 }

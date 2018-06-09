@@ -43,6 +43,8 @@ public class fragment_recom_accom extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_fragment_recom_accom, container, false);
         listview1 = view.findViewById(R.id.recom_accom);
+        recomlistViewItemList.clear();
+        tourspot.clear();
 
         listViewAdapter = new RecomListViewAdapter(recomlistViewItemList);// Adapter 생성
 

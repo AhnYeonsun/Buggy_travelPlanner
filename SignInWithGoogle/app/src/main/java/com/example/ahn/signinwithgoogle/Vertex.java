@@ -10,6 +10,7 @@ public class Vertex implements Serializable {
     Vertex(int id, double x, double y) {
         this.vertexID = id;
         this.vertexX = x;
+
         this.vertexY = y;
     }
 
