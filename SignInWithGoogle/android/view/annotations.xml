@@ -1,6 +1,0 @@
-<root>
-    <item
-        name='android.view.LayoutInflater android.view.View inflate(int, android.view.ViewGroup, boolean)'>
-        <annotation name='android.support.annotation.Nullable' />
-    </item>
-</root>

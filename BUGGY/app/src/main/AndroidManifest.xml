@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.whitesneakers.buggy">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Buggy"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateAlwaysHidden"
+        tools:replace="theme, icon, label">
+        <!--모듈 라이브러리 사용시 menifest 충돌 병합시켜주는 코드-->
+        <activity android:name="org.whitesneakers.buggy.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAZKHfN10cYPEYS8ecJCb3T2HHlulOa54Q"/>
+        <activity android:name=".PlanDetail" />
+        <activity
+            android:name=".SetDetail"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".Recommend" />
+        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".Navigation"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Tutorial"></activity>
+        <activity android:name=".SortingByAlgo"></activity>
+    </application>
+
+</manifest>
